@@ -7,6 +7,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 import services.interfaces.UserServicesLocal;
+import entities.Station;
 import entities.Traveler;
 
 /**
@@ -32,5 +33,6 @@ public class PopulateDb {
 		Traveler traveler = new Traveler("jousem", "k", "k@r.y", "k", 10214);
 
 		userServicesLocal.addUser(traveler);
+		
 	}
 }
