@@ -18,6 +18,8 @@ public class Place implements Serializable {
 	private String name;
 	private String description;
 	private String Category;
+	private Integer x;
+	private Integer y;
 	private static final long serialVersionUID = 1L;
 	
 	private Station station;
@@ -60,6 +62,18 @@ public class Place implements Serializable {
 	}
 	public void setStation(Station station) {
 		this.station = station;
+	}
+	public Integer getX() {
+		return x;
+	}
+	public void setX(Integer x) {
+		this.x = x;
+	}
+	public Integer getY() {
+		return y;
+	}
+	public void setY(Integer y) {
+		this.y = y;
 	}
    
 }
