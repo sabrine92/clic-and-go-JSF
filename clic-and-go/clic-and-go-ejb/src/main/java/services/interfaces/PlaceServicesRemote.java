@@ -8,14 +8,14 @@ import entities.Place;
 public interface PlaceServicesRemote {
 	Boolean addPlace(Place place);
 
-	Boolean deletePlaceByPlaceId(Integer placeId);
-
 	Boolean updatePlace(Place place);
+
+	Boolean deletePlace(Place place);
+
+	Boolean deletePlaceByPlaceId(Integer placeId);
 
 	Place findPlaceByPlaceId(Integer placeId);
 
-	Boolean deletePlace(Place place);
-	
-	Boolean assignPlaceToStation(Place place, Integer stationId);
+	Boolean assignPlaceToStation(Integer placeId, Integer stationId);
 
 }
