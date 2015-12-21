@@ -3,6 +3,7 @@ package services.impl;
 import java.util.List;
 import java.util.Vector;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import services.interfaces.DijkestraLocal;
@@ -28,6 +29,7 @@ public class Dijkestra implements DijkestraRemote, DijkestraLocal {
 	// rajout
 	private boolean[] noeudsMarqués;
 	private static int dimensionDeLaMatrice;
+	@EJB
 	StationServices stationServices;
 	Session session;
 

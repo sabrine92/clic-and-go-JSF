@@ -6,34 +6,38 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import services.interfaces.MapyInitialLocal;
 import services.interfaces.MapyInitialRemote;
 import entities.Line;
 import entities.Station;
+
 /**
  * Session Bean implementation class MapyInitial
  */
 @Stateless
 public class MapyInitial implements MapyInitialRemote, MapyInitialLocal {
-	 StationLineManagement stationLineManagement;
-		Session session;
-		LineServices lineServices;
-    /**
-     * Default constructor. 
-     */
-    public MapyInitial() {
-        // TODO Auto-generated constructor stub
-    }
+	@EJB
+	private StationLineManagement stationLineManagement;
+	private Session session;
+	private LineServices lineServices;
+
+	/**
+	 * Default constructor.
+	 */
+	public MapyInitial() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		Graphics2D gr = (Graphics2D) g;
 		String depart = session.getDeparture();
-		String arrival =session.getArrival();
-		Station sta = (Station)stationLineManagement.findLineByName(depart);
-			
+		String arrival = session.getArrival();
+		Station sta = (Station) stationLineManagement.findLineByName(depart);
+
 		int[][] mat = stationLineManagement.RemplirMatrice();
 		Graphe g0 = new Graphe(mat);
 		Dijkestra dij = new Dijkestra(sta.getReference(), g0);
@@ -44,8 +48,8 @@ public class MapyInitial implements MapyInitialRemote, MapyInitialLocal {
 		for (Line l : lines) {
 			// setBackground(getBackground());
 
-			List<Station> stations = stationLineManagement.findAllStationsByLineId(l.getLineId());
-					
+			List<Station> stations = stationLineManagement
+					.findAllStationsByLineId(l.getLineId());
 
 			for (Station s : stations) {
 				System.out.println("" + l.getName() + "" + s.getName() + " ");

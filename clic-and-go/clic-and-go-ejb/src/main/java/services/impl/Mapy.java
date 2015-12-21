@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import services.interfaces.MapyLocal;
@@ -18,15 +19,17 @@ import entities.Station;
  */
 @Stateless
 public class Mapy implements MapyRemote, MapyLocal {
-    StationLineManagement stationLineManagement;
-	Session session;
-	LineServices lineServices;
-    /**
-     * Default constructor. 
-     */
-    public Mapy() {
-        // TODO Auto-generated constructor stub
-    }
+	@EJB
+	private StationLineManagement stationLineManagement;
+	private Session session;
+	private LineServices lineServices;
+
+	/**
+	 * Default constructor.
+	 */
+	public Mapy() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public void paintComponent(Graphics g) {
@@ -34,7 +37,7 @@ public class Mapy implements MapyRemote, MapyLocal {
 		String depart = session.getDeparture();
 		String arrival = session.getArrival();
 		Station sta = (Station) stationLineManagement.findLineByName(depart);
-				
+
 		int[][] mat = stationLineManagement.RemplirMatrice();
 		Graphe g0 = new Graphe(mat);
 		Dijkestra dij = new Dijkestra(sta.getReference(), g0);
@@ -45,8 +48,9 @@ public class Mapy implements MapyRemote, MapyLocal {
 		for (Line l : lines) {
 			// setBackground(getBackground());
 
-			List<Station> stations =stationLineManagement.findAllStationsByLineId(l.getLineId());
-				
+			List<Station> stations = stationLineManagement
+					.findAllStationsByLineId(l.getLineId());
+
 			for (Station s : stations) {
 				System.out.println("" + l.getName() + "" + s.getName() + " ");
 			}
@@ -87,7 +91,5 @@ public class Mapy implements MapyRemote, MapyLocal {
 		}
 
 	}
-		
-	}
 
-
+}
