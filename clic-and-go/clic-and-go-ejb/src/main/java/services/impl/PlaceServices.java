@@ -84,8 +84,6 @@ public class PlaceServices implements PlaceServicesRemote, PlaceServicesLocal {
 			Station station = entityManager.find(Station.class, stationId);
 			Place place = entityManager.find(Place.class, placeId);
 			place.setStation(station);
-			// une fois les cruds de nadia fait na7iwHa
-			// entityManager.merge(line);
 			entityManager.merge(place);
 			b = true;
 		} catch (Exception e) {
