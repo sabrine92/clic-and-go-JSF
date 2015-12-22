@@ -19,7 +19,9 @@ public interface StationLineManagementRemote {
 	public Station findStationById(Integer id);
 
 	public Object findStationByName(String name);
+
 	public List<Line> lookUpLinet(String name);
+
 	public Line findLineById(Integer id);
 
 	public Object findLineByName(String name);

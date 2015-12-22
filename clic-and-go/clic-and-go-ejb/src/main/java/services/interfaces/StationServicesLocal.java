@@ -12,11 +12,16 @@ public interface StationServicesLocal {
 	Boolean addStation(Station station);
 
 	Boolean deleteStationById(Integer Id);
+
 	public Boolean updateStation(Station station);
-	public Station findStationById(Integer
-			Id);
+
+	public Station findStationById(Integer Id);
+
 	public Boolean deleteStation(Station station);
+
 	public List<Station> findAllStations();
+
 	public Station findStationByStationByReference(int ref);
+
 	public Station findStationByStationName(String name);
 }

@@ -9,6 +9,9 @@ import entities.Line;
 @Local
 public interface LineServicesLocal {
 	Boolean addLine(Line line);
+
 	Line findLineByName(String name);
+
 	public List<Line> findAllLines();
+
 }

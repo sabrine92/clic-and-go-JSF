@@ -18,5 +18,4 @@ public interface PlaceServicesLocal {
 	Place findPlaceByPlaceId(Integer placeId);
 
 	Boolean assignPlaceToStation(Integer placeId, Integer stationId);
-
 }

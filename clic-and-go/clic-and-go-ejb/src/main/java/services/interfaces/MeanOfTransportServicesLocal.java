@@ -14,10 +14,19 @@ public interface MeanOfTransportServicesLocal {
 
 	Boolean updateMeanOfTransport(MeanOfTransport MeanOfTransport);
 
-	MeanOfTransport findMeanOfTransportById(
-			String Id);
+	MeanOfTransport findMeanOfTransportById(String Id);
 
 	Boolean deleteMeanOfTransport(MeanOfTransport MeanOfTransport);
 
 	List<MeanOfTransport> findAllMeanOfTransports();
+
+	Boolean assignMeanOfTransportToLine(MeanOfTransport newMeanOfTransport,
+			Integer lineId);
+
+	List<MeanOfTransport> lookUpMeanOfTransport(String id);
+
+	Boolean assignMeanOfTransportToLine(String meanOfTransportId, Integer lineId);
+
+	MeanOfTransport findMeanOfTransportByName(String name);
+
 }
