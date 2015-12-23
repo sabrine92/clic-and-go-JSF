@@ -30,10 +30,14 @@ public class PlaceServices implements PlaceServicesRemote, PlaceServicesLocal {
 	public Boolean addPlace(Place place) {
 		Boolean b = false;
 		try {
-			entityManager.merge(place);
+			System.out.println(place);
+			entityManager.persist(place);
 			b = true;
+			System.out.println(b);
+			
 		} catch (Exception e) {
 		}
+		System.out.println(b);
 		return b;
 	}
 
