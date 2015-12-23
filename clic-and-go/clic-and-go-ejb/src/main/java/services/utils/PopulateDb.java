@@ -7,7 +7,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 import services.interfaces.UserServicesLocal;
-import entities.Station;
+import entities.ContentManager;
 import entities.Traveler;
 
 /**
@@ -30,9 +30,13 @@ public class PopulateDb {
 
 	@PostConstruct
 	public void initDb() {
-		Traveler traveler = new Traveler("jousem", "k", "k@r.y", "k", 10214);
-
+		// /Users
+		Traveler traveler = new Traveler("houcem", "houcem",
+				"Houcem@esprit.tn", "houcem", 10214);
+		ContentManager contentManager = new ContentManager("yosr", "yosr",
+				"y@esprit.tn", "yosr", "esprit");
 		userServicesLocal.addUser(traveler);
-		
+		userServicesLocal.addUser(contentManager);
+
 	}
 }
