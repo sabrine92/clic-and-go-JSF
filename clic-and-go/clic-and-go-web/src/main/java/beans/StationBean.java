@@ -5,16 +5,17 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
 import services.interfaces.StationServicesLocal;
 import entities.Station;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class StationBean {
 
 	// Models
@@ -49,7 +50,7 @@ public class StationBean {
 	}
 
 	public void onRowEdit(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Car Edited",
+		FacesMessage msg = new FacesMessage("Station Edited",
 				((Station) event.getObject()).getName());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
@@ -59,6 +60,15 @@ public class StationBean {
 				((Station) event.getObject()).getName());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
+	 public void onCellEdit(CellEditEvent event) {
+	        Object oldValue = event.getOldValue();
+	        Object newValue = event.getNewValue();
+	         
+	        if(newValue != null && !newValue.equals(oldValue)) {
+	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+	            FacesContext.getCurrentInstance().addMessage(null, msg);
+	        }
+	    }
 
 	public void doSelect() {
 		setDisplayform(true);
