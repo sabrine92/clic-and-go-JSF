@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import services.interfaces.PlaceServicesLocal;
 import services.interfaces.StationServicesLocal;
@@ -12,7 +12,7 @@ import entities.Place;
 import entities.Station;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class PlaceBean {
 
 	String navigateTo = "";
@@ -34,10 +34,12 @@ public class PlaceBean {
 	}
 
 	public String doAddPlace() {
+		System.out.println(place);
 		placeServicesLocal.addPlace(place);
+		places = placeServicesLocal.findAllPlaces();
+		System.out.println(places);
 		navigateTo = "addPlace";
 		return navigateTo;
-
 	}
 
 	public Place getPlace() {
@@ -49,6 +51,8 @@ public class PlaceBean {
 	}
 
 	public List<Place> getPlaces() {
+		places = placeServicesLocal.findAllPlaces();
+		System.out.println(places);
 		return places;
 	}
 

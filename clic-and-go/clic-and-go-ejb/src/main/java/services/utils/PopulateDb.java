@@ -6,9 +6,11 @@ import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
+import services.interfaces.PlaceServicesLocal;
 import services.interfaces.StationServicesLocal;
 import services.interfaces.UserServicesLocal;
 import entities.ContentManager;
+import entities.Place;
 import entities.Station;
 import entities.Traveler;
 
@@ -25,6 +27,9 @@ public class PopulateDb {
 
 	@EJB
 	private StationServicesLocal stationServicesLocal;
+	
+	@EJB
+	private PlaceServicesLocal placeServicesLocal;
 	/**
 	 * Default constructor.
 	 */
@@ -34,6 +39,7 @@ public class PopulateDb {
 
 	@PostConstruct
 	public void initDb() {
+		
 		// /Users
 		Traveler traveler = new Traveler("houcem", "houcem",
 				"Houcem@esprit.tn", "houcem", 10214);
@@ -129,5 +135,13 @@ public class PopulateDb {
         stationServicesLocal.addStation(st9);
         stationServicesLocal.addStation(st10);
         stationServicesLocal.addStation(st11);
+        
+      //Places
+        Place place1 = new Place("foccacia", "pizza italienne à volenté", "fast food", 45, 255, st10);
+        Place place2 = new Place("Barista's", "Cheese cake et moccachino", "salon de thé", 140, 17, st11);
+        
+        placeServicesLocal.addPlace(place1);
+        placeServicesLocal.addPlace(place2);
+      		
 	}
 }
