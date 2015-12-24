@@ -36,8 +36,6 @@ public class PlaceBean {
 	public String doAddPlace() {
 		System.out.println(place);
 		placeServicesLocal.addPlace(place);
-		places = placeServicesLocal.findAllPlaces();
-		System.out.println(places);
 		navigateTo = "addPlace";
 		return navigateTo;
 	}
@@ -52,7 +50,6 @@ public class PlaceBean {
 
 	public List<Place> getPlaces() {
 		places = placeServicesLocal.findAllPlaces();
-		System.out.println(places);
 		return places;
 	}
 
