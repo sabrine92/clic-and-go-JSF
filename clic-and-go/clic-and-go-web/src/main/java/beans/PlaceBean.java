@@ -33,6 +33,7 @@ public class PlaceBean implements Serializable {
 	// Models
 	private Place place = new Place();
 	private List<Place> places;
+	private List<Place> filteredPlaces;
 	private List<Station> stations;
 	private Place selectedPlace;
 	private Place modifiedPlace;
@@ -180,6 +181,14 @@ public class PlaceBean implements Serializable {
 
 	public void setModifiedPlace(Place modifiedPlace) {
 		this.modifiedPlace = modifiedPlace;
+	}
+
+	public List<Place> getFilteredPlaces() {
+		return filteredPlaces;
+	}
+
+	public void setFilteredPlaces(List<Place> filteredPlaces) {
+		this.filteredPlaces = filteredPlaces;
 	}
 
 	
