@@ -6,7 +6,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SelectEvent;
@@ -18,7 +18,7 @@ import entities.Place;
 import entities.Station;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class PlaceBean implements Serializable {
 
 	/**
@@ -34,6 +34,7 @@ public class PlaceBean implements Serializable {
 	private List<Station> stations;
 	private Place selectedPlace;
 	private Boolean displayform = false;
+	private Boolean displayformadd = false;
 
 	// Injection
 	@EJB
@@ -48,8 +49,19 @@ public class PlaceBean implements Serializable {
 	public String doAddPlace() {
 		System.out.println(place);
 		placeServicesLocal.addPlace(place);
-		navigateTo = "addPlace";
+		navigateTo = "listPlaces";
+		setDisplayformadd(false);
+		place=new Place();
+		
 		return navigateTo;
+	}
+
+	public void doDisplayAdd() {
+		displayformadd = true;
+	}
+
+	public void doSelect() {
+		displayform = true;
 	}
 
 	public Place getPlace() {
@@ -104,6 +116,14 @@ public class PlaceBean implements Serializable {
 		FacesMessage msg = new FacesMessage("Place Unselected",
 				((Place) event.getObject()).getName());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public Boolean getDisplayformadd() {
+		return displayformadd;
+	}
+
+	public void setDisplayformadd(Boolean displayformadd) {
+		this.displayformadd = displayformadd;
 	}
 
 }

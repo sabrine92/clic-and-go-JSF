@@ -5,25 +5,30 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
-
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
+import java.util.Locale;
 import services.interfaces.StationServicesLocal;
+import entities.Place;
 import entities.Station;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class StationBean {
 
 	// Models
 	private Station station = new Station();
 	private List<Station> stations;
-
+	  private Station selectedstaStation;
 	private List<Station> stations2;
 	private Boolean displayform = false;
+	  private List<Station> filteredStations;
 	// Injection
 
 	@EJB
@@ -32,9 +37,22 @@ public class StationBean {
 	public String doAddStation() {
 		stationServicesLocal.addStation(station);
 		String navigateTo = "listStations";
-
+		setDisplayform(false);
 		return navigateTo;
 
+	}
+	
+	
+	public void onRowSelect(SelectEvent event) {
+		FacesMessage msg = new FacesMessage("Station Selected",
+				((Station) event.getObject()).getName());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onRowUnselect(UnselectEvent event) {
+		FacesMessage msg = new FacesMessage("Station Unselected",
+				((Station) event.getObject()).getName());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	public String doUpdate() {
@@ -115,6 +133,20 @@ public class StationBean {
 
 	public void setStations2(List<Station> stations2) {
 		this.stations2 = stations2;
+	}
+	public Station getSelectedstaStation() {
+		return selectedstaStation;
+	}
+	public void setSelectedstaStation(Station selectedstaStation) {
+		this.selectedstaStation = selectedstaStation;
+	}
+
+	public List<Station> getFilteredStations() {
+		return filteredStations;
+	}
+
+	public void setFilteredStations(List<Station> filteredStations) {
+		this.filteredStations = filteredStations;
 	}
 
 }
