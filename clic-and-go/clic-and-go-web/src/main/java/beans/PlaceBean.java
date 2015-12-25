@@ -9,6 +9,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
@@ -33,8 +35,10 @@ public class PlaceBean implements Serializable {
 	private List<Place> places;
 	private List<Station> stations;
 	private Place selectedPlace;
+	private Place modifiedPlace;
 	private Boolean displayform = false;
 	private Boolean displayformadd = false;
+	//private Integer rating;
 
 	// Injection
 	@EJB
@@ -52,12 +56,26 @@ public class PlaceBean implements Serializable {
 		navigateTo = "listPlaces";
 		setDisplayformadd(false);
 		place=new Place();
-		
 		return navigateTo;
 	}
+	
+	public String doDeletePlace() {
+		System.out.println(selectedPlace);
+		placeServicesLocal.deletePlace(selectedPlace);
+		return "";
+	}
 
+	public String doUpdatePlace() {
+		placeServicesLocal.updatePlace(modifiedPlace);
+		navigateTo = "listPlaces";
+		return "";
+	}
+	
 	public void doDisplayAdd() {
 		displayformadd = true;
+	}
+	public void doUndisplayAdd() {
+		displayformadd = false;
 	}
 
 	public void doSelect() {
@@ -125,5 +143,35 @@ public class PlaceBean implements Serializable {
 	public void setDisplayformadd(Boolean displayformadd) {
 		this.displayformadd = displayformadd;
 	}
+	public void onRowEdit(RowEditEvent event) {
+		doUpdatePlace();
+		System.out.println(place+" selected " + selectedPlace +"modified "+modifiedPlace);
+        FacesMessage msg = new FacesMessage("Place edited", ((Place) event.getObject()).getName());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+     
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", ((Place) event.getObject()).getName());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+     
+    public void onCellEdit(CellEditEvent event) {
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+        if(newValue != null && !newValue.equals(oldValue)) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+    }
+
+	public Place getModifiedPlace() {
+		return modifiedPlace;
+	}
+
+	public void setModifiedPlace(Place modifiedPlace) {
+		this.modifiedPlace = modifiedPlace;
+	}
+
+	
 
 }
