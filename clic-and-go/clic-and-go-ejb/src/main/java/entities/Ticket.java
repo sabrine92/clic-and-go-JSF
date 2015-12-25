@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.resource.spi.AuthenticationMechanism;
 
 /**
  * Entity implementation class for Entity: Ticket
@@ -22,11 +21,21 @@ public class Ticket implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private User user;
-	private MeanOfTransport meanOfTransport;
-	
+	// private MeanOfTransport meanOfTransport;
+	private Line line;
 
 	public Ticket() {
 		super();
+	}
+
+	public Ticket(Integer ticketId, State state, Double price, User user,
+			Line line) {
+		super();
+		this.ticketId = ticketId;
+		this.state = state;
+		this.price = price;
+		this.user = user;
+		this.line = line;
 	}
 
 	@Id
@@ -63,26 +72,14 @@ public class Ticket implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 	@ManyToOne
-	public MeanOfTransport getMeanOfTransport() {
-		return meanOfTransport;
+	public Line getLine() {
+		return line;
 	}
 
-	public void setMeanOfTransport(MeanOfTransport meanOfTransport) {
-		this.meanOfTransport = meanOfTransport;
+	public void setLine(Line line) {
+		this.line = line;
 	}
-
-	public Ticket(Integer ticketId, State state, Double price, User user,
-			MeanOfTransport meanOfTransport) {
-		super();
-		this.ticketId = ticketId;
-		this.state = state;
-		this.price = price;
-		this.user = user;
-		this.meanOfTransport = meanOfTransport;
-	}
-
-	
-
 
 }
