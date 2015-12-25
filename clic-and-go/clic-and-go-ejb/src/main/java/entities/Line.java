@@ -26,8 +26,6 @@ public class Line implements Serializable {
 	private List<MeanOfTransport> meansOftransport;
 	private List<Ticket> tickets;
 
-	// private List<Ticket> tickets;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer getLineId() {
@@ -139,6 +137,7 @@ public class Line implements Serializable {
 		return true;
 	}
 
+	@OneToMany(mappedBy = "line")
 	public List<Ticket> getTickets() {
 		return tickets;
 	}

@@ -21,11 +21,21 @@ public class Ticket implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private User user;
-	private MeanOfTransport meanOfTransport;
+	// private MeanOfTransport meanOfTransport;
 	private Line line;
 
 	public Ticket() {
 		super();
+	}
+
+	public Ticket(Integer ticketId, State state, Double price, User user,
+			Line line) {
+		super();
+		this.ticketId = ticketId;
+		this.state = state;
+		this.price = price;
+		this.user = user;
+		this.line = line;
 	}
 
 	@Id
@@ -64,24 +74,6 @@ public class Ticket implements Serializable {
 	}
 
 	@ManyToOne
-	public MeanOfTransport getMeanOfTransport() {
-		return meanOfTransport;
-	}
-
-	public void setMeanOfTransport(MeanOfTransport meanOfTransport) {
-		this.meanOfTransport = meanOfTransport;
-	}
-
-	public Ticket(Integer ticketId, State state, Double price, User user,
-			MeanOfTransport meanOfTransport) {
-		super();
-		this.ticketId = ticketId;
-		this.state = state;
-		this.price = price;
-		this.user = user;
-		this.meanOfTransport = meanOfTransport;
-	}
-
 	public Line getLine() {
 		return line;
 	}
