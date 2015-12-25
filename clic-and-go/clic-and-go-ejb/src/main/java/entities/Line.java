@@ -19,10 +19,12 @@ public class Line implements Serializable {
 	private Integer lineId;
 	private String name;
 	private Integer nbStations;
+	private Double price;
 	private static final long serialVersionUID = 1L;
 
 	private List<StationLine> stationLines;
 	private List<MeanOfTransport> meansOftransport;
+	private List<Ticket> tickets;
 
 	// private List<Ticket> tickets;
 
@@ -135,6 +137,22 @@ public class Line implements Serializable {
 		} else if (!stationLines.equals(other.stationLines))
 			return false;
 		return true;
+	}
+
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
 }
