@@ -1,10 +1,16 @@
 package beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 
 import services.interfaces.PlaceServicesLocal;
 import services.interfaces.StationServicesLocal;
@@ -13,7 +19,12 @@ import entities.Station;
 
 @ManagedBean
 @ViewScoped
-public class PlaceBean {
+public class PlaceBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	String navigateTo = "";
 
@@ -21,6 +32,7 @@ public class PlaceBean {
 	private Place place = new Place();
 	private List<Place> places;
 	private List<Station> stations;
+	private Place selectedPlace;
 	private Boolean displayform = false;
 
 	// Injection
@@ -72,6 +84,26 @@ public class PlaceBean {
 
 	public void setStations(List<Station> stations) {
 		this.stations = stations;
+	}
+
+	public Place getSelectedPlace() {
+		return selectedPlace;
+	}
+
+	public void setSelectedPlace(Place selectedPlace) {
+		this.selectedPlace = selectedPlace;
+	}
+
+	public void onRowSelect(SelectEvent event) {
+		FacesMessage msg = new FacesMessage("Place Selected",
+				((Place) event.getObject()).getName());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onRowUnselect(UnselectEvent event) {
+		FacesMessage msg = new FacesMessage("Place Unselected",
+				((Place) event.getObject()).getName());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 }

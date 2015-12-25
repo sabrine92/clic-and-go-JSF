@@ -1,27 +1,40 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
-<h:head></h:head> 
-<body> 
-<h1>HELLO FROM </h1>
-	<h:form>
-		<h:dataTable value="#{placeBean.places}" var="u" border="2">
-			<h:column id="c1">
-				<f:facet name="header">
-					<h:outputText value="Name" />
-				</f:facet>
+<h:head></h:head>
+<body>
+	<h1>HELLO FROM</h1>
+	<h:form id="form">
+    <p:growl id="msgs" showDetail="true" />
+		<p:dataTable id="eventsDT" value="#{placeBean.places}" var="u" border="2" selectionMode="single" selection="#{placeBean.selectedPlace}" rowKey="#{u.placeId}">
+			<f:facet name="header">
+    		    List of Places
+    		</f:facet>
+    		<p:ajax event="rowSelect" listener="#{placeBean.onRowSelect}" 
+    				update=":form:msgs" />
+        	<p:ajax event="rowUnselect" listener="#{placeBean.onRowUnselect}" 
+        			update=":form:msgs" />
+       		
+       		<p:column headerText="Id">
+				<h:outputText value="#{u.placeId}" />
+			</p:column>
+			<p:column headerText="Name">
 				<h:outputText value="#{u.name}" />
-			</h:column>
-			<h:column id="c2">
-				<f:facet name="header">
-					<h:outputText value="Description" />
-				</f:facet>
+			</p:column>
+			<p:column headerText="Description">
 				<h:outputText value="#{u.description}" />
-			</h:column>
-		</h:dataTable>
+			</p:column>
+			<p:column headerText="Category">
+				<h:outputText value="#{u.category}" />
+			</p:column>
+			<p:column headerText="Close to">
+				<h:outputText value="#{u.station.name}" />
+			</p:column>
+		</p:dataTable>
 	</h:form>
-</body> 
+</body>
 </html>
