@@ -1,5 +1,7 @@
 package services.interfaces;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
 import entities.Place;
@@ -17,5 +19,7 @@ public interface PlaceServicesRemote {
 	Place findPlaceByPlaceId(Integer placeId);
 
 	Boolean assignPlaceToStation(Integer placeId, Integer stationId);
+
+	List<Place> findAllPlaces();
 
 }

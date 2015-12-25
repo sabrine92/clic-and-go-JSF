@@ -17,11 +17,13 @@ public class LoginBean {
 
 	public String doLogin() {
 		String navigateTo = "";
-		User userLoggedIn = userServicesLocal.authenticate(user.getSurname(),
+		User userLoggedIn = userServicesLocal.authenticate(user.getName(),
 				user.getPassword());
+		System.out.println("userLoggedIn :"+userLoggedIn);
 		if (userLoggedIn != null) {
 			user = userLoggedIn;
 			if (userLoggedIn instanceof Traveler) {
+				System.out.println(userLoggedIn instanceof Traveler);
 				navigateTo = "pages/cmHome";
 			}
 		} else {

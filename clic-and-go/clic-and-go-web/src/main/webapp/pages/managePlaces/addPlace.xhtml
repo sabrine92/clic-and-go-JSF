@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head></h:head>
+<body>
+
+	<h:form>
+		<h:panelGrid>
+			<h:outputText value="Name" />
+			<h:inputText value="#{placeBean.place.name}" />
+			<h:outputText value="Description" />
+			<h:inputTextarea value="#{placeBean.place.description}" />
+			<h:outputText value="Category" />
+			<h:inputText value="#{placeBean.place.category}" />
+			<h:outputText value="Longitude" />
+			<h:inputText value="#{placeBean.place.x}" />
+			<h:outputText value="Latitude" />
+			<h:inputText value="#{placeBean.place.y}" />
+			<h:outputText value="Station" />
+<!-- 			<h:selectOneMenu value="#{placeBean.stations}"> -->
+<!-- 				<f:selectItem itemLabel="please select the closest station" /> -->
+<!-- 				<f:selectItems value="#{placeBean.stations}" var="u" -->
+<!-- 					itemLabel="#{u.name}" itemValue="#{u}"></f:selectItems> -->
+<!-- 			</h:selectOneMenu> -->
+
+			<hr />
+			<h:commandButton type="reset" value="reset" />
+			<hr />
+
+
+		</h:panelGrid>
+		<h:commandButton action="#{placeBean.doAddPlace()}" value="Add Place" />
+	</h:form>
+</body>
+</html>

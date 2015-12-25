@@ -1,5 +1,7 @@
 package services.impl;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,10 +32,14 @@ public class PlaceServices implements PlaceServicesRemote, PlaceServicesLocal {
 	public Boolean addPlace(Place place) {
 		Boolean b = false;
 		try {
-			entityManager.merge(place);
+			System.out.println(place);
+			entityManager.persist(place);
 			b = true;
+			System.out.println(b);
+
 		} catch (Exception e) {
 		}
+		System.out.println(b);
 		return b;
 	}
 
@@ -89,6 +95,12 @@ public class PlaceServices implements PlaceServicesRemote, PlaceServicesLocal {
 		} catch (Exception e) {
 		}
 		return b;
+	}
+
+	@Override
+	public List<Place> findAllPlaces() {
+		return entityManager.createQuery("select u from Place u")
+				.getResultList();
 	}
 
 }

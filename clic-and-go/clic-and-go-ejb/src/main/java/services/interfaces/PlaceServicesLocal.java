@@ -1,5 +1,7 @@
 package services.interfaces;
 
+import java.util.List;
+
 import javax.ejb.Local;
 
 import entities.Place;
@@ -18,4 +20,6 @@ public interface PlaceServicesLocal {
 	Place findPlaceByPlaceId(Integer placeId);
 
 	Boolean assignPlaceToStation(Integer placeId, Integer stationId);
+
+	List<Place> findAllPlaces();
 }

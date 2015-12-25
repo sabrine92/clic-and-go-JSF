@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+
+	<h:form id="form">
+		<p:growl id="msgs" showDetail="true" />
+
+		<p:dataTable id="stations" var="stat" value="#{stationBean.stations}"
+			editable="true" style="margin-bottom:20px">
+			<f:facet name="header">
+           Row Editing
+       </f:facet>
+
+			<p:ajax event="rowEdit" listener="#{stationBean.onRowEdit()}"
+				update=":form:msgs" />
+			<p:ajax event="rowEditCancel" listener="#{stationBean.onRowCancel()}"
+				update=":form:msgs" />
+
+			<p:column headerText="Name">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{stat.name}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="modelInput" value="#{stat.name}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="Reference">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{stat.reference}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{stat.reference}" style="width:100%"
+							label="Reference" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="Longitude">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{stat.x}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{stat.x}" style="width:100%"
+							label="Longitude" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="latitude">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{stat.y}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{stat.y}" style="width:100%" label="Latitude" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column style="width:32px">
+				<p:rowEditor />
+			</p:column>
+		</p:dataTable>
+	
+
+	</h:form>
+</body>
+</html>

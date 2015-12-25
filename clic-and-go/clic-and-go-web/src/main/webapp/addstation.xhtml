@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head></h:head>
+<body>
+	<h:form>
+		<h:panelGrid>
+			<h:outputText value="name" />
+			<h:inputText value="#{stationBean.station.name}" />
+			<h:outputText value="reference" />
+			<h:inputText value="#{stationBean.station.reference}" />
+			<h:outputText value="Longitude" />
+			<h:inputText value="#{stationBean.station.x}" />
+			<h:outputText value="Latitude" />
+			<h:inputText value="#{stationBean.station.y}" />
+
+		</h:panelGrid>
+		<h:commandButton action="#{stationBean.doAddStation()}"
+			value="Add-station" />
+	</h:form>
+</body>
+</html>

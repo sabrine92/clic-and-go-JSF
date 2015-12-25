@@ -22,6 +22,7 @@ public class Traveler extends User implements Serializable {
 		this.setName(name);
 		this.setSurname(surname);
 		this.setPassword(password);
+		this.setEmail(email);
 		this.travelsKlm = travelsKlm;
 	}
 

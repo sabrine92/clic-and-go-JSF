@@ -2,13 +2,14 @@ package services.impl;
 
 import javax.ejb.Stateful;
 
+import services.interfaces.SessionLocal;
 import services.interfaces.SessionRemote;
 
 /**
  * Session Bean implementation class SessionServices
  */
 @Stateful
-public class Session implements SessionRemote {
+public class Session implements SessionRemote ,SessionLocal {
 
 	public static String login;
     public static String pwd;
