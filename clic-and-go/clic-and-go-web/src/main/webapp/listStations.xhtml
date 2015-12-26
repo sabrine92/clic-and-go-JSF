@@ -10,96 +10,111 @@
 
 
 	<h:form id="form">
+
+		<p:contextMenu for="stations">
+			<p:menuitem value="Delete" update="stations" icon="ui-icon-close"
+				actionListener="#{stationBean.doDeleteStation()}" />
+		</p:contextMenu>
 		<p:growl id="msgs" showDetail="true" />
-		<h:panelGrid>
-			<div class="row">
-				<div class="col-md-4">
-					<div class="form-group">
-						<h:outputText value="name" />
-						<h:inputText value="#{stationBean.station.name}" />
-					</div>
-				</div>
-			</div>
-			<h:outputText value="Reference" />
-			<h:inputText value="#{stationBean.station.reference}" />
+		<p:panel header="Manage Station" >
+			<h:panelGrid columns="2">
 
-			<h:outputText value="Longitude" />
-			<h:inputText value="#{stationBean.station.x}" />
-			<h:outputText value="Latitude" />
-			<h:inputText value="#{stationBean.station.y}" />
+				<h:outputLabel for="name" value="name" />
+				<p:inputText value="#{stationBean.station.name}" />
 
-		</h:panelGrid>
-		<h:commandButton action="#{stationBean.doAddStation()}"
-			value="Add-station" />
-		<p:dataTable id="stations" var="stat" value="#{stationBean.stations}"
-			editable="true" style="margin-bottom:20px" selectionMode="single"
-			selection="#{stationBean.selectedstaStation}"
-			rowKey="#{stat.stationId}"  emptyMessage="No station found with given criteria" filteredValue="#{stationBean.filteredStations}">
+				<h:outputLabel for="reference" value="Reference" />
+				<p:inputText value="#{stationBean.station.reference}" />
 
-			<f:facet name="header">
+				<h:outputLabel for="x" value="Longitude" />
+				<p:inputText value="#{stationBean.station.x}" />
+				<h:outputLabel for="y" value="Latitude" />
+				<p:inputText value="#{stationBean.station.y}" />
+         <f:facet name="footer">
+       
+         <h:commandButton action="#{stationBean.doAddStation()}"
+				value="Add-station" /> 
+				</f:facet>
+			</h:panelGrid>
+			   <p:spacer height="40px;"/>
+			<p:dataTable id="stations" var="stat" value="#{stationBean.stations}"
+				editable="true" style="margin-bottom:20px" selectionMode="single"
+				selection="#{stationBean.selectedstaStation}"
+				rowKey="#{stat.stationId}"
+				emptyMessage="No station found with given criteria"
+				filteredValue="#{stationBean.filteredStations}">
+
+				<f:facet name="header">
            List of Stations
        </f:facet>
-			<p:ajax event="rowSelect" listener="#{stationBean.onRowSelect}"
-				update=":form:msgs" />
-			<p:ajax event="rowUnselect" listener="#{stationBean.onRowUnselect}"
-				update=":form:msgs" />
-			<p:ajax event="rowEdit" listener="#{stationBean.onRowEdit()}"
-				update=":form:msgs" />
-			<p:ajax event="rowEditCancel" listener="#{stationBean.onRowCancel()}"
-				update=":form:msgs" />
 
-			<p:column headerText="Name" filterBy="#{stat.name}"  filterMatchMode="contains">
-				<p:cellEditor>
-					<f:facet name="output">
-						<h:outputText value="#{stat.name}" />
-					</f:facet>
-					<f:facet name="input">
-						<p:inputText id="modelInput" value="#{stat.name}"
-							style="width:100%" />
-					</f:facet>
-				</p:cellEditor>
-			</p:column>
+				<p:ajax event="rowEdit"
+					actionListener="#{stationBean.saveChanges()}"
+					update=":form:stations" />
+				<p:ajax event="rowEditCancel"
+					actionlistener="#{stationBean.onRowCancel()}"
+					update=":form:msgs,:form:stations" />
+				<p:ajax event="rowSelect" listener="#{stationBean.onRowSelect}"
+					update=":form:msgs" />
+				<p:ajax event="rowUnselect" listener="#{stationBean.onRowUnselect}"
+					update=":form:msgs" />
+				<p:column headerText="Name" filterBy="#{stat.name}"
+					filterMatchMode="contains">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{stat.name}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="modelInput" value="#{stat.name}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
 
-			<p:column headerText="Reference" filterBy="#{stat.reference}"  filterMatchMode="exact">
-				<p:cellEditor>
-					<f:facet name="output">
-						<h:outputText value="#{stat.reference}" />
-					</f:facet>
-					<f:facet name="input">
-						<p:inputText value="#{stat.reference}" style="width:100%"
-							label="Reference" />
-					</f:facet>
-				</p:cellEditor>
-			</p:column>
+				<p:column headerText="Reference" filterBy="#{stat.reference}"
+					filterMatchMode="exact">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{stat.reference}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{stat.reference}" style="width:100%"
+								label="Reference" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
 
-			<p:column headerText="Longitude" filterBy="#{stat.x}"  filterMatchMode="contains">
-				<p:cellEditor>
-					<f:facet name="output">
-						<h:outputText value="#{stat.x}" />
-					</f:facet>
-					<f:facet name="input">
-						<p:inputText value="#{stat.x}" style="width:100%"
-							label="Longitude" />
-					</f:facet>
-				</p:cellEditor>
-			</p:column>
+				<p:column headerText="Longitude" filterBy="#{stat.x}"
+					filterMatchMode="contains">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{stat.x}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{stat.x}" style="width:100%"
+								label="Longitude" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
 
-			<p:column headerText="latitude" filterBy="#{stat.y}"  filterMatchMode="contains">
-				<p:cellEditor>
-					<f:facet name="output">
-						<h:outputText value="#{stat.y}" />
-					</f:facet>
-					<f:facet name="input">
-						<p:inputText value="#{stat.y}" style="width:100%" label="Latitude" />
-					</f:facet>
-				</p:cellEditor>
-			</p:column>
+				<p:column headerText="latitude" filterBy="#{stat.y}"
+					filterMatchMode="contains">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{stat.y}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{stat.y}" style="width:100%"
+								label="Latitude" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
 
-			<p:column style="width:32px">
-				<p:rowEditor />
-			</p:column>
-		</p:dataTable>
-
+				<p:column style="width:38px">
+					<f:facet name="header">Editer</f:facet>
+					<p:rowEditor />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
 
 	</h:form>
 </body>
