@@ -7,7 +7,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.CellEditEvent;
@@ -21,7 +21,7 @@ import entities.Place;
 import entities.Station;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class PlaceBean implements Serializable {
 
 	/**
@@ -43,15 +43,14 @@ public class PlaceBean implements Serializable {
 	private final static String[] categories;
 	static {
 		categories = new String[5];
-        categories[0] = "Fast Food";
-        categories[1] = "Coffee shop";
-        categories[2] = "Lounge";
-        categories[3] = "Bar";
-        categories[4] = "Meseum";
-        categories[4] = "Other";
-    }
-	//private Integer rating;
-
+		categories[0] = "Fast Food";
+		categories[1] = "Coffee shop";
+		categories[2] = "Lounge";
+		categories[3] = "Bar";
+		categories[4] = "Meseum";
+		categories[4] = "Other";
+	}
+	// private Integer rating;
 
 	// Injection
 	@EJB
@@ -68,16 +67,16 @@ public class PlaceBean implements Serializable {
 		placeServicesLocal.addPlace(place);
 		navigateTo = "listPlaces";
 		setDisplayformadd(false);
-		place=new Place();
+		place = new Place();
 
 		return navigateTo;
 	}
-
 
 	public void doDisplayAdd1() {
 		displayformadd = true;
 
 	}
+
 	public String doDeletePlace() {
 		System.out.println(selectedPlace);
 		placeServicesLocal.deletePlace(selectedPlace);
@@ -89,10 +88,11 @@ public class PlaceBean implements Serializable {
 		navigateTo = "listPlaces";
 		return "";
 	}
-	
+
 	public void doDisplayAdd() {
 		displayformadd = true;
 	}
+
 	public void doUndisplayAdd() {
 		displayformadd = false;
 
@@ -166,24 +166,28 @@ public class PlaceBean implements Serializable {
 
 	public void onRowEdit(RowEditEvent event) {
 		doUpdatePlace();
-		System.out.println(place+" selected " + selectedPlace +"modified "+modifiedPlace);
-        FacesMessage msg = new FacesMessage("Place edited", ((Place) event.getObject()).getName());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-     
-    public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Edit Cancelled", ((Place) event.getObject()).getName());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-     
-    public void onCellEdit(CellEditEvent event) {
-        Object oldValue = event.getOldValue();
-        Object newValue = event.getNewValue();
-        if(newValue != null && !newValue.equals(oldValue)) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-        }
-    }
+		System.out.println(place + " selected " + selectedPlace + "modified "
+				+ modifiedPlace);
+		FacesMessage msg = new FacesMessage("Place edited",
+				((Place) event.getObject()).getName());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onRowCancel(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Edit Cancelled",
+				((Place) event.getObject()).getName());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onCellEdit(CellEditEvent event) {
+		Object oldValue = event.getOldValue();
+		Object newValue = event.getNewValue();
+		if (newValue != null && !newValue.equals(oldValue)) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+	}
 
 	public Place getModifiedPlace() {
 		return modifiedPlace;
@@ -202,9 +206,7 @@ public class PlaceBean implements Serializable {
 	}
 
 	public List<String> getCategories() {
-        return Arrays.asList(categories);
-    }
-	
-	
+		return Arrays.asList(categories);
+	}
 
 }
