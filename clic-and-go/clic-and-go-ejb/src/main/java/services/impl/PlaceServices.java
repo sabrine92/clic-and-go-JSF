@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import services.interfaces.PlaceServicesLocal;
 import services.interfaces.PlaceServicesRemote;
@@ -101,6 +102,32 @@ public class PlaceServices implements PlaceServicesRemote, PlaceServicesLocal {
 	public List<Place> findAllPlaces() {
 		return entityManager.createQuery("select u from Place u")
 				.getResultList();
+	}
+
+	@Override
+	public List<Place> findPlacesByDestination(Integer stationId) {
+		try {
+			String jpql = "select m from Place m where m.station.stationId=:param";
+			Query query = entityManager.createQuery(jpql);
+			query.setParameter("param",stationId);
+			return query.getResultList();
+
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public Boolean ratePlace(Integer placeId, Integer rating) {
+		Boolean b = false;
+		try {
+			Place place=findPlaceByPlaceId(placeId);
+			place.setRating(rating);
+			entityManager.merge(place);
+			b = true;
+		} catch (Exception e) {
+		}
+		return b;
 	}
 
 }

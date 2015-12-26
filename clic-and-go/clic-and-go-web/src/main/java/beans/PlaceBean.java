@@ -7,7 +7,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.CellEditEvent;
@@ -21,7 +21,7 @@ import entities.Place;
 import entities.Station;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class PlaceBean implements Serializable {
 
 	/**
@@ -62,6 +62,7 @@ public class PlaceBean implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	// CRUD&Display stuff
 	public String doAddPlace() {
 		System.out.println(place);
 		placeServicesLocal.addPlace(place);
@@ -72,9 +73,10 @@ public class PlaceBean implements Serializable {
 		return navigateTo;
 	}
 
-	public void doDisplayAdd1() {
-		displayformadd = true;
-
+	public String doUpdatePlace() {
+		placeServicesLocal.updatePlace(modifiedPlace);
+		navigateTo = "listPlaces";
+		return "";
 	}
 
 	public String doDeletePlace() {
@@ -83,10 +85,8 @@ public class PlaceBean implements Serializable {
 		return "";
 	}
 
-	public String doUpdatePlace() {
-		placeServicesLocal.updatePlace(modifiedPlace);
-		navigateTo = "listPlaces";
-		return "";
+	public void doDisplayAdd1() {
+		displayformadd = true;
 	}
 
 	public void doDisplayAdd() {
@@ -95,13 +95,13 @@ public class PlaceBean implements Serializable {
 
 	public void doUndisplayAdd() {
 		displayformadd = false;
-
 	}
 
 	public void doSelect() {
 		displayform = true;
 	}
 
+	// GETTERS&SETTERS
 	public Place getPlace() {
 		return place;
 	}
@@ -144,6 +144,35 @@ public class PlaceBean implements Serializable {
 		this.selectedPlace = selectedPlace;
 	}
 
+	public Boolean getDisplayformadd() {
+		return displayformadd;
+	}
+
+	public void setDisplayformadd(Boolean displayformadd) {
+		this.displayformadd = displayformadd;
+	}
+
+	public Place getModifiedPlace() {
+		return modifiedPlace;
+	}
+
+	public void setModifiedPlace(Place modifiedPlace) {
+		this.modifiedPlace = modifiedPlace;
+	}
+
+	public List<Place> getFilteredPlaces() {
+		return filteredPlaces;
+	}
+
+	public void setFilteredPlaces(List<Place> filteredPlaces) {
+		this.filteredPlaces = filteredPlaces;
+	}
+
+	public List<String> getCategories() {
+		return Arrays.asList(categories);
+	}
+
+	// Event Handling
 	public void onRowSelect(SelectEvent event) {
 		FacesMessage msg = new FacesMessage("Place Selected",
 				((Place) event.getObject()).getName());
@@ -154,14 +183,6 @@ public class PlaceBean implements Serializable {
 		FacesMessage msg = new FacesMessage("Place Unselected",
 				((Place) event.getObject()).getName());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
-	public Boolean getDisplayformadd() {
-		return displayformadd;
-	}
-
-	public void setDisplayformadd(Boolean displayformadd) {
-		this.displayformadd = displayformadd;
 	}
 
 	public void onRowEdit(RowEditEvent event) {
@@ -187,26 +208,6 @@ public class PlaceBean implements Serializable {
 					"Cell Changed", "Old: " + oldValue + ", New:" + newValue);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
-	}
-
-	public Place getModifiedPlace() {
-		return modifiedPlace;
-	}
-
-	public void setModifiedPlace(Place modifiedPlace) {
-		this.modifiedPlace = modifiedPlace;
-	}
-
-	public List<Place> getFilteredPlaces() {
-		return filteredPlaces;
-	}
-
-	public void setFilteredPlaces(List<Place> filteredPlaces) {
-		this.filteredPlaces = filteredPlaces;
-	}
-
-	public List<String> getCategories() {
-		return Arrays.asList(categories);
 	}
 
 }

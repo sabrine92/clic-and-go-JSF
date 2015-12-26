@@ -2,19 +2,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head></h:head>
 <body>
 	<h:form>
-		<h:panelGrid>
-			<h:outputText value="login" />
-			<h:inputText value="#{loginBean.user.name}" />
-			<h:outputText value="password" />
-			<h:inputSecret value="#{loginBean.user.password}" />
-		
-		</h:panelGrid>
-		<h:commandButton action="#{loginBean.doLogin()}" value="login" />
+		<p:panel header="Login interface">
+			<h:panelGrid id="pg">
+				<h:outputText value="login" />
+				<p:inputText value="#{loginBean.user.name}" />
+				<h:outputText value="password" />
+				<p:password value="#{loginBean.user.password}" />
+
+			</h:panelGrid>
+			<h:commandButton action="#{loginBean.doLogin()}" value="login" />
+		</p:panel>
 	</h:form>
 </body>
 </html>

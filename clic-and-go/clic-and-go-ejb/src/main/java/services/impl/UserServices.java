@@ -108,7 +108,7 @@ public class UserServices implements UserServicesRemote, UserServicesLocal {
 					Level.WARNING,
 					"auth attempt failed with login=" + name + " and password="
 							+ password);
-			return null;
+			return found;
 		}
 
 	}

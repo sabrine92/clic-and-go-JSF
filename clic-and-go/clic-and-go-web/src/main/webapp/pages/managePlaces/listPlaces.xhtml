@@ -10,6 +10,7 @@
 <!--*sort -->
 <!--*edit -->
 <!--*filter By Rate -->
+<!--*Assign Place to Station on add-->
 <!--END OF My pbs-->
 
 <h:head></h:head>
@@ -92,35 +93,36 @@
 			<!--END OF Data Table: places-->
 			<p:spacer height="40px;" />
 			<!--Buttons-->
-			<h:commandButton action="#{placeBean.doDisplayAdd()}"
-				value="Add a place">
-				<f:setPropertyActionListener value="#{placeBean.place}"
-					target="#{placeBean.place}"></f:setPropertyActionListener>
-			</h:commandButton>
-
-			<h:commandButton action="#{placeBean.doUndisplayAdd()}"
+			<h:panelGrid columns="2">
+				<h:commandButton action="#{placeBean.doDisplayAdd()}"
+					value="Add a place">
+					<f:setPropertyActionListener value="#{placeBean.place}"
+						target="#{placeBean.place}"></f:setPropertyActionListener>
+				</h:commandButton>
+				<h:commandButton action="#{placeBean.doUndisplayAdd()}"
 				value="Cancel" rendered="#{placeBean.displayformadd}" />
+			</h:panelGrid>
 			<!--Panel Grid: ADD-->
 			<h:panelGrid columns="2" rendered="#{placeBean.displayformadd}">
 				<h:outputText value="Name" />
-				<h:inputText value="#{placeBean.place.name}" maxlength="100" />
+				<p:inputText value="#{placeBean.place.name}" maxlength="100" />
 				<h:outputText value="Description" />
-				<h:inputTextarea value="#{placeBean.place.description}"
+				<p:inputTextarea value="#{placeBean.place.description}"
 					minlength="200" />
 				<h:outputText value="Category" />
-				<h:selectOneMenu value="#{placeBean.place.category}">
+				<p:selectOneMenu value="#{placeBean.place.category}">
 					<f:selectItem itemLabel="please select a category" />
 					<f:selectItem itemValue="Fast Food"></f:selectItem>
 					<f:selectItem itemValue="Coffee shop"></f:selectItem>
 					<f:selectItem itemValue="Lounge"></f:selectItem>
 					<f:selectItem itemValue="Bar"></f:selectItem>
 					<f:selectItem itemValue="Meseum"></f:selectItem>
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 				<h:outputText value="Longitude" />
-				<h:inputText value="#{placeBean.place.x}" minValue="-180"
+				<p:inputText value="#{placeBean.place.x}" minValue="-180"
 					maxValue="180" />
 				<h:outputText value="Latitude" />
-				<h:inputText value="#{placeBean.place.y}" minValue="-90"
+				<p:inputText value="#{placeBean.place.y}" minValue="-90"
 					maxValue="90" />
 
 				<h:commandButton type="reset" value="reset" />
