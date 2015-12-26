@@ -137,11 +137,15 @@ public class PopulateDb {
         stationServicesLocal.addStation(st11);
         
       //Places
-        Place place1 = new Place("foccacia", "pizza italienne à volenté", "fast food", 45, 255, st10);
-        Place place2 = new Place("Barista's", "Cheese cake et moccachino", "salon de thé", 140, 17, st11);
-        
+        Place place1 = new Place("foccacia", "pizza italienne à volenté", "Fast Food", 45, 255, st10);
+        Place place2 = new Place("Barista's", "Cheese cake et moccachino", "Coffee shop", 140, 17, st11);
+        Place place3 = new Place("Al7attab", "Lablebi, Kafteji, s7an tounsi", "Fast Food", 155, 190, st3);
+        place1.setRating(3);
+        place2.setRating(4);
+        place3.setRating(5);
         placeServicesLocal.addPlace(place1);
         placeServicesLocal.addPlace(place2);
+        placeServicesLocal.addPlace(place3);
       		
 	}
 }

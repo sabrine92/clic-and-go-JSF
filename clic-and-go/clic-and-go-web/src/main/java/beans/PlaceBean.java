@@ -1,6 +1,7 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -39,7 +40,16 @@ public class PlaceBean implements Serializable {
 	private Place modifiedPlace;
 	private Boolean displayform = false;
 	private Boolean displayformadd = false;
-
+	private final static String[] categories;
+	static {
+		categories = new String[5];
+        categories[0] = "Fast Food";
+        categories[1] = "Coffee shop";
+        categories[2] = "Lounge";
+        categories[3] = "Bar";
+        categories[4] = "Meseum";
+        categories[4] = "Other";
+    }
 	//private Integer rating;
 
 
@@ -191,6 +201,10 @@ public class PlaceBean implements Serializable {
 		this.filteredPlaces = filteredPlaces;
 	}
 
+	public List<String> getCategories() {
+        return Arrays.asList(categories);
+    }
+	
 	
 
 }
