@@ -111,12 +111,9 @@
 					minlength="200" />
 				<h:outputText value="Category" />
 				<p:selectOneMenu value="#{placeBean.place.category}">
-					<f:selectItem itemLabel="please select a category" />
-					<f:selectItem itemValue="Fast Food"></f:selectItem>
-					<f:selectItem itemValue="Coffee shop"></f:selectItem>
-					<f:selectItem itemValue="Lounge"></f:selectItem>
-					<f:selectItem itemValue="Bar"></f:selectItem>
-					<f:selectItem itemValue="Meseum"></f:selectItem>
+							<f:selectItem itemLabel="Select One" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{placeBean.categories}" />
 				</p:selectOneMenu>
 				<h:outputText value="Longitude" />
 				<p:inputText value="#{placeBean.place.x}" minValue="-180"
