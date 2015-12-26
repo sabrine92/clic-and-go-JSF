@@ -29,7 +29,7 @@ public class LoginBean {
 			sessionLocal.setLogin(userLoggedIn.getPassword());
 			if (userLoggedIn instanceof Traveler) {
 				System.out.println(userLoggedIn instanceof Traveler);
-				navigateTo = "pages/cmHome";
+				navigateTo = "pages/cm/cmHome";
 			}
 		} else {
 			navigateTo = "error";
