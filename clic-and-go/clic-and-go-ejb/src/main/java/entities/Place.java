@@ -21,6 +21,7 @@ public class Place implements Serializable {
 	private String Category;
 	private Integer x;
 	private Integer y;
+	private Integer rating;
 	private static final long serialVersionUID = 1L;
 
 	private Station station;
@@ -38,6 +39,7 @@ public class Place implements Serializable {
 		this.x = x;
 		this.y = y;
 		this.station = station;
+		this.rating=0;
 	}
 	
 
@@ -105,6 +107,14 @@ public class Place implements Serializable {
 
 	public void setY(Integer y) {
 		this.y = y;
+	}
+
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
 	}
 
 }

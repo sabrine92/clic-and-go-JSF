@@ -1,27 +1,99 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
-<h:head></h:head> 
-<body> 
-<h1>HELLO FROM </h1>
-	<h:form>
-		<h:dataTable value="#{placeBean.places}" var="u" border="2">
-			<h:column id="c1">
-				<f:facet name="header">
-					<h:outputText value="Name" />
-				</f:facet>
+<h:head></h:head>
+<body>
+	<h1>HELLO FROM</h1>
+	<h:form id="form">
+
+		<p:contextMenu for="listPlaces">
+			<p:menuitem value="Delete" update="listPlaces" icon="ui-icon-close"
+				actionListener="#{placeBean.doDeletePlace()}" />
+		</p:contextMenu>
+
+		<p:growl id="msgs" showDetail="true" />
+
+		<p:dataTable id="listPlaces" value="#{placeBean.places}" var="u"
+			border="2" selectionMode="single"
+			selection="#{placeBean.selectedPlace}" rowKey="#{u.placeId}">
+
+
+			<f:facet name="header">
+    		    List of Places
+    		</f:facet>
+
+			<p:ajax event="rowSelect" listener="#{placeBean.onRowSelect}"
+				update=":form:msgs" />
+			<p:ajax event="rowUnselect" listener="#{placeBean.onRowUnselect}"
+				update=":form:msgs" />
+
+			<p:column headerText="Id">
+				<h:outputText value="#{u.placeId}" />
+			</p:column>
+
+			<p:column headerText="Name">
 				<h:outputText value="#{u.name}" />
-			</h:column>
-			<h:column id="c2">
-				<f:facet name="header">
-					<h:outputText value="Description" />
-				</f:facet>
+			</p:column>
+			<p:column headerText="Description">
 				<h:outputText value="#{u.description}" />
-			</h:column>
-		</h:dataTable>
+			</p:column>
+			<p:column headerText="Category">
+				<h:outputText value="#{u.category}" />
+			</p:column>
+			<p:column headerText="Close to">
+				<h:outputText value="#{u.station.name}" />
+			</p:column>
+			<p:column headerText="Rating">
+				<p:rating value="#{u.rating}" readonly="true" />
+			</p:column>
+
+			<p:column style="width:32px">
+				<p:rowEditor />
+			</p:column>
+
+		</p:dataTable>
+
+		<h:commandButton action="#{placeBean.doDisplayAdd()}"
+			value="Add a place">
+			<f:setPropertyActionListener value="#{placeBean.place}"
+				target="#{placeBean.place}"></f:setPropertyActionListener>
+		</h:commandButton>
+		<h:commandButton action="#{placeBean.doUndisplayAdd()}" value="Cancel"
+			rendered="#{placeBean.displayformadd}" />
+
+		<h:panelGrid columns="2" rendered="#{placeBean.displayformadd}">
+			<h:outputText value="Name" />
+			<h:inputText value="#{placeBean.place.name}" maxlength="100" />
+			<h:outputText value="Description" />
+			<h:inputTextarea value="#{placeBean.place.description}"
+				minlength="200" />
+			<h:outputText value="Category" />
+			<h:selectOneMenu value="#{placeBean.place.category}">
+				<f:selectItem itemLabel="please select a category" />
+				<f:selectItem itemValue="Fast Food"></f:selectItem>
+				<f:selectItem itemValue="Coffee shop"></f:selectItem>
+				<f:selectItem itemValue="Lounge"></f:selectItem>
+				<f:selectItem itemValue="Bar"></f:selectItem>
+				<f:selectItem itemValue="Meseum"></f:selectItem>
+			</h:selectOneMenu>
+			<h:outputText value="Longitude" />
+			<h:inputText value="#{placeBean.place.x}" minValue="-180"
+				maxValue="180" />
+			<h:outputText value="Latitude" />
+			<h:inputText value="#{placeBean.place.y}" minValue="-90"
+				maxValue="90" />
+
+			<h:commandButton type="reset" value="reset" />
+
+			<h:commandButton action="#{placeBean.doAddPlace()}" value="Confirm" />
+
+
+		</h:panelGrid>
+
 	</h:form>
-</body> 
+</body>
 </html>

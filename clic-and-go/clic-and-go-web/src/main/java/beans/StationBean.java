@@ -1,29 +1,41 @@
 package beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
+
+import java.util.Locale;
 
 import services.interfaces.StationServicesLocal;
+import entities.Place;
 import entities.Station;
 
 @ManagedBean
 @ViewScoped
-public class StationBean {
+public class StationBean implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Models
 	private Station station = new Station();
 	private List<Station> stations;
-
+	  private Station selectedstaStation;
 	private List<Station> stations2;
 	private Boolean displayform = false;
+	  private List<Station> filteredStations;
 	// Injection
 
 	@EJB
@@ -32,9 +44,26 @@ public class StationBean {
 	public String doAddStation() {
 		stationServicesLocal.addStation(station);
 		String navigateTo = "listStations";
-
+		setDisplayform(false);
 		return navigateTo;
 
+	}
+	public String doDeleteStation() {
+		System.out.println(selectedstaStation);
+		stationServicesLocal.deleteStation(selectedstaStation);
+		return "";
+	}
+	
+	public void onRowSelect(SelectEvent event) {
+		FacesMessage msg = new FacesMessage("Station Selected",
+				((Station) event.getObject()).getName());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onRowUnselect(UnselectEvent event) {
+		FacesMessage msg = new FacesMessage("Station Unselected",
+				((Station) event.getObject()).getName());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	public String doUpdate() {
@@ -49,26 +78,21 @@ public class StationBean {
 		return "";
 	}
 
-	public void onRowEdit(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Station Edited",
-				((Station) event.getObject()).getName());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+	public void saveChanges(RowEditEvent event) {
+		selectedstaStation= (Station) event.getObject();
+		stationServicesLocal.updateStation(selectedstaStation);
+FacesMessage msg = new FacesMessage("Station Edited",
+			((Station) event.getObject()).getName());
+	FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	public void onRowCancel(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Edit Cancelled",
+		FacesMessage msg = new FacesMessage("Cancel",
 				((Station) event.getObject()).getName());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+		stationServicesLocal.deleteStation(selectedstaStation);
 	}
-	 public void onCellEdit(CellEditEvent event) {
-	        Object oldValue = event.getOldValue();
-	        Object newValue = event.getNewValue();
-	         
-	        if(newValue != null && !newValue.equals(oldValue)) {
-	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
-	            FacesContext.getCurrentInstance().addMessage(null, msg);
-	        }
-	    }
+
 
 	public void doSelect() {
 		setDisplayform(true);
@@ -115,6 +139,20 @@ public class StationBean {
 
 	public void setStations2(List<Station> stations2) {
 		this.stations2 = stations2;
+	}
+	public Station getSelectedstaStation() {
+		return selectedstaStation;
+	}
+	public void setSelectedstaStation(Station selectedstaStation) {
+		this.selectedstaStation = selectedstaStation;
+	}
+
+	public List<Station> getFilteredStations() {
+		return filteredStations;
+	}
+
+	public void setFilteredStations(List<Station> filteredStations) {
+		this.filteredStations = filteredStations;
 	}
 
 }
