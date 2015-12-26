@@ -7,28 +7,31 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import entities.Ticket;
 import services.interfaces.TicketsServicesLocal;
 import services.interfaces.TicketsServicesRemote;
+import entities.Card;
+import entities.Ticket;
 
 /**
  * Session Bean implementation class TicketsServices
  */
 @Stateless
-public class TicketsServices implements TicketsServicesRemote, TicketsServicesLocal {
+public class TicketsServices implements TicketsServicesRemote,
+		TicketsServicesLocal {
 
-    /**
-     * Default constructor. 
-     */
+	/**
+	 * Default constructor.
+	 */
 	@PersistenceContext
 	private EntityManager entityManager;
-    public TicketsServices() {
-        // TODO Auto-generated constructor stub
-    }
+
+	public TicketsServices() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public Boolean addTicket(Ticket ticket) {
-		
+
 		Boolean b = false;
 		try {
 			entityManager.merge(ticket);
@@ -40,14 +43,13 @@ public class TicketsServices implements TicketsServicesRemote, TicketsServicesLo
 
 	@Override
 	public Boolean updateTicket(Ticket ticket) {
-		
+
 		Boolean b = false;
 		try {
 			entityManager.merge(ticket);
 			b = true;
 		} catch (Exception e) {
-			System.err.println("A problem occured while updating "
-					+ ticket);
+			System.err.println("A problem occured while updating " + ticket);
 		}
 		return b;
 	}
@@ -64,6 +66,7 @@ public class TicketsServices implements TicketsServicesRemote, TicketsServicesLo
 		}
 		return null;
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Ticket> findAllTickets() {
@@ -71,6 +74,7 @@ public class TicketsServices implements TicketsServicesRemote, TicketsServicesLo
 		Query query = entityManager.createQuery(jpql);
 		return query.getResultList();
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Ticket> findAllTicketsByUserId(Integer userId) {
@@ -78,6 +82,26 @@ public class TicketsServices implements TicketsServicesRemote, TicketsServicesLo
 		Query query = entityManager.createQuery(jpql);
 		query.setParameter("param", userId);
 		return query.getResultList();
+	}
+
+	@Override
+	public Boolean payTicket(Ticket ticket, Card card) {
+		Boolean b = false;
+		try {
+			if (ticket.getPrice() < card.getAmount()) {
+				card.setAmount(card.getAmount() - ticket.getPrice());
+				b = true;
+			} else {
+				System.out.println("vous devez recharger votre carte");
+				b = false;
+			}
+			entityManager.merge(ticket);
+			entityManager.merge(card);
+
+		} catch (Exception e) {
+			System.out.println("erreur");
+		}
+		return b;
 	}
 
 }
