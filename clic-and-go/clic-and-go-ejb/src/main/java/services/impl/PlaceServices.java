@@ -130,4 +130,13 @@ public class PlaceServices implements PlaceServicesRemote, PlaceServicesLocal {
 		return b;
 	}
 
+	@Override
+	public Place findPlaceByPlaceName(String name) {
+		String jpql = "select s from Place s where s.name LIKE :param";
+		Query query = entityManager.createQuery(jpql);
+		query.setParameter("param",'%'+name+'%');
+		System.out.println((Place) query.getSingleResult());
+		return (Place) query.getSingleResult();
+	}
+
 }

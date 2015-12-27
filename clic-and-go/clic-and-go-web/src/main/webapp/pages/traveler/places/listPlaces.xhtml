@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<!--My Pbs-->
+<!--*sort -->
+<!--*edit -->
+<!--*filter By Rate -->
+<!--*Assign Place to Station on add-->
+<!--END OF My pbs-->
+
+<h:head></h:head>
+<body>
+	<h1>welcome : #{loginBean.user.name}</h1>
+	<h:form id="form">
+		<p:panel header="Must Go Places">
+			<p:growl id="msgs" showDetail="true" />
+
+
+
+			<p:spacer height="40px;" />
+
+			<p:accordionPanel id="listPlaces" value="#{placeBean.places}" var="u"
+				selectionMode="single" selection="#{placeBean.selectedPlace}">
+
+				<p:ajax event="tabChange" listener="#{placeBean.onTabChange}"
+					update=":form:msgs" />
+				<p:ajax event="tabClose" listener="#{placeBean.onTabClose}"
+					update=":form:msgs" />
+
+				<p:tab title="#{u.name}">
+					<h:panelGrid columns="3" cellpadding="10">
+						<p:row>
+							<p:graphicImage name="pages/traveler/mustgo.jpg" />
+							<!-- 						 <p:graphicImage name="demo/images/car/#{car.brand}-big.gif" /> -->
+						</p:row>
+						<p:row>
+							<h:panelGrid columns="2" cellpadding="10">
+								<h:outputText value="Name" />
+								<h:outputText value="#{u.name}" />
+								<h:outputText value="Description" />
+								<h:outputText value="#{u.description}" />
+								<h:outputText value="Close to" />
+								<h:outputText value="#{u.station.name}" />
+								<h:outputText value="Category" />
+								<h:outputText value="#{u.category}" />
+								<h:outputText value="Rating" />
+								<p:rating value="#{u.rating}" readonly="true" />
+								<h:outputText value=" " />
+							</h:panelGrid>
+						</p:row>
+						<p:row>
+							<p:growl id="messages" showDetail="true" />
+							<h:panelGrid columns="2">
+								<h:commandButton action="#{placeBean.doDisplayRate()}"
+									value="Rate #{placeBean.selectedPlace.name}">
+									<f:setPropertyActionListener value="#{placeBean.selectedPlace}"
+										target="#{placeBean.selectedPlace}"></f:setPropertyActionListener>
+								</h:commandButton>
+							
+							
+							<!--Panel Grid: RATE-->
+							<h:panelGrid columns="2" rendered="#{placeBean.displayformrate}">
+								<h:outputText value="Your Rate:" />
+								<p:rating value="#{placeBean.selectedPlace.rating}">
+									<p:ajax event="rate" listener="#{placeBean.onrate}"
+										update="messages" />
+									<p:ajax event="cancel" listener="#{placeBean.oncancel}"
+										update="messages" />
+								</p:rating> 
+								<h:commandButton action="#{placeBean.doConfirmRating()}"
+									value="Confirm" rendered="#{placeBean.displayformrate}" />
+							
+								<h:commandButton action="#{placeBean.doUndisplayRate()}"
+									value="Cancel" rendered="#{placeBean.displayformrate}" />
+							</h:panelGrid>
+							</h:panelGrid>
+							<!--END OF Panel Grid: Rate-->
+
+						</p:row>
+					</h:panelGrid>
+				</p:tab>
+			</p:accordionPanel>
+
+		</p:panel>
+	</h:form>
+</body>
+</html>

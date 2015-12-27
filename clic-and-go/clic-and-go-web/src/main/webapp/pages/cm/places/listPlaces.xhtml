@@ -15,6 +15,7 @@
 
 <h:head></h:head>
 <body>
+	<h1>welcome : #{loginBean.user.name}</h1>
 	<h:form id="form">
 		<p:panel header="Manage Places">
 			<p:growl id="msgs" showDetail="true" />
@@ -27,15 +28,20 @@
 			<!--END OF context menu for : on right clic  -->
 
 			<!--Data Table: places-->
-			<p:dataTable id="listPlaces" widgetVar="placesTable"
-				value="#{placeBean.places}" var="u" border="2"
-				selectionMode="single" selection="#{placeBean.selectedPlace}"
+			<p:dataTable 
+				id="listPlaces" 
+				widgetVar="placesTable"
+				value="#{placeBean.places}" 
+				var="u" 
+				border="2"
+				selectionMode="single" 
+				selection="#{placeBean.selectedPlace}"
 				rowKey="#{u.placeId}"
 				emptyMessage="No place found with given criteria"
 				filteredValue="#{placeBean.filteredPlaces}" sortMode="multiple">
 
 				<f:facet name="header">
-    		    	List of Places
+    		    	Must Go Places
     			</f:facet>
 
 				<!--Events-->
@@ -100,7 +106,7 @@
 						target="#{placeBean.place}"></f:setPropertyActionListener>
 				</h:commandButton>
 				<h:commandButton action="#{placeBean.doUndisplayAdd()}"
-				value="Cancel" rendered="#{placeBean.displayformadd}" />
+					value="Cancel" rendered="#{placeBean.displayformadd}" />
 			</h:panelGrid>
 			<!--Panel Grid: ADD-->
 			<h:panelGrid columns="2" rendered="#{placeBean.displayformadd}">
@@ -111,9 +117,9 @@
 					minlength="200" />
 				<h:outputText value="Category" />
 				<p:selectOneMenu value="#{placeBean.place.category}">
-							<f:selectItem itemLabel="Select One" itemValue="#{null}"
-								noSelectionOption="true" />
-							<f:selectItems value="#{placeBean.categories}" />
+					<f:selectItem itemLabel="Select One" itemValue="#{null}"
+						noSelectionOption="true" />
+					<f:selectItems value="#{placeBean.categories}" />
 				</p:selectOneMenu>
 				<h:outputText value="Longitude" />
 				<p:inputText value="#{placeBean.place.x}" minValue="-180"

@@ -8,6 +8,7 @@ import entities.Place;
 
 @Remote
 public interface PlaceServicesRemote {
+
 	Boolean addPlace(Place place);
 
 	Boolean updatePlace(Place place);
@@ -21,9 +22,11 @@ public interface PlaceServicesRemote {
 	Boolean assignPlaceToStation(Integer placeId, Integer stationId);
 
 	List<Place> findAllPlaces();
-	
+
 	List<Place> findPlacesByDestination(Integer stationId);
-	
+
 	Boolean ratePlace(Integer placeId, Integer rating);
+
+	Place findPlaceByPlaceName(String name);
 
 }

@@ -22,9 +22,11 @@ public interface PlaceServicesLocal {
 	Boolean assignPlaceToStation(Integer placeId, Integer stationId);
 
 	List<Place> findAllPlaces();
-	
+
 	List<Place> findPlacesByDestination(Integer stationId);
-	
+
 	Boolean ratePlace(Integer placeId, Integer rating);
-	
+
+	Place findPlaceByPlaceName(String name);
+
 }
