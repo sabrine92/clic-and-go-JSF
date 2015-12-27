@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import services.interfaces.TicketsServicesLocal;
 import services.interfaces.TicketsServicesRemote;
 import entities.Card;
+import entities.Line;
 import entities.Ticket;
 
 /**
@@ -100,6 +101,19 @@ public class TicketsServices implements TicketsServicesRemote,
 
 		} catch (Exception e) {
 			System.out.println("erreur");
+		}
+		return b;
+	}
+
+	@Override
+	public Boolean chooseLineForTicket(Ticket ticket, Line line) {
+		Boolean b = false;
+		try {
+			ticket.setPrice(line.getPrice());
+			entityManager.merge(ticket);
+			b = true;
+		} catch (Exception e) {
+			System.err.println("A problem occured while updating " + ticket);
 		}
 		return b;
 	}
