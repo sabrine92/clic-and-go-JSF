@@ -113,7 +113,7 @@ public class TicketsServices implements TicketsServicesRemote,
 			entityManager.merge(ticket);
 			b = true;
 		} catch (Exception e) {
-			System.err.println("A problem occured while updating " + ticket);
+			System.out.println("A problem occured while updating " + ticket);
 		}
 		return b;
 	}

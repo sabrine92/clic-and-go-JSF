@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import entities.Card;
+import entities.Line;
 import entities.Ticket;
 
 @Local
@@ -11,6 +13,10 @@ public interface TicketsServicesLocal {
 	Boolean addTicket(Ticket ticket);
 
 	Boolean updateTicket(Ticket ticket);
+
+	Boolean chooseLineForTicket(Ticket ticket, Line line);
+
+	Boolean payTicket(Ticket ticket, Card card);
 
 	Ticket findTicketById(Integer ticketId);
 
