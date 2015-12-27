@@ -16,7 +16,7 @@
 				actionListener="#{stationBean.doDeleteStation()}" />
 		</p:contextMenu>
 		<p:growl id="msgs" showDetail="true" />
-		<p:panel header="Manage Station" >
+		<p:panel header="Manage Station">
 			<h:panelGrid columns="2">
 
 				<h:outputLabel for="name" value="name" />
@@ -29,13 +29,13 @@
 				<p:inputText value="#{stationBean.station.x}" />
 				<h:outputLabel for="y" value="Latitude" />
 				<p:inputText value="#{stationBean.station.y}" />
-         <f:facet name="footer">
-       
-         <h:commandButton action="#{stationBean.doAddStation()}"
-				value="Add-station" /> 
+				<f:facet name="footer">
+
+					<h:commandButton action="#{stationBean.doAddStation()}"
+						value="Add-station" />
 				</f:facet>
 			</h:panelGrid>
-			   <p:spacer height="40px;"/>
+			<p:spacer height="40px;" />
 			<p:dataTable id="stations" var="stat" value="#{stationBean.stations}"
 				editable="true" style="margin-bottom:20px" selectionMode="single"
 				selection="#{stationBean.selectedstaStation}"

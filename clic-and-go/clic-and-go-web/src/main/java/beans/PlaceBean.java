@@ -1,6 +1,7 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -39,9 +40,17 @@ public class PlaceBean implements Serializable {
 	private Place modifiedPlace;
 	private Boolean displayform = false;
 	private Boolean displayformadd = false;
-
-	//private Integer rating;
-
+	private final static String[] categories;
+	static {
+		categories = new String[5];
+		categories[0] = "Fast Food";
+		categories[1] = "Coffee shop";
+		categories[2] = "Lounge";
+		categories[3] = "Bar";
+		categories[4] = "Meseum";
+		categories[4] = "Other";
+	}
+	// private Integer rating;
 
 	// Injection
 	@EJB
@@ -53,25 +62,15 @@ public class PlaceBean implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	// CRUD&Display stuff
 	public String doAddPlace() {
 		System.out.println(place);
 		placeServicesLocal.addPlace(place);
 		navigateTo = "listPlaces";
 		setDisplayformadd(false);
-		place=new Place();
+		place = new Place();
 
 		return navigateTo;
-	}
-
-
-	public void doDisplayAdd1() {
-		displayformadd = true;
-
-	}
-	public String doDeletePlace() {
-		System.out.println(selectedPlace);
-		placeServicesLocal.deletePlace(selectedPlace);
-		return "";
 	}
 
 	public String doUpdatePlace() {
@@ -79,19 +78,30 @@ public class PlaceBean implements Serializable {
 		navigateTo = "listPlaces";
 		return "";
 	}
-	
+
+	public String doDeletePlace() {
+		System.out.println(selectedPlace);
+		placeServicesLocal.deletePlace(selectedPlace);
+		return "";
+	}
+
+	public void doDisplayAdd1() {
+		displayformadd = true;
+	}
+
 	public void doDisplayAdd() {
 		displayformadd = true;
 	}
+
 	public void doUndisplayAdd() {
 		displayformadd = false;
-
 	}
 
 	public void doSelect() {
 		displayform = true;
 	}
 
+	// GETTERS&SETTERS
 	public Place getPlace() {
 		return place;
 	}
@@ -134,18 +144,6 @@ public class PlaceBean implements Serializable {
 		this.selectedPlace = selectedPlace;
 	}
 
-	public void onRowSelect(SelectEvent event) {
-		FacesMessage msg = new FacesMessage("Place Selected",
-				((Place) event.getObject()).getName());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
-	public void onRowUnselect(UnselectEvent event) {
-		FacesMessage msg = new FacesMessage("Place Unselected",
-				((Place) event.getObject()).getName());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
 	public Boolean getDisplayformadd() {
 		return displayformadd;
 	}
@@ -153,27 +151,6 @@ public class PlaceBean implements Serializable {
 	public void setDisplayformadd(Boolean displayformadd) {
 		this.displayformadd = displayformadd;
 	}
-
-	public void onRowEdit(RowEditEvent event) {
-		doUpdatePlace();
-		System.out.println(place+" selected " + selectedPlace +"modified "+modifiedPlace);
-        FacesMessage msg = new FacesMessage("Place edited", ((Place) event.getObject()).getName());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-     
-    public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Edit Cancelled", ((Place) event.getObject()).getName());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-     
-    public void onCellEdit(CellEditEvent event) {
-        Object oldValue = event.getOldValue();
-        Object newValue = event.getNewValue();
-        if(newValue != null && !newValue.equals(oldValue)) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-        }
-    }
 
 	public Place getModifiedPlace() {
 		return modifiedPlace;
@@ -191,6 +168,46 @@ public class PlaceBean implements Serializable {
 		this.filteredPlaces = filteredPlaces;
 	}
 
-	
+	public List<String> getCategories() {
+		return Arrays.asList(categories);
+	}
+
+	// Event Handling
+	public void onRowSelect(SelectEvent event) {
+		FacesMessage msg = new FacesMessage("Place Selected",
+				((Place) event.getObject()).getName());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onRowUnselect(UnselectEvent event) {
+		FacesMessage msg = new FacesMessage("Place Unselected",
+				((Place) event.getObject()).getName());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onRowEdit(RowEditEvent event) {
+		doUpdatePlace();
+		System.out.println(place + " selected " + selectedPlace + "modified "
+				+ modifiedPlace);
+		FacesMessage msg = new FacesMessage("Place edited",
+				((Place) event.getObject()).getName());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onRowCancel(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Edit Cancelled",
+				((Place) event.getObject()).getName());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onCellEdit(CellEditEvent event) {
+		Object oldValue = event.getOldValue();
+		Object newValue = event.getNewValue();
+		if (newValue != null && !newValue.equals(oldValue)) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+	}
 
 }

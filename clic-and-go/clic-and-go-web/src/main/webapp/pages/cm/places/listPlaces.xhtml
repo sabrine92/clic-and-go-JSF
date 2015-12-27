@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<!--My Pbs-->
+<!--*sort -->
+<!--*edit -->
+<!--*filter By Rate -->
+<!--*Assign Place to Station on add-->
+<!--END OF My pbs-->
+
+<h:head></h:head>
+<body>
+	<h:form id="form">
+		<p:panel header="Manage Places">
+			<p:growl id="msgs" showDetail="true" />
+
+			<!--context menu for : on right clic-->
+			<p:contextMenu for="listPlaces">
+				<p:menuitem value="Delete" update="listPlaces" icon="ui-icon-close"
+					actionListener="#{placeBean.doDeletePlace()}" />
+			</p:contextMenu>
+			<!--END OF context menu for : on right clic  -->
+
+			<!--Data Table: places-->
+			<p:dataTable id="listPlaces" widgetVar="placesTable"
+				value="#{placeBean.places}" var="u" border="2"
+				selectionMode="single" selection="#{placeBean.selectedPlace}"
+				rowKey="#{u.placeId}"
+				emptyMessage="No place found with given criteria"
+				filteredValue="#{placeBean.filteredPlaces}" sortMode="multiple">
+
+				<f:facet name="header">
+    		    	List of Places
+    			</f:facet>
+
+				<!--Events-->
+				<p:ajax event="rowSelect" listener="#{placeBean.onRowSelect}"
+					update=":form:msgs" />
+				<p:ajax event="rowUnselect" listener="#{placeBean.onRowUnselect}"
+					update=":form:msgs" />
+
+				<!--Columns-->
+				<p:column headerText="Id" filterBy="#{u.placeId}"
+					filterMatchMode="contains" sortBy="#{u.placeId}">
+					<h:outputText value="#{u.placeId}" />
+				</p:column>
+
+				<p:column headerText="Name" filterBy="#{u.name}"
+					filterMatchMode="contains" sortBy="#{u.name}">
+					<h:outputText value="#{u.name}" />
+				</p:column>
+
+				<p:column headerText="Description" filterBy="#{u.description}"
+					filterMatchMode="contains">
+					<h:outputText value="#{u.description}" />
+				</p:column>
+
+				<p:column headerText="Category" filterBy="#{u.category}"
+					filterMatchMode="exact" sortBy="#{u.category}">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('placesTable').filter()">
+							<f:selectItem itemLabel="Select One" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{placeBean.categories}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{u.category}" />
+				</p:column>
+
+				<p:column headerText="Close to" filterBy="#{u.station.name}"
+					filterMatchMode="contains">
+					<h:outputText value="#{u.station.name}" />
+				</p:column>
+
+				<p:column headerText="Rating" filterBy="#{u.rating}"
+					filterMatchMode="exact" sortBy="#{u.category}">
+					<f:facet name="filter">
+						<p:rating />
+					</f:facet>
+					<p:rating value="#{u.rating}" readonly="true" />
+				</p:column>
+
+				<p:column style="width:32px">
+					<p:rowEditor />
+				</p:column>
+
+			</p:dataTable>
+			<!--END OF Data Table: places-->
+			<p:spacer height="40px;" />
+			<!--Buttons-->
+			<h:panelGrid columns="2">
+				<h:commandButton action="#{placeBean.doDisplayAdd()}"
+					value="Add a place">
+					<f:setPropertyActionListener value="#{placeBean.place}"
+						target="#{placeBean.place}"></f:setPropertyActionListener>
+				</h:commandButton>
+				<h:commandButton action="#{placeBean.doUndisplayAdd()}"
+				value="Cancel" rendered="#{placeBean.displayformadd}" />
+			</h:panelGrid>
+			<!--Panel Grid: ADD-->
+			<h:panelGrid columns="2" rendered="#{placeBean.displayformadd}">
+				<h:outputText value="Name" />
+				<p:inputText value="#{placeBean.place.name}" maxlength="100" />
+				<h:outputText value="Description" />
+				<p:inputTextarea value="#{placeBean.place.description}"
+					minlength="200" />
+				<h:outputText value="Category" />
+				<p:selectOneMenu value="#{placeBean.place.category}">
+							<f:selectItem itemLabel="Select One" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{placeBean.categories}" />
+				</p:selectOneMenu>
+				<h:outputText value="Longitude" />
+				<p:inputText value="#{placeBean.place.x}" minValue="-180"
+					maxValue="180" />
+				<h:outputText value="Latitude" />
+				<p:inputText value="#{placeBean.place.y}" minValue="-90"
+					maxValue="90" />
+
+				<h:commandButton type="reset" value="reset" />
+				<h:commandButton action="#{placeBean.doAddPlace()}" value="Confirm" />
+			</h:panelGrid>
+			<!--END OF Panel Grid: ADD-->
+		</p:panel>
+	</h:form>
+</body>
+</html>
