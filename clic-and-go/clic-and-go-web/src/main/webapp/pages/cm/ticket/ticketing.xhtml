@@ -14,13 +14,19 @@
 		<p:panel header="Ticketing">
 
 			<p:spacer height="0px;" />
-			<p:dataTable var="line" value="#{lineBean.lines}">
+			<p:dataTable var="line" value="#{lineBean.lines}" style="width:30%;"
+				selectionMode="single" selection="#{ticketBean.lineSelected}"
+				rowKey="#{line.lineId}">
+				<p:ajax event="rowSelect" listener="#{ticketBean.onRowSelect}"
+					update=":form:msgs" />
 				<p:column headerText="Lines">
 					<h:outputText value="#{line.name}" />
 				</p:column>
 
-
 			</p:dataTable>
+
+
+
 		</p:panel>
 
 	</h:form>

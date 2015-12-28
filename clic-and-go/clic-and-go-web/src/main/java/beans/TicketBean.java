@@ -4,8 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.event.SelectEvent;
 
 import services.interfaces.StationLineManagementLocal;
 import services.interfaces.TicketsServicesLocal;
@@ -27,6 +31,7 @@ public class TicketBean implements Serializable {
 	private List<Line> lines;
 	private Line line = new Line();
 	private Boolean displayform = false;
+	private Line lineSelected;
 
 	// Injection
 
@@ -84,6 +89,21 @@ public class TicketBean implements Serializable {
 
 	public void setLine(Line line) {
 		this.line = line;
+	}
+
+	public Line getLineSelected() {
+		return lineSelected;
+	}
+
+	public void setLineSelected(Line lineSelected) {
+		this.lineSelected = lineSelected;
+	}
+
+	public void onRowSelect(SelectEvent event) {
+		FacesMessage msg = new FacesMessage("Line Selected",
+				((Line) event.getObject()).getName());
+		ticketsServicesLocal.chooseLineForTicket(ticket, lineSelected);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 }
