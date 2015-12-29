@@ -1,9 +1,12 @@
 package services.impl;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -114,6 +117,51 @@ public class TicketsServices implements TicketsServicesRemote,
 			b = true;
 		} catch (Exception e) {
 			System.out.println("A problem occured while updating " + ticket);
+		}
+		return b;
+	}
+
+	@Override
+	public Card authentificateCard(String cardId, Integer pwd) {
+		Card found = new Card();
+		Query query = entityManager
+				.createQuery("select c from Card c where c.cardId=:cardId and c.pwd=:pwd");
+		query.setParameter("cardId", cardId);
+		query.setParameter("pwd", pwd);
+		try {
+			found = (Card) query.getSingleResult();
+			System.out.println("The authentified card is:" + found);
+			return found;
+		} catch (NoResultException e) {
+			Logger.getLogger(getClass().getName()).log(
+					Level.WARNING,
+					"auth attempt failed with cardId=" + cardId
+							+ " and password=" + pwd);
+			return found;
+		}
+	}
+
+	@Override
+	public Double CheckCardAmount(Card card) {
+		Double b = 0D;
+		try {
+
+			b = card.getAmount();
+		} catch (Exception e) {
+			System.out.println("error Amount card");
+		}
+		return b;
+	}
+
+	@Override
+	public Double CalculateTotalPrice(Line line, Integer qt) {
+
+		Double b = 0D;
+		try {
+
+			b = line.getPrice() * qt;
+		} catch (Exception e) {
+			System.out.println("error calculate Total Price");
 		}
 		return b;
 	}

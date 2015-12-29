@@ -23,4 +23,11 @@ public interface TicketsServicesLocal {
 	List<Ticket> findAllTickets();
 
 	List<Ticket> findAllTicketsByUserId(Integer userId);
+
+	Card authentificateCard(String cardId, Integer pwd);
+
+	Double CheckCardAmount(Card card);
+
+	Double CalculateTotalPrice(Line line, Integer qt);
+
 }

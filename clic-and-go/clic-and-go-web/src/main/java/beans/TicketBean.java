@@ -13,6 +13,7 @@ import org.primefaces.event.SelectEvent;
 
 import services.interfaces.StationLineManagementLocal;
 import services.interfaces.TicketsServicesLocal;
+import entities.Card;
 import entities.Line;
 import entities.Ticket;
 
@@ -30,6 +31,7 @@ public class TicketBean implements Serializable {
 	private Ticket ticket = new Ticket();
 	private List<Line> lines;
 	private Line line = new Line();
+	private Card card = new Card();
 	private Boolean displayform = false;
 	private Line lineSelected;
 
@@ -99,11 +101,39 @@ public class TicketBean implements Serializable {
 		this.lineSelected = lineSelected;
 	}
 
+	public Card getCard() {
+		return card;
+	}
+
+	public void setCard(Card card) {
+		this.card = card;
+	}
+
 	public void onRowSelect(SelectEvent event) {
-		FacesMessage msg = new FacesMessage("Line Selected",
-				((Line) event.getObject()).getName());
+		FacesMessage msg = new FacesMessage("Line Selected : "
+				+ ((Line) event.getObject()).getName(), "  Price : "
+				+ ((Line) event.getObject()).getPrice() + " DT");
+
 		ticketsServicesLocal.chooseLineForTicket(ticket, lineSelected);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public Card doAuthentificateCard(String cardId, Integer pwd) {
+		card = ticketsServicesLocal.authentificateCard(cardId, pwd);
+		return card;
+
+	}
+
+	public Double doCheckCardAmount(Card card) {
+		Double b = ticketsServicesLocal.CheckCardAmount(card);
+
+		return b;
+
+	}
+
+	public Double doCalculateTotalPrice(Line line, Integer qt) {
+		Double b = ticketsServicesLocal.CalculateTotalPrice(line, qt);
+		return b;
 	}
 
 }

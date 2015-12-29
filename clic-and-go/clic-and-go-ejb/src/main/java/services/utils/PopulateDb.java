@@ -145,18 +145,23 @@ public class PopulateDb {
 
 		Line line1 = new Line();
 		line1.setName("Ariana-Passage");
+		line1.setPrice(0.850D);
 
 		Line line2 = new Line();
 		line2.setName("Passage-Barcelone");
+		line2.setPrice(0.850D);
 
 		Line line3 = new Line();
 		line3.setName("Barcelone-Hammam Lif");
+		line3.setPrice(1.150D);
 
 		Line line4 = new Line();
 		line4.setName("Barcelone-La Marsa");
+		line4.setPrice(1.850D);
 
 		Line line5 = new Line();
 		line5.setName("Passage-Menzeh 9");
+		line5.setPrice(1.250D);
 
 		System.out.println(stationLineManagementLocal.addLine(line1));
 		System.out.println(stationLineManagementLocal.addLine(line2));
