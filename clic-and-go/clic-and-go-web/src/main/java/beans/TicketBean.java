@@ -34,6 +34,7 @@ public class TicketBean implements Serializable {
 	private Card card = new Card();
 	private Boolean displayform = false;
 	private Line lineSelected;
+	private Integer qt;
 
 	// Injection
 
@@ -134,6 +135,14 @@ public class TicketBean implements Serializable {
 	public Double doCalculateTotalPrice(Line line, Integer qt) {
 		Double b = ticketsServicesLocal.CalculateTotalPrice(line, qt);
 		return b;
+	}
+
+	public Integer getQt() {
+		return qt;
+	}
+
+	public void setQt(Integer qt) {
+		this.qt = qt;
 	}
 
 }

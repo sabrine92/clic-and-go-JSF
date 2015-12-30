@@ -31,7 +31,22 @@
 
 						</p:dataTable>
 					</div>
-					<div class="ui-grid-col-1">Center</div>
+					<div class="ui-grid-col-1">
+
+						<h:form>
+
+							<h:outputLabel for="minMax" value="Quantity :  " />
+							<p:spinner id="minMax" value="#{ticketBean.qt}" min="0" max="100" />
+							<p:commandButton value="Submit" update="display"
+								icon="ui-icon-check" />
+							<h:outputText value="Total Price : " />
+							<h:outputText id="display"
+								value="#{ticketBean.doCalculateTotalPrice(ticketBean.lineSelected,ticketBean.qt)}"
+								style="font-weight: bold" />
+
+						</h:form>
+
+					</div>
 				</div>
 			</div>
 		</p:panel>
