@@ -49,7 +49,58 @@
 					</div>
 				</div>
 			</div>
+
 		</p:panel>
+
+
+	</h:form>
+
+
+	<h:form id="form1">
+
+		<p:growl id="msg" showDetail="true" />
+		<p:panel header="Payement">
+
+			<p:spacer height="0px;" />
+
+
+			<div class="ui-grid ui-grid-responsive">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-1" style="width: 30%;">
+						<h:panelGrid>
+
+							<h:outputText value="Card Id : " />
+							<h:inputText value="#{ticketBean.card.cardId}" />
+							<h:outputText value="Secret Number : " />
+							<h:inputText value="#{ticketBean.card.pwd}" />
+
+						</h:panelGrid>
+						<h:commandButton
+							action="#{ticketBean.doAuthentificateCard(ticketBean.card.cardId,ticketBean.card.pwd)}"
+							value="Submit" />
+					</div>
+					<div class="ui-grid-col-1">
+
+						<h:form>
+
+							<h:outputText value="Your Amount: " />
+							<h:outputText id="display1"
+								value="#{ticketBean.doCheckCardAmount(ticketBean.card)}"
+								style="font-weight: bold" />
+
+						</h:form>
+
+					</div>
+					<div class="ui-grid-col-1">
+
+						<p:commandButton value="Buy It Now" id="withIcon"
+							actionListener="#{ticketBean.doPayTicket(ticketBean.ticket,ticketBean.card)}" />
+					</div>
+				</div>
+			</div>
+
+		</p:panel>
+
 
 	</h:form>
 

@@ -30,4 +30,6 @@ public interface TicketsServicesLocal {
 
 	Double CalculateTotalPrice(Line line, Integer qt);
 
+	Boolean addCard(Card card);
+
 }

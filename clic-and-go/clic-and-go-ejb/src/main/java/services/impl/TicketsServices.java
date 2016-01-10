@@ -13,6 +13,7 @@ import javax.persistence.Query;
 import services.interfaces.TicketsServicesLocal;
 import services.interfaces.TicketsServicesRemote;
 import entities.Card;
+import entities.Ebook;
 import entities.Line;
 import entities.Ticket;
 
@@ -45,6 +46,16 @@ public class TicketsServices implements TicketsServicesRemote,
 		return b;
 	}
 
+	@Override
+	public Boolean addCard(Card card) {
+		Boolean b = false;
+		try {
+			entityManager.merge(card);
+			b = true;
+		} catch (Exception e) {
+		}
+		return b;
+	}
 	@Override
 	public Boolean updateTicket(Ticket ticket) {
 
