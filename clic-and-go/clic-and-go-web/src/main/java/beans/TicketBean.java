@@ -134,6 +134,7 @@ public class TicketBean implements Serializable {
 
 	public Double doCalculateTotalPrice(Line line, Integer qt) {
 		Double b = ticketsServicesLocal.CalculateTotalPrice(line, qt);
+		ticket.setPrice(ticketsServicesLocal.CalculateTotalPrice(line, qt));
 		return b;
 	}
 
@@ -143,6 +144,12 @@ public class TicketBean implements Serializable {
 
 	public void setQt(Integer qt) {
 		this.qt = qt;
+	}
+
+
+	public Boolean doPayTicket(Ticket ticket, Card card) {
+		Boolean b = ticketsServicesLocal.payTicket(ticket, card);
+		return b;
 	}
 
 }

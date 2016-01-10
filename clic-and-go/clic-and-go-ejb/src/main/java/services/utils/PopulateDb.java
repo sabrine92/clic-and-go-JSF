@@ -9,7 +9,9 @@ import javax.ejb.Startup;
 import services.interfaces.PlaceServicesLocal;
 import services.interfaces.StationLineManagementLocal;
 import services.interfaces.StationServicesLocal;
+import services.interfaces.TicketsServicesLocal;
 import services.interfaces.UserServicesLocal;
+import entities.Card;
 import entities.ContentManager;
 import entities.Line;
 import entities.Place;
@@ -35,6 +37,9 @@ public class PopulateDb {
 
 	@EJB
 	private StationLineManagementLocal stationLineManagementLocal;
+	
+	@EJB
+	private TicketsServicesLocal ticketsServicesLocal;
 
 	/**
 	 * Default constructor.
@@ -54,6 +59,34 @@ public class PopulateDb {
 
 		userServicesLocal.addUser(traveler);
 		userServicesLocal.addUser(contentManager);
+
+		// Card
+		Card c = new Card();
+		c.setCardId("card100");
+		c.setPwd(100);
+		c.setAmount(10D);
+
+		Card c1 = new Card();
+		c1.setCardId("card200");
+		c1.setPwd(200);
+		c1.setAmount(20D);
+
+		Card c2 = new Card();
+		c2.setCardId("card300");
+		c2.setPwd(300);
+		c2.setAmount(30D);
+
+		Card c3 = new Card();
+		c3.setCardId("card400");
+		c3.setPwd(400);
+		c3.setAmount(40D);
+		
+
+		ticketsServicesLocal.addCard(c);
+		ticketsServicesLocal.addCard(c1);
+		ticketsServicesLocal.addCard(c2);
+		ticketsServicesLocal.addCard(c3);
+		
 
 		// Stations
 		Station st0 = new Station();
