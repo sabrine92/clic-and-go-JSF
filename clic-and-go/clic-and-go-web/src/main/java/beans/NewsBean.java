@@ -1,7 +1,9 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -41,6 +43,8 @@ public class NewsBean implements Serializable {
 	private double lat;
 
 	private double lng;
+	private String type;  
+    private Map<String,String> types = new HashMap<String, String>();
 
 	// Injection
 	@EJB
@@ -103,8 +107,26 @@ public class NewsBean implements Serializable {
 	public Marker getMarker() {
 		return marker;
 	}
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Map<String, String> getTypes() {
+		return types;
+	}
+
+	public void setTypes(Map<String, String> types) {
+		this.types = types;
+	}
 
 	// Functionality
+
+	
 
 	public Boolean doAddNews(News news) {
 		return newsServicesLocal.addNews(news);
@@ -155,6 +177,9 @@ public class NewsBean implements Serializable {
 			simpleModel.addOverlay(new Marker(
 					new LatLng(n.getLat(), n.getLng()), n.getTitle(), n));
 
+			 types = new HashMap<String, String>();
+		        types.put("Accident", "Accident");
+		        types.put("Breakdown","Breakdown");
 		}
 
 		// simpleModel = new DefaultMapModel();

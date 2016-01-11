@@ -22,11 +22,11 @@
 
 			<p:gmapInfoWindow id="infoWindow">
 				<p:outputPanel
-					style="text-align: center; display: block; margin: auto" >
+					style="text-align: center; display: block; margin: auto">
 
 					<h:outputText value="Title: " style="font-weight: bold" />
 					<h:outputText value="#{newsBean.marker.title}" />
-					
+
 
 
 				</p:outputPanel>
@@ -36,6 +36,26 @@
 			<p:ajax event="overlaySelect" listener="#{newsBean.onMarkerSelect}"
 				update="growl" />
 		</p:gmap>
+
+		<h3>News</h3>
+		<p:accordionPanel value="#{newsBean.newss}" var="c">
+			<p:tab title="#{c.title}">
+				<h:panelGrid columns="2" cellpadding="5">
+					<f:facet name="header">
+						<p:graphicImage name="demo/images/car/#{car.brand}-big.gif" />
+					</f:facet>
+					<h:outputText value="Title:" style="font-weight: bold" />
+					<h:outputText value="#{c.title}" />
+
+					<h:outputText value="Description:" style="font-weight: bold" />
+					<h:outputText value="#{c.description}" />
+
+					<h:outputText value="Type:" style="font-weight: bold" />
+					<h:outputText value="#{c.type}" />
+				</h:panelGrid>
+			</p:tab>
+		</p:accordionPanel>
+
 	</h:form>
 </body>
 </html>

@@ -10,35 +10,43 @@
 		type="text/javascript"></script>
 </h:head>
 <body>
-	<p:growl id="messages" showDetail="true" />
 
-	<p:gmap id="gmap" center="36.803660, 10.180010" zoom="13" type="HYBRID"
-		style="width:70%;height:400px" model="#{newsBean.simpleModel}"
-		onPointClick="handlePointClick(event);" widgetVar="map" />
+	<div class="ui-grid ui-grid-responsive">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-1" style="width: 60%;">
 
-	<p:dialog widgetVar="dlg" showEffect="fade">
-		<h:form prependId="false">
-			<h:panelGrid columns="2">
-				<h:outputLabel for="title" value="Title:" />
-				<p:inputText id="title" value="#{newsBean.news.title}" />
-				<h:outputLabel for="descr" value="Description:" />
-				<p:inputText id="descr" value="#{newsBean.news.description}" />
-				<h:outputLabel for="type" value="Type:" />
-				<p:inputText id="type" value="#{newsBean.news.type}" />
 
-				<f:facet name="footer">
-					<p:commandButton value="Add" actionListener="#{newsBean.addMarker}"
-						update=":messages" oncomplete="markerAddComplete()" />
-					<p:commandButton value="Cancel" onclick="return cancel()" />
-				</f:facet>
-			</h:panelGrid>
+				<p:growl id="messages" showDetail="true" />
 
-			<h:inputHidden id="lat" value="#{newsBean.lat}" />
-			<h:inputHidden id="lng" value="#{newsBean.lng}" />
-		</h:form>
-	</p:dialog>
+				<p:gmap id="gmap" center="36.803660, 10.180010" zoom="13"
+					type="HYBRID" style="width:98%;height:400px"
+					model="#{newsBean.simpleModel}"
+					onPointClick="handlePointClick(event);" widgetVar="map" />
 
-	<script type="text/javascript">
+				<p:dialog widgetVar="dlg" showEffect="fade">
+					<h:form prependId="false">
+						<h:panelGrid columns="2">
+							<h:outputLabel for="title" value="Title:" />
+							<p:inputText id="title" value="#{newsBean.news.title}" />
+							<h:outputLabel for="descr" value="Description:" />
+							<p:inputText id="descr" value="#{newsBean.news.description}" />
+							<h:outputLabel for="type" value="Type:" />
+							<p:inputText id="type" value="#{newsBean.news.type}" />
+
+							<f:facet name="footer">
+								<p:commandButton value="Add"
+									actionListener="#{newsBean.addMarker}" update=":messages"
+									oncomplete="markerAddComplete()" />
+								<p:commandButton value="Cancel" onclick="return cancel()" />
+							</f:facet>
+						</h:panelGrid>
+
+						<h:inputHidden id="lat" value="#{newsBean.lat}" />
+						<h:inputHidden id="lng" value="#{newsBean.lng}" />
+					</h:form>
+				</p:dialog>
+
+				<script type="text/javascript">
     var currentMarker = null;
  
     function handlePointClick(event) {
@@ -72,6 +80,55 @@
  
         return false;
     }
-</script>
+    </script>
+
+			</div>
+			<div class="ui-grid-col-1">
+				<h:form>
+					<p:panel header="Envoyer Alerte ">
+						<h:panelGrid columns="2">
+							<h:outputLabel for="title" value="Title: " />
+							<p:inputText value="#{newsBean.news.title}" />
+
+							<h:outputLabel for="description" value="Description: " />
+							<p:inputText value="#{newsBean.news.description}" />
+
+							<p:outputLabel for="type" value="Type: " />
+							<p:selectOneMenu id="type" value="#{newsBean.type}" effect="fold"
+								editable="true">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{newsBean.types}" />
+							</p:selectOneMenu>
+
+							<f:facet name="footer">
+
+								<h:commandButton action="#{newsBean.doAddNews(news)}"
+									value="Add-station" />
+							</f:facet>
+
+						</h:panelGrid>
+					</p:panel>
+				</h:form>
+			</div>
+		</div>
+	</div>
+	<h3>News</h3>
+	<p:accordionPanel value="#{newsBean.newss}" var="c">
+		<p:tab title="#{c.title}">
+			<h:panelGrid columns="2" cellpadding="5">
+				<f:facet name="header">
+					<p:graphicImage name="demo/images/car/#{car.brand}-big.gif" />
+				</f:facet>
+				<h:outputText value="Title:" style="font-weight: bold" />
+				<h:outputText value="#{c.title}" />
+
+				<h:outputText value="Description:" style="font-weight: bold" />
+				<h:outputText value="#{c.description}" />
+
+				<h:outputText value="Type:" style="font-weight: bold" />
+				<h:outputText value="#{c.type}" />
+			</h:panelGrid>
+		</p:tab>
+	</p:accordionPanel>
 </body>
 </html>
