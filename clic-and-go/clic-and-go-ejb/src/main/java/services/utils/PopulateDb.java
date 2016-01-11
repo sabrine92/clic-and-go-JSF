@@ -6,6 +6,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
+import services.interfaces.NewsServicesLocal;
 import services.interfaces.PlaceServicesLocal;
 import services.interfaces.StationLineManagementLocal;
 import services.interfaces.StationServicesLocal;
@@ -14,6 +15,7 @@ import services.interfaces.UserServicesLocal;
 import entities.Card;
 import entities.ContentManager;
 import entities.Line;
+import entities.News;
 import entities.Place;
 import entities.Station;
 import entities.Traveler;
@@ -37,9 +39,12 @@ public class PopulateDb {
 
 	@EJB
 	private StationLineManagementLocal stationLineManagementLocal;
-	
+
 	@EJB
 	private TicketsServicesLocal ticketsServicesLocal;
+
+	@EJB
+	private NewsServicesLocal newsServicesLocal;
 
 	/**
 	 * Default constructor.
@@ -80,13 +85,11 @@ public class PopulateDb {
 		c3.setCardId("card400");
 		c3.setPwd(400);
 		c3.setAmount(40D);
-		
 
 		ticketsServicesLocal.addCard(c);
 		ticketsServicesLocal.addCard(c1);
 		ticketsServicesLocal.addCard(c2);
 		ticketsServicesLocal.addCard(c3);
-		
 
 		// Stations
 		Station st0 = new Station();
@@ -247,6 +250,33 @@ public class PopulateDb {
 		placeServicesLocal.addPlace(place1);
 		placeServicesLocal.addPlace(place2);
 		placeServicesLocal.addPlace(place3);
+
+		// NEWS
+
+		News news1 = new News();
+		news1.setTitle("Bab El Khadhra");
+		news1.setDescription("Bus breakdown to 4:40 p.m. Waiting for towing");
+		news1.setType("Breakdown");
+		news1.setLat(36.809590);
+		news1.setLng(10.162847);
+
+		News news2 = new News();
+		news2.setTitle("Avenue Habib Bourguiba");
+		news2.setDescription("Serious accident at 4:40 p.m. Bus. Waiting ambulance");
+		news2.setType("Accident");
+		news2.setLat(36.799663);
+		news2.setLng(10.180025);
+
+		News news3 = new News();
+		news3.setTitle("Bab Alouia");
+		news3.setDescription("Trafic Jam");
+		news3.setType("Jam");
+		news3.setLat(36.784016);
+		news3.setLng(10.177511);
+
+		System.out.println(newsServicesLocal.addNews(news1));
+		System.out.println(newsServicesLocal.addNews(news2));
+		System.out.println(newsServicesLocal.addNews(news3));
 
 	}
 }

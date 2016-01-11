@@ -9,7 +9,12 @@
 
 </h:head>
 <body>
-
+<ui:composition template="/Template.xhtml">
+<ui:define name="content">
+<br></br>
+<br></br>
+<br></br>
+<p:spacer height="30px;" />
 	<h:form id="form">
 
 		<p:growl id="msgs" showDetail="true" />
@@ -107,7 +112,7 @@
 	</h:form>
 
 
-
-
+</ui:define>
+</ui:composition>
 </body>
 </html>
