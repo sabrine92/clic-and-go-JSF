@@ -38,7 +38,8 @@
 				selection="#{placeBean.selectedPlace}"
 				rowKey="#{u.placeId}"
 				emptyMessage="No place found with given criteria"
-				filteredValue="#{placeBean.filteredPlaces}" sortMode="multiple">
+				filteredValue="#{placeBean.filteredPlaces}" 
+				>
 
 				<f:facet name="header">
     		    	Must Go Places
@@ -52,12 +53,12 @@
 
 				<!--Columns-->
 				<p:column headerText="Id" filterBy="#{u.placeId}"
-					filterMatchMode="contains" sortBy="#{u.placeId}">
+					filterMatchMode="contains" >
 					<h:outputText value="#{u.placeId}" />
 				</p:column>
 
 				<p:column headerText="Name" filterBy="#{u.name}"
-					filterMatchMode="contains" sortBy="#{u.name}">
+					filterMatchMode="contains" >
 					<h:outputText value="#{u.name}" />
 				</p:column>
 
@@ -67,7 +68,7 @@
 				</p:column>
 
 				<p:column headerText="Category" filterBy="#{u.category}"
-					filterMatchMode="exact" sortBy="#{u.category}">
+					filterMatchMode="exact" >
 					<f:facet name="filter">
 						<p:selectOneMenu onchange="PF('placesTable').filter()">
 							<f:selectItem itemLabel="Select One" itemValue="#{null}"
@@ -83,12 +84,12 @@
 					<h:outputText value="#{u.station.name}" />
 				</p:column>
 
-				<p:column headerText="Rating" filterBy="#{u.rating}"
-					filterMatchMode="exact" sortBy="#{u.category}">
-					<f:facet name="filter">
-						<p:rating />
-					</f:facet>
-					<p:rating value="#{u.rating}" readonly="true" />
+				<p:column headerText="Rating" >
+					<p:rating value="#{u.rate}" readonly="true" />
+					<h:outputText  value="(rated by " rendered="#{u.nbRaters!=0}" />
+					<h:outputText value="#{u.nbRaters}"  rendered="#{u.nbRaters!=0}" />
+					<h:outputText value=" travellers)"  rendered="#{u.nbRaters!=0}" />
+					<h:outputText value=" (yet unrated)"  rendered="#{u.nbRaters==0}" />
 				</p:column>
 
 				<p:column style="width:32px">
