@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<body>
+
+	<h:form id="form">
+
+		<p:growl id="msgs" showDetail="true" />
+		<p:panel header="Ticketing">
+
+			<p:spacer height="0px;" />
+
+
+			<div class="ui-grid ui-grid-responsive">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-1" style="width: 30%;">
+						<p:dataTable var="line" value="#{lineBean.lines}"
+							selectionMode="single" selection="#{ticketBean.lineSelected}"
+							rowKey="#{line.lineId}">
+							<p:ajax event="rowSelect" listener="#{ticketBean.onRowSelect}"
+								update=":form:msgs" />
+							<p:column headerText="Lines">
+								<h:outputText value="#{line.name}" />
+							</p:column>
+
+
+						</p:dataTable>
+					</div>
+					<div class="ui-grid-col-1">
+
+						<h:form>
+
+							<h:outputLabel for="minMax" value="Quantity :  " />
+							<p:spinner id="minMax" value="#{ticketBean.qt}" min="0" max="100" />
+							<p:commandButton value="Submit" update="display"
+								icon="ui-icon-check" />
+							<h:outputText value="Total Price : " />
+							<h:outputText id="display"
+								value="#{ticketBean.doCalculateTotalPrice(ticketBean.lineSelected,ticketBean.qt)}"
+								style="font-weight: bold" />
+
+						</h:form>
+
+					</div>
+				</div>
+			</div>
+
+		</p:panel>
+
+
+	</h:form>
+
+
+	<h:form id="form1">
+
+		<p:growl id="msg" showDetail="true" />
+		<p:panel header="Payement">
+
+			<p:spacer height="0px;" />
+
+
+			<div class="ui-grid ui-grid-responsive">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-1" style="width: 30%;">
+						<h:panelGrid>
+
+							<h:outputText value="Card Id : " />
+							<h:inputText value="#{ticketBean.card.cardId}" />
+							<h:outputText value="Secret Number : " />
+							<p:inputText type="password" value="#{ticketBean.card.pwd}" />
+
+						</h:panelGrid>
+						<h:commandButton
+							action="#{ticketBean.doAuthentificateCard(ticketBean.card.cardId,ticketBean.card.pwd)}"
+							value="Submit" />
+					</div>
+					<div class="ui-grid-col-1">
+
+						<h:form>
+
+							<h:outputText value="Your Amount: " />
+							<h:outputText id="display1"
+								value="#{ticketBean.doCheckCardAmount(ticketBean.card)}"
+								style="font-weight: bold" />
+
+						</h:form>
+
+					</div>
+					<div class="ui-grid-col-1">
+
+						<p:commandButton value="Buy It Now" id="withIcon"
+							actionListener="#{ticketBean.doPayTicket(ticketBean.ticket,ticketBean.card)}" />
+					</div>
+				</div>
+			</div>
+
+		</p:panel>
+
+
+	</h:form>
+
+
+
+
+</body>
+</html>

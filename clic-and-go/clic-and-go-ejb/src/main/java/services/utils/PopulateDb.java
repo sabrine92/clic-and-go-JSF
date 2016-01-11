@@ -7,9 +7,13 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 import services.interfaces.PlaceServicesLocal;
+import services.interfaces.StationLineManagementLocal;
 import services.interfaces.StationServicesLocal;
+import services.interfaces.TicketsServicesLocal;
 import services.interfaces.UserServicesLocal;
+import entities.Card;
 import entities.ContentManager;
+import entities.Line;
 import entities.Place;
 import entities.Station;
 import entities.Traveler;
@@ -27,9 +31,16 @@ public class PopulateDb {
 
 	@EJB
 	private StationServicesLocal stationServicesLocal;
-	
+
 	@EJB
 	private PlaceServicesLocal placeServicesLocal;
+
+	@EJB
+	private StationLineManagementLocal stationLineManagementLocal;
+
+	@EJB
+	private TicketsServicesLocal ticketsServicesLocal;
+
 	/**
 	 * Default constructor.
 	 */
@@ -39,17 +50,43 @@ public class PopulateDb {
 
 	@PostConstruct
 	public void initDb() {
-		
+
 		// /Users
 		Traveler traveler = new Traveler("houcem", "houcem",
 				"Houcem@esprit.tn", "houcem", 10214);
 		ContentManager contentManager = new ContentManager("yosr", "yosr",
 				"y@esprit.tn", "yosr", "esprit");
-		
+
 		userServicesLocal.addUser(traveler);
 		userServicesLocal.addUser(contentManager);
 
-		//Stations
+		// Card
+		Card c = new Card();
+		c.setCardId("card100");
+		c.setPwd(100);
+		c.setAmount(10D);
+
+		Card c1 = new Card();
+		c1.setCardId("card200");
+		c1.setPwd(200);
+		c1.setAmount(20D);
+
+		Card c2 = new Card();
+		c2.setCardId("card300");
+		c2.setPwd(300);
+		c2.setAmount(30D);
+
+		Card c3 = new Card();
+		c3.setCardId("card400");
+		c3.setPwd(400);
+		c3.setAmount(40D);
+
+		ticketsServicesLocal.addCard(c);
+		ticketsServicesLocal.addCard(c1);
+		ticketsServicesLocal.addCard(c2);
+		ticketsServicesLocal.addCard(c3);
+
+		// Stations
 		Station st0 = new Station();
 		st0.setName("Ariana");
 		st0.setReference(0);
@@ -103,57 +140,120 @@ public class PopulateDb {
 		st8.setReference(8);
 		st8.setX(300);
 		st8.setY(30);
-		
+
 		Station st9 = new Station();
 		st9.setName("Manar 2");
 		st9.setReference(9);
 		st9.setX(90);
 		st9.setY(250);
-		
+
 		Station st10 = new Station();
 		st10.setName("Menzeh 9");
 		st10.setReference(10);
 		st10.setX(40);
 		st10.setY(250);
-		
+
 		Station st11 = new Station();
 		st11.setName("La marsa");
 		st11.setReference(11);
 		st11.setX(130);
 		st11.setY(20);
-		
-		
-        stationServicesLocal.addStation(st0);
-        stationServicesLocal.addStation(st1);
-        stationServicesLocal.addStation(st2);
-        stationServicesLocal.addStation(st3);
-        stationServicesLocal.addStation(st4);
-        stationServicesLocal.addStation(st5);
-        stationServicesLocal.addStation(st6);
-        stationServicesLocal.addStation(st7);
-        stationServicesLocal.addStation(st8);
-        stationServicesLocal.addStation(st9);
-        stationServicesLocal.addStation(st10);
-        stationServicesLocal.addStation(st11);
-        
-      //Places
-        Place place1 = new Place("foccacia", "pizza italienne à volenté", "Fast Food", 45, 255, st10);
-        Place place2 = new Place("Barista's", "Cheese cake et moccachino", "Coffee shop", 140, 17, st11);
-        Place place3 = new Place("Al7attab", "Lablebi, Kafteji, s7an tounsi", "Fast Food", 155, 190, st3);
-        Place place4 = new Place("Chillis", "American Dream on a plate", "Restaurant", 95, 255, st9);
-        place1.setRating(108);
-        place1.setNbRaters(36);
-        place1.setRate(3);
-        place2.setRating(600);
-        place2.setRate(4);
-        place2.setNbRaters(150);
-        place3.setRating(3100);
-        place3.setRate(5);
-        place3.setNbRaters(620);
-        placeServicesLocal.addPlace(place1);
-        placeServicesLocal.addPlace(place2);
-        placeServicesLocal.addPlace(place3);
-        placeServicesLocal.addPlace(place4);
-      		
+
+		stationServicesLocal.addStation(st0);
+		stationServicesLocal.addStation(st1);
+		stationServicesLocal.addStation(st2);
+		stationServicesLocal.addStation(st3);
+		stationServicesLocal.addStation(st4);
+		stationServicesLocal.addStation(st5);
+		stationServicesLocal.addStation(st6);
+		stationServicesLocal.addStation(st7);
+		stationServicesLocal.addStation(st8);
+		stationServicesLocal.addStation(st9);
+		stationServicesLocal.addStation(st10);
+		stationServicesLocal.addStation(st11);
+
+		// //Populating line
+
+		Line line1 = new Line();
+		line1.setName("Ariana-Passage");
+		line1.setPrice(0.850D);
+
+		Line line2 = new Line();
+		line2.setName("Passage-Barcelone");
+		line2.setPrice(0.850D);
+
+		Line line3 = new Line();
+		line3.setName("Barcelone-Hammam Lif");
+		line3.setPrice(1.150D);
+
+		Line line4 = new Line();
+		line4.setName("Barcelone-La Marsa");
+		line4.setPrice(1.850D);
+
+		Line line5 = new Line();
+		line5.setName("Passage-Menzeh 9");
+		line5.setPrice(1.250D);
+
+		System.out.println(stationLineManagementLocal.addLine(line1));
+		System.out.println(stationLineManagementLocal.addLine(line2));
+		System.out.println(stationLineManagementLocal.addLine(line3));
+		System.out.println(stationLineManagementLocal.addLine(line4));
+		System.out.println(stationLineManagementLocal.addLine(line5));
+		System.out.println(stationLineManagementLocal.findAllLines());
+
+		// Assign Stations To Lines
+		stationLineManagementLocal.assignStationToLine(1, 1, 1, 5, 5);
+		stationLineManagementLocal.assignStationToLine(2, 1, 2, 5, 5);
+
+		stationLineManagementLocal.assignStationToLine(3, 1, 3, 4, 4);
+		stationLineManagementLocal.assignStationToLine(4, 1, 4, 2, 2);
+
+		stationLineManagementLocal.assignStationToLine(4, 2, 1, 1, 1);
+
+		stationLineManagementLocal.assignStationToLine(5, 2, 2, 1, 1);
+
+		stationLineManagementLocal.assignStationToLine(5, 3, 1, 5, 5);
+
+		stationLineManagementLocal.assignStationToLine(6, 3, 2, 5, 5);
+
+		stationLineManagementLocal.assignStationToLine(7, 3, 3, 4, 4);
+
+		stationLineManagementLocal.assignStationToLine(8, 3, 4, 4, 4);
+
+		stationLineManagementLocal.assignStationToLine(9, 3, 5, 3, 3);
+
+		stationLineManagementLocal.assignStationToLine(5, 4, 1, 15, 15);
+
+		stationLineManagementLocal.assignStationToLine(12, 4, 2, 15, 15);
+
+		stationLineManagementLocal.assignStationToLine(4, 5, 1, 8, 8);
+
+		stationLineManagementLocal.assignStationToLine(10, 5, 2, 8, 8);
+
+		stationLineManagementLocal.assignStationToLine(11, 5, 3, 3, 3);
+
+		// Places
+		Place place1 = new Place("foccacia", "pizza italienne à volenté",
+				"Fast Food", 45, 255, st10);
+		Place place2 = new Place("Barista's", "Cheese cake et moccachino",
+				"Coffee shop", 140, 17, st11);
+		Place place3 = new Place("Al7attab", "Lablebi, Kafteji, s7an tounsi",
+				"Fast Food", 155, 190, st3);
+		Place place4 = new Place("Chillis", "American Dream on a plate",
+				"Restaurant", 95, 255, st9);
+		place1.setRating(108);
+		place1.setNbRaters(36);
+		place1.setRate(3);
+		place2.setRating(600);
+		place2.setRate(4);
+		place2.setNbRaters(150);
+		place3.setRating(3100);
+		place3.setRate(5);
+		place3.setNbRaters(620);
+		placeServicesLocal.addPlace(place1);
+		placeServicesLocal.addPlace(place2);
+		placeServicesLocal.addPlace(place3);
+		placeServicesLocal.addPlace(place4);
+
 	}
 }

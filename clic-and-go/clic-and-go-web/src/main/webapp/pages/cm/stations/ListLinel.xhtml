@@ -8,7 +8,7 @@
 	<h1>List of Stations</h1>
 
 	<h:form>
-		<h:dataTable value="#{lineBean.line}" var="line" border="2">
+		<h:dataTable id="stations" var="line" value="#{lineBean.lines}" border="2">
 			<h:column id="c1">
 				<f:facet name="header">
 					<h:outputText value="Name" />
@@ -33,17 +33,16 @@
 			</h:column>
 
 		</h:dataTable>
-	<h:panelGrid>
+		<h:panelGrid>
 			<h:outputText value="name" />
 			<h:inputText value="#{lineBean.line.name}" />
 			<h:outputText value="number of stations" />
 			<h:inputText value="#{lineBean.line.nbStations}" />
-			
-			
+
+
 
 		</h:panelGrid>
-		<h:commandButton action="#{lineBean.doAddline()}"
-			value="Add-line" />
+		<h:commandButton action="#{lineBean.doAddline()}" value="Add-line" />
 	</h:form>
 </body>
 </html>

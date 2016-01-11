@@ -41,7 +41,7 @@ public class LineBean {
 		this.line = line;
 	}
 	public List<Line> getLines() {
-		lineServicesLocal.findAllLines();
+	lines=	lineServicesLocal.findAllLines();
 		return lines;
 	}
 	public void setLines(List<Line> lines) {
