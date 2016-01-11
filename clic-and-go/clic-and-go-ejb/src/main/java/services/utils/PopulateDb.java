@@ -140,12 +140,20 @@ public class PopulateDb {
         Place place1 = new Place("foccacia", "pizza italienne à volenté", "Fast Food", 45, 255, st10);
         Place place2 = new Place("Barista's", "Cheese cake et moccachino", "Coffee shop", 140, 17, st11);
         Place place3 = new Place("Al7attab", "Lablebi, Kafteji, s7an tounsi", "Fast Food", 155, 190, st3);
-        place1.setRating(3);
-        place2.setRating(4);
-        place3.setRating(5);
+        Place place4 = new Place("Chillis", "American Dream on a plate", "Restaurant", 95, 255, st9);
+        place1.setRating(108);
+        place1.setNbRaters(36);
+        place1.setRate(3);
+        place2.setRating(600);
+        place2.setRate(4);
+        place2.setNbRaters(150);
+        place3.setRating(3100);
+        place3.setRate(5);
+        place3.setNbRaters(620);
         placeServicesLocal.addPlace(place1);
         placeServicesLocal.addPlace(place2);
         placeServicesLocal.addPlace(place3);
+        placeServicesLocal.addPlace(place4);
       		
 	}
 }
