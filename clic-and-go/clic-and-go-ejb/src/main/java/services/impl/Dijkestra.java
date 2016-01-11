@@ -35,6 +35,8 @@ public class Dijkestra implements DijkestraRemote, DijkestraLocal {
 	private StationServicesLocal stationServices;
 	@EJB
 	private SessionLocal session;
+	
+	
 
 	public Dijkestra() {
 		
@@ -50,6 +52,10 @@ public class Dijkestra implements DijkestraRemote, DijkestraLocal {
 		R = new int[dimensionDeLaMatrice];
 		calculePlusCourtChemin();
 	}
+	
+	
+	
+
 
 	@Override
 	public void calculePlusCourtChemin() {
@@ -179,6 +185,73 @@ public class Dijkestra implements DijkestraRemote, DijkestraLocal {
 		System.out.println();
 		String yy = "-->" + arrivee;
 		ch = "To go from  " + depart + " to " + arrivee + ": \n" + sh + yy;
+		return ch;
+	}
+	public String afficheCheminByStationId(int Id1, int Id2) {
+		String ch = null;
+		String sh = "";
+	Station	StatDepart = stationServices.findStationById(Id1);
+		
+				
+		Station StatArriv= stationServices.findStationById(Id2);
+				
+		int i = StatArriv.getReference();
+		int source = StatDepart.getReference();
+
+		int antécédent = i;
+		Vector<Integer> lesNoeudsIntermediaires = new Vector<Integer>();
+		;
+		System.out.println(" le chemin de " + StatDepart.getName() + " à " + StatArriv.getName() + ":");
+		while (antécédent != source) {
+			lesNoeudsIntermediaires.add(antécédent);
+			antécédent = R[antécédent];
+
+		}
+		lesNoeudsIntermediaires.add(source);
+		for (int j = lesNoeudsIntermediaires.size() - 1; j > 0; j--) {
+			Station stationvariable = stationServices
+					.findStationByStationByReference(lesNoeudsIntermediaires
+							.get(j));
+
+			System.out.print("-->" + stationvariable.getName());
+			sh = sh + "-->" + stationvariable.getName();
+		}
+		System.out.print("-->" + StatArriv.getName());
+		System.out.println();
+		String yy = "-->" + StatArriv.getName();
+		ch = "To go from  " + StatArriv.getName() + " to " + StatDepart.getName() + ": \n" + sh + yy;
+		return ch;
+	}
+	public String afficheCheminByStationHoucem() {
+		String ch = null;
+		String sh = "";
+		Station StatArriv=stationServices.findStationByStationByReference(0);
+	Station	StatDepart=stationServices.findStationByStationByReference(3);
+		int i = StatArriv.getReference();
+		int source = StatDepart.getReference();
+
+		int antécédent = i;
+		Vector<Integer> lesNoeudsIntermediaires = new Vector<Integer>();
+		;
+		System.out.println(" le chemin de " + StatDepart.getName() + " à " + StatArriv.getName() + ":");
+		while (antécédent != source) {
+			lesNoeudsIntermediaires.add(antécédent);
+			antécédent = R[antécédent];
+
+		}
+		lesNoeudsIntermediaires.add(source);
+		for (int j = lesNoeudsIntermediaires.size() - 1; j > 0; j--) {
+			Station stationvariable = stationServices
+					.findStationByStationByReference(lesNoeudsIntermediaires
+							.get(j));
+
+			System.out.print("-->" + stationvariable.getName());
+			sh = sh + "-->" + stationvariable.getName();
+		}
+		System.out.print("-->" + StatArriv.getName());
+		System.out.println();
+		String yy = "-->" + StatArriv.getName();
+		ch = "To go from  " + StatArriv.getName() + " to " + StatDepart.getName() + ": \n" + sh + yy;
 		return ch;
 	}
 

@@ -89,6 +89,7 @@ public class StationLineManagement implements StationLineManagementRemote,
 			String jpql = "select s from Station s where s.name=:param";
 			Query query = entityManager.createQuery(jpql);
 			query.setParameter("param", name);
+			
 			return query.getSingleResult();
 
 		} catch (Exception e) {

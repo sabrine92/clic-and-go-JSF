@@ -70,7 +70,8 @@ import entities.Station;
     	@Override
     	public Station findStationById(Integer Id) {
     		try {
-    			return entityManager.find(Station.class, Id);
+    		
+    			return entityManager.merge( entityManager.find(Station.class, Id));
     		} catch (Exception e) {
     			System.err
     					.println("A problem occured while trying to find station by  "
