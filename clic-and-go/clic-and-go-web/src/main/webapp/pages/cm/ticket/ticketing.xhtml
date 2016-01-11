@@ -5,7 +5,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:head></h:head>
+<h:head>
+
+</h:head>
 <body>
 
 	<h:form id="form">
@@ -72,7 +74,7 @@
 							<h:outputText value="Card Id : " />
 							<h:inputText value="#{ticketBean.card.cardId}" />
 							<h:outputText value="Secret Number : " />
-							<h:inputText value="#{ticketBean.card.pwd}" />
+							<p:inputText type="password" value="#{ticketBean.card.pwd}" />
 
 						</h:panelGrid>
 						<h:commandButton
@@ -103,6 +105,9 @@
 
 
 	</h:form>
+
+
+
 
 </body>
 </html>
