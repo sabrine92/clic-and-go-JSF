@@ -13,9 +13,9 @@ import javax.persistence.Query;
 import services.interfaces.TicketsServicesLocal;
 import services.interfaces.TicketsServicesRemote;
 import entities.Card;
-import entities.Ebook;
 import entities.Line;
 import entities.Ticket;
+import entities.User;
 
 /**
  * Session Bean implementation class TicketsServices
@@ -56,6 +56,7 @@ public class TicketsServices implements TicketsServicesRemote,
 		}
 		return b;
 	}
+
 	@Override
 	public Boolean updateTicket(Ticket ticket) {
 
@@ -175,6 +176,21 @@ public class TicketsServices implements TicketsServicesRemote,
 			System.out.println("error calculate Total Price");
 		}
 		return b;
+	}
+
+	public Boolean assignTicketToUser(Integer ticketId, Integer userId) {
+		Boolean b = false;
+		try {
+			User found = entityManager.find(User.class, userId);
+			Ticket ticketfound = entityManager.find(Ticket.class, ticketId);
+			ticketfound.setUser(found);
+			entityManager.merge(found);
+			entityManager.merge(ticketfound);
+			b = true;
+		} catch (Exception e) {
+		}
+		return b;
+
 	}
 
 }

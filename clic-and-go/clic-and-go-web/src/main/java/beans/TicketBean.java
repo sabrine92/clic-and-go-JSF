@@ -11,11 +11,14 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SelectEvent;
 
+import services.interfaces.SessionLocal;
 import services.interfaces.StationLineManagementLocal;
 import services.interfaces.TicketsServicesLocal;
+import services.interfaces.UserServicesLocal;
 import entities.Card;
 import entities.Line;
 import entities.Ticket;
+import entities.User;
 
 @ManagedBean
 @ViewScoped
@@ -35,6 +38,8 @@ public class TicketBean implements Serializable {
 	private Boolean displayform = false;
 	private Line lineSelected;
 	private Integer qt;
+	private User user;
+	private List<Ticket> tickets;
 
 	// Injection
 
@@ -42,6 +47,12 @@ public class TicketBean implements Serializable {
 	private TicketsServicesLocal ticketsServicesLocal;
 	@EJB
 	private StationLineManagementLocal stationLineManagementLocal;
+	@EJB
+	private UserServicesLocal userServicesLocal;
+	@EJB
+	private SessionLocal sessionLocal;
+
+	// Getters & Setters
 
 	public StationLineManagementLocal getStationLineManagementLocal() {
 		return stationLineManagementLocal;
@@ -59,6 +70,22 @@ public class TicketBean implements Serializable {
 	public void setTicketsServicesLocal(
 			TicketsServicesLocal ticketsServicesLocal) {
 		this.ticketsServicesLocal = ticketsServicesLocal;
+	}
+
+	public UserServicesLocal getUserServicesLocal() {
+		return userServicesLocal;
+	}
+
+	public void setUserServicesLocal(UserServicesLocal userServicesLocal) {
+		this.userServicesLocal = userServicesLocal;
+	}
+
+	public SessionLocal getSessionLocal() {
+		return sessionLocal;
+	}
+
+	public void setSessionLocal(SessionLocal sessionLocal) {
+		this.sessionLocal = sessionLocal;
 	}
 
 	public Ticket getTicket() {
@@ -110,6 +137,34 @@ public class TicketBean implements Serializable {
 		this.card = card;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Integer getQt() {
+		return qt;
+	}
+
+	public void setQt(Integer qt) {
+		this.qt = qt;
+	}
+
+	public List<Ticket> getTickets() {
+		tickets = ticketsServicesLocal.findAllTicketsByUserId(doAuthentUser()
+				.getUserId());
+		return tickets;
+	}
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+
+	// Functionality
+
 	public void onRowSelect(SelectEvent event) {
 		FacesMessage msg = new FacesMessage("Line Selected : "
 				+ ((Line) event.getObject()).getName(), "  Price : "
@@ -138,18 +193,16 @@ public class TicketBean implements Serializable {
 		return b;
 	}
 
-	public Integer getQt() {
-		return qt;
-	}
-
-	public void setQt(Integer qt) {
-		this.qt = qt;
-	}
-
-
 	public Boolean doPayTicket(Ticket ticket, Card card) {
 		Boolean b = ticketsServicesLocal.payTicket(ticket, card);
+		ticketsServicesLocal.assignTicketToUser(ticket.getTicketId(),
+				doAuthentUser().getUserId());
 		return b;
+	}
+
+	public User doAuthentUser() {
+		return userServicesLocal.authenticate(sessionLocal.getLogin(),
+				sessionLocal.getPwd());
 	}
 
 }
