@@ -25,11 +25,11 @@
 			<p:spacer height="40px;" />
 
 			<p:accordionPanel id="listPlaces" value="#{placeBean.places}" var="u"
-				selectionMode="single" selection="#{placeBean.selectedPlace}">
+				selectionMode="single" selection="#{ratingPlacesBean.selectedPlace}">
 
-				<p:ajax event="tabChange" listener="#{placeBean.onTabChange}"
+				<p:ajax event="tabChange" listener="#{ratingPlacesBean.onTabChange}"
 					update=":form:msgs" />
-				<p:ajax event="tabClose" listener="#{placeBean.onTabClose}"
+				<p:ajax event="tabClose" listener="#{ratingPlacesBean.onTabClose}"
 					update=":form:msgs" />
 
 				<p:tab title="#{u.name}">
@@ -42,21 +42,53 @@
 							<h:panelGrid columns="2" cellpadding="10">
 								<h:outputText value="Name" />
 								<h:outputText value="#{u.name}" />
+								
 								<h:outputText value="Description" />
 								<h:outputText value="#{u.description}" />
+								
 								<h:outputText value="Close to" />
 								<h:outputText value="#{u.station.name}" />
+								
 								<h:outputText value="Category" />
 								<h:outputText value="#{u.category}" />
+								
 								<h:outputText value="Rating" />
 								<p:rating value="#{u.rate}" readonly="true" />
-								<h:outputText value=" " />
+								
+								<h:outputText value="Rated" rendered="#{u.nbRaters>0}" />
+								<h:outputText value="#{u.nbRaters} times" rendered="#{u.nbRaters>1}"/>
+								<h:outputText value="#{u.nbRaters} time" rendered="#{u.nbRaters==1}"/>
+								<h:outputText value="YET UNRATED" rendered="#{u.nbRaters==0}"/>
 							</h:panelGrid>
 						</p:row>
 						<p:row>
 							<p:growl id="messages" showDetail="true" />
-						
 
+							<h:panelGrid id="rpg" columns="2" >
+								<h:commandButton action="#{ratingPlacesBean.doDisplayRate()}"
+									value="Rate #{u.name}">
+
+									<f:setPropertyActionListener
+										value="#{ratingPlacesBean.selectedPlace}"
+										target="#{ratingPlacesBean.selectedPlace}"></f:setPropertyActionListener>
+								</h:commandButton>
+
+								<!--Panel Grid: RATE -->
+								<h:panelGrid columns="2"
+									rendered="#{ratingPlacesBean.displayformrate}">
+
+									<h:outputText value="Your Rate:" />
+									<p:rating value="#{ratingPlacesBean.rating}">
+										<p:ajax event="rate" listener="#{ratingPlacesBean.onrate}"
+											update="messages" />
+										<p:ajax event="cancel" listener="#{ratingPlacesBean.oncancel}"
+											update="messages" />
+									</p:rating>
+									<h:commandButton action="#{ratingPlacesBean.doConfirmRating()}"
+										value="Confirm" rendered="#{ratingPlacesBean.displayformrate}"  />
+								</h:panelGrid>
+								<!--END OF Panel Grid: Rate -->
+							</h:panelGrid>
 						</p:row>
 					</h:panelGrid>
 				</p:tab>
