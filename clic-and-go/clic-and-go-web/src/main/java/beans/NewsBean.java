@@ -7,9 +7,9 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.map.OverlaySelectEvent;
@@ -18,11 +18,12 @@ import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
+import services.interfaces.GwMessageLocal;
 import services.interfaces.NewsServicesLocal;
 import entities.News;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class NewsBean implements Serializable {
 
 	/**
@@ -43,12 +44,14 @@ public class NewsBean implements Serializable {
 	private double lat;
 
 	private double lng;
-	private String type;  
-    private Map<String,String> types = new HashMap<String, String>();
+	private String type;
+	private Map<String, String> types = new HashMap<String, String>();
 
 	// Injection
 	@EJB
 	private NewsServicesLocal newsServicesLocal;
+	@EJB
+	private GwMessageLocal gwMessageLocal;
 
 	// Getters & Setters
 	public NewsServicesLocal getNewsServicesLocal() {
@@ -107,7 +110,7 @@ public class NewsBean implements Serializable {
 	public Marker getMarker() {
 		return marker;
 	}
-	
+
 	public String getType() {
 		return type;
 	}
@@ -126,7 +129,13 @@ public class NewsBean implements Serializable {
 
 	// Functionality
 
-	
+	public GwMessageLocal getGwMessageLocal() {
+		return gwMessageLocal;
+	}
+
+	public void setGwMessageLocal(GwMessageLocal gwMessageLocal) {
+		this.gwMessageLocal = gwMessageLocal;
+	}
 
 	public Boolean doAddNews(News news) {
 		return newsServicesLocal.addNews(news);
@@ -177,9 +186,9 @@ public class NewsBean implements Serializable {
 			simpleModel.addOverlay(new Marker(
 					new LatLng(n.getLat(), n.getLng()), n.getTitle(), n));
 
-			 types = new HashMap<String, String>();
-		        types.put("Accident", "Accident");
-		        types.put("Breakdown","Breakdown");
+			types = new HashMap<String, String>();
+			types.put("Accident", "Accident");
+			types.put("Breakdown", "Breakdown");
 		}
 
 		// simpleModel = new DefaultMapModel();
@@ -197,9 +206,9 @@ public class NewsBean implements Serializable {
 	}
 
 	public void onMarkerSelect(OverlaySelectEvent event) {
-		
+
 		marker = (Marker) event.getOverlay();
-       
+
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Selected",
@@ -207,7 +216,8 @@ public class NewsBean implements Serializable {
 
 	}
 
-	public void addMarker() {
+	public String addMarker() {
+		String nav = "";
 		Marker marker = new Marker(new LatLng(lat, lng), title, news);
 		// Marker marker = new Marker(new LatLng(lat, lng), title);
 		simpleModel.addOverlay(marker);
@@ -220,10 +230,15 @@ public class NewsBean implements Serializable {
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Alert Added",
 						news.getTitle()));
+		nav = "News";
+		return nav;
 
 	}
-	
-	
-	
-	
+
+	public void send() {
+
+		gwMessageLocal.sendEmail("mohamedheni.gafsi@esprit.tn",
+				"nadi.badr@esprit.tn", "Accident", "ijewni ejriiiiiiiwliiii");
+	}
+
 }
