@@ -6759,10 +6759,20 @@ button.close {
 }
 #top{
 	position:relative;
-	background-color: #036fab;
+	
 	color: white;
 	padding: 5px;
 	margin: 0px 0px 10px 0px;
 }
 
+.footer {
+	
+	margin: 0 auto;
+	position: relative;
+	width: 100%;
+	background-color: black;
+}
+.white-text{
+	color:white;
+}
 /*# sourceMappingURL=bootstrap.css.map */
