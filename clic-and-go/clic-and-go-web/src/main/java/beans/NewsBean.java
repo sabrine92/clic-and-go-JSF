@@ -18,7 +18,6 @@ import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
-import services.interfaces.GwMessageLocal;
 import services.interfaces.NewsServicesLocal;
 import entities.News;
 
@@ -47,11 +46,14 @@ public class NewsBean implements Serializable {
 	private String type;
 	private Map<String, String> types = new HashMap<String, String>();
 
+	private String titre = "";
+	private String text = "";
+
 	// Injection
 	@EJB
 	private NewsServicesLocal newsServicesLocal;
 	@EJB
-	private GwMessageLocal gwMessageLocal;
+//	private GwMessageLocal gwMessageLocal;
 
 	// Getters & Setters
 	public NewsServicesLocal getNewsServicesLocal() {
@@ -129,13 +131,29 @@ public class NewsBean implements Serializable {
 
 	// Functionality
 
-	public GwMessageLocal getGwMessageLocal() {
-		return gwMessageLocal;
+	public String getTitre() {
+		return titre;
 	}
 
-	public void setGwMessageLocal(GwMessageLocal gwMessageLocal) {
-		this.gwMessageLocal = gwMessageLocal;
+	public void setTitre(String titre) {
+		this.titre = titre;
 	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+//	public GwMessageLocal getGwMessageLocal() {
+//		return gwMessageLocal;
+//	}
+//
+//	public void setGwMessageLocal(GwMessageLocal gwMessageLocal) {
+//		this.gwMessageLocal = gwMessageLocal;
+//	}
 
 	public Boolean doAddNews(News news) {
 		return newsServicesLocal.addNews(news);
@@ -237,8 +255,8 @@ public class NewsBean implements Serializable {
 
 	public void send() {
 
-		gwMessageLocal.sendEmail("mohamedheni.gafsi@esprit.tn",
-				"nadi.badr@esprit.tn", "Accident", "ijewni ejriiiiiiiwliiii");
+		// gwMessageLocal.sendEmail("mohamedheni.gafsi@esprit.tn",
+		// "nadia.badr@esprit.tn", titre, text);
 	}
 
 }
