@@ -13,13 +13,43 @@
 <!--*Assign Place to Station on add-->
 <!--END OF My pbs-->
 
-<h:head></h:head>
+<h:head>
+	<script src="http://maps.google.com/maps/api/js?sensor=true|false"
+		type="text/javascript"></script>
+</h:head>
 <body>
-	<h1>welcome : #{loginBean.user.name}</h1>
 	<h:form id="form">
 		<p:panel header="Must Go Places">
 			<p:growl id="msgs" showDetail="true" />
 
+
+			<p:panel>
+
+				<p:growl id="growl" showDetail="true" />
+
+				<p:gmap id="gmap" center="36.803660, 10.180010" zoom="11"
+					type="HYBRID" model="#{mapPlacesBean.simpleModel}"
+					style="width:100%;height:400px"
+					onPointClick="handlePointClick(event);" widgetVar="map">
+
+					<p:gmapInfoWindow id="infoWindow">
+						<p:outputPanel
+							style="text-align: center; display: block; margin: auto">
+
+							<h:outputText value="Title: " style="font-weight: bold" />
+							<h:outputText value="#{mapPlacesBean.marker.title}" />
+
+
+
+						</p:outputPanel>
+					</p:gmapInfoWindow>
+
+
+					<p:ajax event="overlaySelect" listener="#{mapPlacesBean.onMarkerSelect}"
+						update="growl" />
+				</p:gmap>
+
+			</p:panel>
 
 
 			<p:spacer height="40px;" />
@@ -35,36 +65,38 @@
 				<p:tab title="#{u.name}">
 					<h:panelGrid columns="3" cellpadding="10">
 						<p:row>
-							<p:graphicImage name="pages/traveler/mustgo.jpg" />
-							<!-- 						 <p:graphicImage name="demo/images/car/#{car.brand}-big.gif" /> -->
+							<p:graphicImage name="resources/images/aee.png" />
+							<!--<p:graphicImage name="demo/images/car/#{car.brand}-big.gif" /> -->
 						</p:row>
 						<p:row>
 							<h:panelGrid columns="2" cellpadding="10">
 								<h:outputText value="Name" />
 								<h:outputText value="#{u.name}" />
-								
+
 								<h:outputText value="Description" />
 								<h:outputText value="#{u.description}" />
-								
+
 								<h:outputText value="Close to" />
 								<h:outputText value="#{u.station.name}" />
-								
+
 								<h:outputText value="Category" />
 								<h:outputText value="#{u.category}" />
-								
+
 								<h:outputText value="Rating" />
 								<p:rating value="#{u.rate}" readonly="true" />
-								
+
 								<h:outputText value="Rated" rendered="#{u.nbRaters>0}" />
-								<h:outputText value="#{u.nbRaters} times" rendered="#{u.nbRaters>1}"/>
-								<h:outputText value="#{u.nbRaters} time" rendered="#{u.nbRaters==1}"/>
-								<h:outputText value="YET UNRATED" rendered="#{u.nbRaters==0}"/>
+								<h:outputText value="#{u.nbRaters} times"
+									rendered="#{u.nbRaters>1}" />
+								<h:outputText value="#{u.nbRaters} time"
+									rendered="#{u.nbRaters==1}" />
+								<h:outputText value="YET UNRATED" rendered="#{u.nbRaters==0}" />
 							</h:panelGrid>
 						</p:row>
 						<p:row>
 							<p:growl id="messages" showDetail="true" />
 
-							<h:panelGrid id="rpg" columns="2" >
+							<h:panelGrid id="rpg" columns="2">
 								<h:commandButton action="#{ratingPlacesBean.doDisplayRate()}"
 									value="Rate #{u.name}">
 
@@ -85,7 +117,7 @@
 											update="messages" />
 									</p:rating>
 									<h:commandButton action="#{ratingPlacesBean.doConfirmRating()}"
-										value="Confirm" rendered="#{ratingPlacesBean.displayformrate}"  />
+										value="Confirm" rendered="#{ratingPlacesBean.displayformrate}" />
 								</h:panelGrid>
 								<!--END OF Panel Grid: Rate -->
 							</h:panelGrid>
