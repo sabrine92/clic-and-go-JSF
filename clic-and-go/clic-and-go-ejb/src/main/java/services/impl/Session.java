@@ -4,27 +4,26 @@ import javax.ejb.Stateful;
 
 import services.interfaces.SessionLocal;
 import services.interfaces.SessionRemote;
+import entities.Line;
 
 /**
  * Session Bean implementation class SessionServices
  */
 @Stateful
-public class Session implements SessionRemote ,SessionLocal {
+public class Session implements SessionRemote, SessionLocal {
 
 	public static String login;
-    public static String pwd;
-    public static String departure;
-    public static String arrival;
-    public static Integer duration;
+	public static String pwd;
+	public static String departure;
+	public static String arrival;
+	public static Integer duration;
+	public static Line lineSelected;
 
-    
-    
-    
-    public  Integer getDuration() {
+	public Integer getDuration() {
 		return duration;
 	}
 
-	public  void setDuration(Integer duration) {
+	public void setDuration(Integer duration) {
 		Session.duration = duration;
 	}
 
@@ -44,47 +43,53 @@ public class Session implements SessionRemote ,SessionLocal {
 		Session.arrival = arrival;
 	}
 
-	public  String getLogin() {
-        return login;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public void setLogin(String login) {
-        Session.login = login;
-    }
+	public void setLogin(String login) {
+		Session.login = login;
+	}
 
-    public  String getPwd() {
-        return pwd;
-    }
+	public String getPwd() {
+		return pwd;
+	}
 
-    public  void setPwd(String pwd) {
-        Session.pwd = pwd;
-    }
-    
-    
-    public Session() {
-        arrival="Ariana";
-        departure="Ariana";
-    }
+	public void setPwd(String pwd) {
+		Session.pwd = pwd;
+	}
+
+	public Line getLineSelected() {
+		return lineSelected;
+	}
+
+	public void setLineSelected(Line lineSelected) {
+		Session.lineSelected = lineSelected;
+	}
+
+	public Session() {
+		arrival = "Ariana";
+		departure = "Ariana";
+	}
 
 	@Override
 	public void exit() {
-		login=null;
-		pwd=null;
-		arrival=null;
-		departure=null;
-		duration=null;
-		
+		login = null;
+		pwd = null;
+		arrival = null;
+		departure = null;
+		duration = null;
+
 	}
 
 	@Override
 	public void stopSession() {
-		login=null;
-		pwd=null;
-		arrival=null;
-		departure=null;
-		duration=null;
-		
+		login = null;
+		pwd = null;
+		arrival = null;
+		departure = null;
+		duration = null;
+
 	}
-  
 
 }

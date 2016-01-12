@@ -118,35 +118,13 @@ public class PlaceServices implements PlaceServicesRemote, PlaceServicesLocal {
 	}
 
 	@Override
-	public Boolean ratePlace(Integer placeId, Integer rating) {
+	public Boolean ratePlace(Integer placeId, Integer rating, Integer nbRaters, Integer rate){
 		Boolean b = false;
 		try {
 			Place place = findPlaceByPlaceId(placeId);
-			Integer currentRating = place.getRating();
-			Integer currentNbRaters = place.getNbRaters();
-			Integer currentRate=place.getRate();
-			Integer newRating;
-			Integer newNbRaters;
-			Integer newRate;
-			if ((currentRating != null) && (currentNbRaters != null)) {
-				newNbRaters = currentNbRaters + 1;
-				newRating = currentRating+rating;
-				newRate=(int)(newRating/newNbRaters);
-				
-				System.out.println("old rate= " + currentRating + " new rate= "
-						+ newRating);
-				System.out.println("old nbR= " + currentNbRaters
-						+ " new nbRaters= " + newNbRaters);
-				System.out.println("old rate= " + currentRate + " new rate= "
-						+ newRate);
-			} else {
-				newRating = rating;
-				newNbRaters = 1;
-				newRate=(int)(newRating/newNbRaters);
-			}
-			place.setRating(newRating);
-			place.setNbRaters(newNbRaters);
-			place.setRating(newRate);
+			place.setRating(rating);
+			place.setNbRaters(nbRaters);
+			place.setRate(rate);
 			entityManager.merge(place);
 			b = true;
 		} catch (Exception e) {
