@@ -52,8 +52,9 @@ public class NewsBean implements Serializable {
 	// Injection
 	@EJB
 	private NewsServicesLocal newsServicesLocal;
-	@EJB
-//	private GwMessageLocal gwMessageLocal;
+
+	// @EJB
+	// private GwMessageLocal gwMessageLocal;
 
 	// Getters & Setters
 	public NewsServicesLocal getNewsServicesLocal() {
@@ -147,13 +148,13 @@ public class NewsBean implements Serializable {
 		this.text = text;
 	}
 
-//	public GwMessageLocal getGwMessageLocal() {
-//		return gwMessageLocal;
-//	}
-//
-//	public void setGwMessageLocal(GwMessageLocal gwMessageLocal) {
-//		this.gwMessageLocal = gwMessageLocal;
-//	}
+	// public GwMessageLocal getGwMessageLocal() {
+	// return gwMessageLocal;
+	// }
+	//
+	// public void setGwMessageLocal(GwMessageLocal gwMessageLocal) {
+	// this.gwMessageLocal = gwMessageLocal;
+	// }
 
 	public Boolean doAddNews(News news) {
 		return newsServicesLocal.addNews(news);
