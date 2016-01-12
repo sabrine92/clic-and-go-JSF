@@ -22,7 +22,6 @@ public class Card implements Serializable {
 	}
 
 	public Card(String cardId, Integer pwd, Double amount) {
-		super();
 		this.cardId = cardId;
 		this.pwd = pwd;
 		this.amount = amount;

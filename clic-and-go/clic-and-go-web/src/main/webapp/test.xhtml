@@ -6,15 +6,48 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<script src="http://maps.google.com/maps/api/js?sensor=true|false"
-		type="text/javascript"></script>
+
 </h:head>
 <body>
-	<h:form>
 
-		<p:gmap center="36.807508, 10.183444" zoom="15" type="HYBRID"
-			style="width:100%;height:400px" />
 
-	</h:form>
+	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+		<h:outputText value="Render method: " />
+		<p:selectOneButton value="#{qrCodeController.renderMethod}">
+			<f:selectItem itemLabel="canvas" itemValue="canvas" />
+			<f:selectItem itemLabel="image" itemValue="img" />
+			<f:selectItem itemLabel="div" itemValue="div" />
+		</p:selectOneButton>
+		<h:outputText value="Render mode:" />
+		<p:selectOneButton value="#{qrCodeController.mode}">
+			<f:selectItem itemLabel="normal" itemValue="0" />
+			<f:selectItem itemLabel="label strip" itemValue="1" />
+			<f:selectItem itemLabel="label box" itemValue="2" />
+			<f:selectItem itemLabel="image strip" itemValue="3" />
+			<f:selectItem itemLabel="image box" itemValue="4" />
+		</p:selectOneButton>
+		<h:outputText value="Size:" />
+		<h:panelGrid columns="1">
+			<h:inputHidden id="txt2" value="#{qrCodeController.size}" />
+			<p:slider minValue="50" maxValue="500" for="txt2" style="width:200px" />
+		</h:panelGrid>
+		<h:outputText value="Fill color:" />
+		<p:colorPicker value="#{qrCodeController.fillColor}" />
+
+		<p:commandButton value="update" update="qrCodeElem" />
+
+	</h:panelGrid>
+
+	<p:separator />
+
+	<pe:qrCode id="qrCodeElem"
+		renderMethod="#{qrCodeController.renderMethod}"
+		renderMode="#{qrCodeController.mode}" text="#{qrCodeController.text}"
+		label="#{qrCodeController.label}" size="#{qrCodeController.size}"
+		fillColor="#{qrCodeController.fillColor}" fontName="Ubuntu"
+		fontColor="#01A9DB" ecLevel="H" radius="0.5" />
+
+
 </body>
 </html>

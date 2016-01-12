@@ -1,11 +1,22 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 
 import services.interfaces.NewsServicesLocal;
 import entities.News;
@@ -23,10 +34,23 @@ public class NewsBean implements Serializable {
 	private News news = new News();
 	private List<News> newss;
 
+	private MapModel simpleModel;
+
+	private Marker marker;
+
+	private String title;
+
+	private double lat;
+
+	private double lng;
+	private String type;  
+    private Map<String,String> types = new HashMap<String, String>();
+
 	// Injection
 	@EJB
 	private NewsServicesLocal newsServicesLocal;
 
+	// Getters & Setters
 	public NewsServicesLocal getNewsServicesLocal() {
 		return newsServicesLocal;
 	}
@@ -51,6 +75,58 @@ public class NewsBean implements Serializable {
 	public void setNewss(List<News> newss) {
 		this.newss = newss;
 	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLng() {
+		return lng;
+	}
+
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
+
+	public MapModel getSimpleModel() {
+		return simpleModel;
+	}
+
+	public Marker getMarker() {
+		return marker;
+	}
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Map<String, String> getTypes() {
+		return types;
+	}
+
+	public void setTypes(Map<String, String> types) {
+		this.types = types;
+	}
+
+	// Functionality
+
+	
 
 	public Boolean doAddNews(News news) {
 		return newsServicesLocal.addNews(news);
@@ -88,4 +164,66 @@ public class NewsBean implements Serializable {
 
 	}
 
+	// MAP
+
+	@PostConstruct
+	public void init() {
+
+		simpleModel = new DefaultMapModel();
+
+		newss = newsServicesLocal.findAllNewss();
+
+		for (News n : newss) {
+			simpleModel.addOverlay(new Marker(
+					new LatLng(n.getLat(), n.getLng()), n.getTitle(), n));
+
+			 types = new HashMap<String, String>();
+		        types.put("Accident", "Accident");
+		        types.put("Breakdown","Breakdown");
+		}
+
+		// simpleModel = new DefaultMapModel();
+		//
+		// // Shared coordinates
+		// LatLng coord1 = new LatLng(36.809590, 10.162847);
+		// LatLng coord2 = new LatLng(36.799663, 10.180025);
+		// LatLng coord3 = new LatLng(36.784016, 10.177511);
+		//
+		// // Basic marker
+		// simpleModel.addOverlay(new Marker(coord1, "Beb El Khadhra"));
+		// simpleModel.addOverlay(new Marker(coord2, "Avenue Habib Bourguiba"));
+		// simpleModel.addOverlay(new Marker(coord3, "Bab Alouia"));
+
+	}
+
+	public void onMarkerSelect(OverlaySelectEvent event) {
+		
+		marker = (Marker) event.getOverlay();
+       
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Selected",
+						marker.getTitle()));
+
+	}
+
+	public void addMarker() {
+		Marker marker = new Marker(new LatLng(lat, lng), title, news);
+		// Marker marker = new Marker(new LatLng(lat, lng), title);
+		simpleModel.addOverlay(marker);
+		news.setLat(lat);
+		news.setLng(lng);
+		newsServicesLocal.addNews(news);
+		newss.add(news);
+
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Alert Added",
+						news.getTitle()));
+
+	}
+	
+	
+	
+	
 }

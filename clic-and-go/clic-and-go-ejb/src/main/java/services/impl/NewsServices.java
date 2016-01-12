@@ -33,13 +33,10 @@ public class NewsServices implements NewsServicesRemote, NewsServicesLocal {
 	public Boolean addNews(News news) {
 		Boolean b = false;
 		try {
-			entityManager.persist(news);
+			entityManager.merge(news);
 			b = true;
-			System.out.println(b);
-
 		} catch (Exception e) {
 		}
-		System.out.println(b);
 		return b;
 	}
 
