@@ -193,4 +193,17 @@ public class TicketsServices implements TicketsServicesRemote,
 
 	}
 
+	public Boolean assignTicketToLine(Integer ticketId, Integer lineId) {
+		Boolean b = false;
+		try {
+			Line found = entityManager.find(Line.class, lineId);
+			Ticket ticketfound = entityManager.find(Ticket.class, ticketId);
+			ticketfound.setLine(found);
+			entityManager.merge(found);
+			entityManager.merge(ticketfound);
+			b = true;
+		} catch (Exception e) {
+		}
+		return b;
+	}
 }

@@ -5,6 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
+
 <h:head>
 
 </h:head>
@@ -105,8 +106,9 @@
 							</div>
 							<div class="ui-grid-col-1">
 
-								<h:commandButton value="Buy It Now" update="dataset"
+								<h:commandButton value="Buy It Now" update="display1"
 									action="#{ticketBean.doPayTicket(ticketBean.ticket,ticketBean.card)}" />
+
 							</div>
 						</div>
 					</div>
@@ -124,17 +126,21 @@
 						</p:column>
 
 						<p:column headerText="Price:">
-							<h:outputText value="#{tic.price}" />
+							<h:outputText value="#{tic.price}">
+								<f:convertNumber pattern="#0.00" />
+							</h:outputText>
 						</p:column>
 
 						<p:column headerText="Line: ">
-							<h:outputText value="#{tic.line}" />
+							<h:outputText value="#{tic.line}"
+								converter="#{converterLineType}" />
 						</p:column>
 
 
 						<p:column headerText="Qr Code">
 
-							<p:barcode value="0123456789" type="qr" />
+							<p:barcode value="#{ticketBean.doGetRandomNumberWithin()}"
+								type="qr" />
 						</p:column>
 					</p:dataTable>
 				</p:panel>

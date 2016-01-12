@@ -18,6 +18,7 @@ import entities.Line;
 import entities.News;
 import entities.Place;
 import entities.Station;
+import entities.Ticket;
 import entities.Traveler;
 
 /**
@@ -287,5 +288,13 @@ public class PopulateDb {
 		System.out.println(newsServicesLocal.addNews(news2));
 		System.out.println(newsServicesLocal.addNews(news3));
 
+		// tickets
+		Ticket t = new Ticket();
+		t.setPrice(1.5D);
+		ticketsServicesLocal.addTicket(t);
+		ticketsServicesLocal.assignTicketToUser(1, 1);
+		ticketsServicesLocal.assignTicketToLine(1, 1);
 	}
+	
+
 }

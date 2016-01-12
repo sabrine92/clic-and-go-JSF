@@ -26,4 +26,6 @@ public interface TicketsServicesRemote {
 
 	public Boolean assignTicketToUser(Integer ticketId, Integer userId);
 
+	public Boolean assignTicketToLine(Integer ticketId, Integer lineId);
+
 }
