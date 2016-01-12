@@ -250,12 +250,18 @@ public class PopulateDb {
 		place1.setRating(108);
 		place1.setNbRaters(36);
 		place1.setRate(3);
+		place1.setLat(36.809590);
+		place1.setLng(10.162847);
 		place2.setRating(600);
 		place2.setRate(4);
 		place2.setNbRaters(150);
+		place2.setLat(36.799663);
+		place2.setLng(10.180025);
 		place3.setRating(3100);
 		place3.setRate(5);
 		place3.setNbRaters(620);
+		place3.setLat(36.784016);
+		place3.setLng(10.177511);
 		placeServicesLocal.addPlace(place1);
 		placeServicesLocal.addPlace(place2);
 		placeServicesLocal.addPlace(place3);
