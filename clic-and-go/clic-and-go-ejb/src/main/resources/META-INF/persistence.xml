@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="clic-and-go-ejb">
-		<jta-data-source>java:/clicandgoDS</jta-data-source>
+		<jta-data-source>java:jboss/datasources/clicandgoDS</jta-data-source>
+		<class>entities.Card</class>
+		<class>entities.ContentManager</class>
+		<class>entities.Ebook</class>
+		<class>entities.Line</class>
+		<class>entities.MeanOfTransport</class>
+		<class>entities.News</class>
+		<class>entities.Place</class>
+		<class>entities.Station</class>
+		<class>entities.StationLine</class>
+		<class>entities.StationLineId</class>
+		<class>entities.Ticket</class>
+		<class>entities.Traveler</class>
+		<class>entities.User</class>
 
 		<properties>
-			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 		</properties>
 	</persistence-unit>
 </persistence>
