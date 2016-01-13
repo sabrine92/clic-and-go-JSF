@@ -1,150 +1,146 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui" template="/Template.xhtml">
+
+	<ui:define name="title"> Home</ui:define>
+	<ui:define name="identity">
+		<h:form rendered="#{loginBean.loggedIn}">
+			<h:commandLink value="logout" action="/login?faces-redirect=true" />
+		</h:form>
+	</ui:define>
+
+	<ui:define name="content">
+		<br></br>
+		<p:spacer height="30px;" />
+		<h:form id="form">
+
+			<p:growl id="msgs" showDetail="true" />
+			<p:panel header="Ticketing">
+
+				<p:spacer height="0px;" />
 
 
-<h:head>
-
-</h:head>
-<body>
-	<ui:composition template="/Template.xhtml">
-		<ui:define name="content">
-			<br></br>
-			<br></br>
-			<br></br>
-			<p:spacer height="30px;" />
-			<h:form id="form">
-
-				<p:growl id="msgs" showDetail="true" />
-				<p:panel header="Ticketing">
-
-					<p:spacer height="0px;" />
+				<div class="ui-grid ui-grid-responsive">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-1" style="width: 30%;">
+							<p:dataTable var="line" value="#{lineBean.lines}"
+								selectionMode="single" selection="#{ticketBean.lineSelected}"
+								rowKey="#{line.lineId}">
+								<p:ajax event="rowSelect" listener="#{ticketBean.onRowSelect}"
+									update=":form:msgs" />
+								<p:column headerText="Lines">
+									<h:outputText value="#{line.name}" />
+								</p:column>
 
 
-					<div class="ui-grid ui-grid-responsive">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-1" style="width: 30%;">
-								<p:dataTable var="line" value="#{lineBean.lines}"
-									selectionMode="single" selection="#{ticketBean.lineSelected}"
-									rowKey="#{line.lineId}">
-									<p:ajax event="rowSelect" listener="#{ticketBean.onRowSelect}"
-										update=":form:msgs" />
-									<p:column headerText="Lines">
-										<h:outputText value="#{line.name}" />
-									</p:column>
+							</p:dataTable>
+						</div>
+						<div class="ui-grid-col-1">
 
+							<h:form>
 
-								</p:dataTable>
-							</div>
-							<div class="ui-grid-col-1">
+								<h:outputLabel for="minMax" value="Quantity :  " />
+								<p:spinner id="minMax" value="#{ticketBean.qt}" min="0"
+									max="100" />
+								<p:commandButton value="Submit" update="display"
+									icon="ui-icon-check" />
+								<h:outputText value="Total Price : " />
+								<h:outputText id="display"
+									value="#{ticketBean.doCalculateTotalPrice(ticketBean.lineSelected,ticketBean.qt)}"
+									style="font-weight: bold">
+									<f:convertNumber pattern="#0.00" />
+								</h:outputText>
 
-								<h:form>
+							</h:form>
 
-									<h:outputLabel for="minMax" value="Quantity :  " />
-									<p:spinner id="minMax" value="#{ticketBean.qt}" min="0"
-										max="100" />
-									<p:commandButton value="Submit" update="display"
-										icon="ui-icon-check" />
-									<h:outputText value="Total Price : " />
-									<h:outputText id="display"
-										value="#{ticketBean.doCalculateTotalPrice(ticketBean.lineSelected,ticketBean.qt)}"
-										style="font-weight: bold">
-										<f:convertNumber pattern="#0.00" />
-									</h:outputText>
-
-								</h:form>
-
-							</div>
 						</div>
 					</div>
+				</div>
 
-				</p:panel>
-
-
-			</h:form>
+			</p:panel>
 
 
-			<h:form id="form1">
-
-				<p:growl id="msg" showDetail="true" />
-				<p:panel header="Payement">
-
-					<p:spacer height="0px;" />
+		</h:form>
 
 
-					<div class="ui-grid ui-grid-responsive">
-						<div class="ui-grid-row">
-							<div class="ui-grid-col-1" style="width: 30%;">
-								<h:panelGrid>
+		<h:form id="form1">
 
-									<h:outputText value="Card Id : " />
-									<h:inputText value="#{ticketBean.card.cardId}" />
-									<h:outputText value="Secret Number : " />
-									<p:inputText type="password" value="#{ticketBean.card.pwd}" />
+			<p:growl id="msg" showDetail="true" />
+			<p:panel header="Payement">
 
-								</h:panelGrid>
-								<h:commandButton
-									action="#{ticketBean.doAuthentificateCard(ticketBean.card.cardId,ticketBean.card.pwd)}"
-									value="Submit" update="display1" />
-							</div>
-							<div class="ui-grid-col-1">
+				<p:spacer height="0px;" />
 
-								<h:form>
 
-									<h:outputText value="Your Amount: " />
-									<h:outputText id="display1"
-										value="#{ticketBean.doCheckCardAmount(ticketBean.card)}"
-										style="font-weight: bold">
-										<f:convertNumber pattern="#0.00" />
-									</h:outputText>
+				<div class="ui-grid ui-grid-responsive">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-1" style="width: 30%;">
+							<h:panelGrid>
 
-								</h:form>
+								<h:outputText value="Card Id : " />
+								<h:inputText value="#{ticketBean.card.cardId}" />
+								<h:outputText value="Secret Number : " />
+								<p:inputText type="password" value="#{ticketBean.card.pwd}" />
 
-							</div>
-							<div class="ui-grid-col-1">
+							</h:panelGrid>
+							<h:commandButton
+								action="#{ticketBean.doAuthentificateCard(ticketBean.card.cardId,ticketBean.card.pwd)}"
+								value="Submit" update="display1" />
+						</div>
+						<div class="ui-grid-col-1">
 
-								<h:commandButton value="Buy It Now" update="display1"
-									action="#{ticketBean.doPayTicket(ticketBean.ticket,ticketBean.card)}" />
+							<h:form>
 
-							</div>
+								<h:outputText value="Your Amount: " />
+								<h:outputText id="display1"
+									value="#{ticketBean.doCheckCardAmount(ticketBean.card)}"
+									style="font-weight: bold">
+									<f:convertNumber pattern="#0.00" />
+								</h:outputText>
+
+							</h:form>
+
+						</div>
+						<div class="ui-grid-col-1">
+
+							<h:commandButton value="Buy It Now" update="display1"
+								action="#{ticketBean.doPayTicket(ticketBean.ticket,ticketBean.card)}" />
+
 						</div>
 					</div>
+				</div>
 
-				</p:panel>
-
-
-			</h:form>
-
-			<h:form>
-				<p:panel header="Your Tickets">
-					<p:dataTable var="tic" value="#{ticketBean.tickets}" id="dataset">
-						<p:column headerText="Ticket Id">
-							<h:outputText value="#{tic.ticketId}" />
-						</p:column>
-
-						<p:column headerText="Price">
-							<h:outputText value="#{tic.price}">
-								<f:convertNumber pattern="#0.00" />
-							</h:outputText>
-						</p:column>
+			</p:panel>
 
 
-						<p:column headerText="Qr Code">
+		</h:form>
 
-							<p:barcode value="#{ticketBean.doGetRandomNumberWithin()}"
-								type="qr" />
-						</p:column>
+		<h:form>
+			<p:panel header="Your Tickets">
+				<p:dataTable var="tic" value="#{ticketBean.tickets}" id="dataset">
+					<p:column headerText="Ticket Id">
+						<h:outputText value="#{tic.ticketId}" />
+					</p:column>
 
-					</p:dataTable>
-				</p:panel>
+					<p:column headerText="Price">
+						<h:outputText value="#{tic.price}">
+							<f:convertNumber pattern="#0.00" />
+						</h:outputText>
+					</p:column>
 
-			</h:form>
 
+					<p:column headerText="Qr Code">
 
-		</ui:define>
-	</ui:composition>
-</body>
-</html>
+						<p:barcode value="#{ticketBean.doGetRandomNumberWithin()}"
+							type="qr" />
+					</p:column>
+
+				</p:dataTable>
+			</p:panel>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
