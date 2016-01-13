@@ -131,24 +131,13 @@
 							</h:outputText>
 						</p:column>
 
-						<p:column headerText="Line ">
-							<h:outputText value="#{tic.line}"
-								converter="#{converterLineType}" />
-						</p:column>
-
 
 						<p:column headerText="Qr Code">
 
 							<p:barcode value="#{ticketBean.doGetRandomNumberWithin()}"
 								type="qr" />
 						</p:column>
-						<p:column headerText="PDF">
-							<h:commandLink ajax="false">
-								<p:graphicImage name="/img/pdf-icon.png"/>
-								<p:dataExporter type="pdf" target="dataset" fileName="file"
-									pageOnly="true" />
-							</h:commandLink>
-						</p:column> 
+
 					</p:dataTable>
 				</p:panel>
 

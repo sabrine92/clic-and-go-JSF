@@ -9,8 +9,10 @@
 	<script src="http://maps.google.com/maps/api/js?sensor=true|false"
 		type="text/javascript"></script>
 </h:head>
+
 <body>
 
+	<br></br>
 	<div class="ui-grid ui-grid-responsive">
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-1" style="width: 60%;">
@@ -85,29 +87,40 @@
 			</div>
 			<div class="ui-grid-col-1">
 				<h:form>
-					<p:panel header="Envoyer Alerte ">
-						<h:panelGrid columns="2">
-							<h:outputLabel for="title" value="Title: " />
-							<p:inputText value="#{newsBean.news.title}" />
+					<div class="panel panel-danger"
+						style="width: 320px; height: 180px; position: relative; top: 20%; left: 70%;">
+						<div class="panel-heading">
+							<h3 class="panel-title">Alert</h3>
 
-							<h:outputLabel for="description" value="Description: " />
-							<p:inputText value="#{newsBean.news.description}" />
+						</div>
+						<div class="panel-body">
+							<h:panelGrid columns="2">
+								<h:outputLabel for="title" value="Title: " />
+								<p:inputText value="#{newsBean.titre}" />
 
-							<p:outputLabel for="type" value="Type: " />
-							<p:selectOneMenu id="type" value="#{newsBean.type}" effect="fold"
-								editable="true">
-								<f:selectItem itemLabel="Select One" itemValue="" />
-								<f:selectItems value="#{newsBean.types}" />
-							</p:selectOneMenu>
+								<h:outputLabel for="description" value="Description: " />
+								<p:inputText value="#{newsBean.text}" />
 
-							<f:facet name="footer">
+								<p:outputLabel for="type" value="Type: " />
+								<p:selectOneMenu id="type" value="#{newsBean.type}"
+									effect="fold" editable="true">
+									<f:selectItem itemLabel="Select One" itemValue="" />
+									<f:selectItems value="#{newsBean.types}" />
+								</p:selectOneMenu>
 
-								<h:commandButton action="#{newsBean.send()}"
-									value="envoyer Alerte" />
-							</f:facet>
+								<f:facet name="footer">
 
-						</h:panelGrid>
-					</p:panel>
+									<h:commandButton action="#{newsBean.send()}"
+										value="envoyer Alerte"
+										style="position: relative;
+    width: 60px;
+    height: 30px; left: 250px;
+    top: 6px;" />
+								</f:facet>
+							</h:panelGrid>
+						</div>
+					</div>
+
 				</h:form>
 			</div>
 		</div>
@@ -116,9 +129,7 @@
 	<p:accordionPanel value="#{newsBean.newss}" var="c">
 		<p:tab title="#{c.title}">
 			<h:panelGrid columns="2" cellpadding="5">
-				<f:facet name="header">
-					<p:graphicImage name="demo/images/car/#{car.brand}-big.gif" />
-				</f:facet>
+
 				<h:outputText value="Title:" style="font-weight: bold" />
 				<h:outputText value="#{c.title}" />
 
@@ -130,5 +141,6 @@
 			</h:panelGrid>
 		</p:tab>
 	</p:accordionPanel>
+
 </body>
 </html>

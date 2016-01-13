@@ -10,50 +10,57 @@
 		type="text/javascript"></script>
 </h:head>
 <body>
-	<h:form>
-		<p:growl id="growl" showDetail="true" />
+	<ui:composition template="/Template.xhtml">
+		<ui:define name="content">
+			<br></br>
+			<br></br>
+			<br></br>
 
-		<p:gmap id="gmap" center="36.803660, 10.180010" zoom="13"
-			type="HYBRID" model="#{newsBean.simpleModel}"
-			style="width:100%;height:400px"
-			onPointClick="handlePointClick(event);" widgetVar="map">
+			<h:form>
+				<p:panel>
+					<p:growl id="growl" showDetail="true" />
 
-			<p:gmapInfoWindow id="infoWindow">
-				<p:outputPanel
-					style="text-align: center; display: block; margin: auto">
+					<p:gmap id="gmap" center="36.803660, 10.180010" zoom="13"
+						type="HYBRID" model="#{newsBean.simpleModel}"
+						style="width:70%;height:400px"
+						onPointClick="handlePointClick(event);" widgetVar="map">
 
-					<h:outputText value="Title: " style="font-weight: bold" />
-					<h:outputText value="#{newsBean.marker.title}" />
+						<p:gmapInfoWindow id="infoWindow">
+							<p:outputPanel
+								style="text-align: center; display: block; margin: auto">
+
+								<h:outputText value="Title: " style="font-weight: bold" />
+								<h:outputText value="#{newsBean.marker.title}" />
 
 
 
-				</p:outputPanel>
-			</p:gmapInfoWindow>
+							</p:outputPanel>
+						</p:gmapInfoWindow>
 
 
-			<p:ajax event="overlaySelect" listener="#{newsBean.onMarkerSelect}"
-				update="growl" />
-		</p:gmap>
+						<p:ajax event="overlaySelect"
+							listener="#{newsBean.onMarkerSelect}" update="growl" />
+					</p:gmap>
+				</p:panel>
+				<h3>News</h3>
+				<p:accordionPanel value="#{newsBean.newss}" var="c">
+					<p:tab title="#{c.title}">
+						<h:panelGrid columns="2" cellpadding="5">
 
-		<h3>News</h3>
-		<p:accordionPanel value="#{newsBean.newss}" var="c">
-			<p:tab title="#{c.title}">
-				<h:panelGrid columns="2" cellpadding="5">
-					<f:facet name="header">
-						<p:graphicImage name="demo/images/car/#{car.brand}-big.gif" />
-					</f:facet>
-					<h:outputText value="Title:" style="font-weight: bold" />
-					<h:outputText value="#{c.title}" />
+							<h:outputText value="Title:" style="font-weight: bold" />
+							<h:outputText value="#{c.title}" />
 
-					<h:outputText value="Description:" style="font-weight: bold" />
-					<h:outputText value="#{c.description}" />
+							<h:outputText value="Description:" style="font-weight: bold" />
+							<h:outputText value="#{c.description}" />
 
-					<h:outputText value="Type:" style="font-weight: bold" />
-					<h:outputText value="#{c.type}" />
-				</h:panelGrid>
-			</p:tab>
-		</p:accordionPanel>
+							<h:outputText value="Type:" style="font-weight: bold" />
+							<h:outputText value="#{c.type}" />
+						</h:panelGrid>
+					</p:tab>
+				</p:accordionPanel>
 
-	</h:form>
+			</h:form>
+		</ui:define>
+	</ui:composition>
 </body>
 </html>
