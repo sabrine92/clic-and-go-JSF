@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head> 
+<body> 
+
+
+	<p:panel id="details" header="product detail"
+		visible="#{meanBean.display}">
+		<h:form id="formadd" rendered="#{meanBean.display}">
+			<h:panelGrid columns="2">
+
+				<p:outputLabel value="Registration Number" />
+				<p:inputText value="#{meanBean.m.registrationNumber}" />
+				<p:outputLabel value="Number of Wagons" />
+				<p:inputText value="#{meanBean.m.nbOfWagons}" />
+				<p:outputLabel value="Capacity" />
+				<p:inputText value="#{meanBean.m.capacity}" />
+				<p:outputLabel value="assign Line to mean of transport" />
+				<p:selectOneMenu value="#{meanBean.m.line}"
+					converter="#{lineConverter}">
+					<f:selectItem itemLabel="select one..." itemValue="" />
+					<f:selectItems value="#{lineBean.lines}" var="c"
+						itemLabel="#{c.name}" itemValue="#{c}" />
+
+				</p:selectOneMenu>
+
+
+			</h:panelGrid>
+
+
+
+			<!-- <h:panelGrid columns="3">
+				<p:commandButton actionListener="#{productBean.doSave}" value="save" 
+					update=":master :details" />
+				<p:commandButton actionListener="#{productBean.doCancel}" value="cancel"
+					 update=":details" />
+				<p:commandButton actionListener="#{productBean.doDelete}" value="delete" 
+				update=":master :details"/> -->
+
+
+<!-- 		</h:panelGrid> -->
+
+		</h:form>
+	</p:panel>
+</body> 
+</html>

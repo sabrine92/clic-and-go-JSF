@@ -2,24 +2,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head></h:head>
 <body>
 	<h:form>
-		<h:panelGrid>
-			<h:outputText value="name" />
-			<h:inputText value="#{stationBean.station.name}" />
-			<h:outputText value="reference" />
-			<h:inputText value="#{stationBean.station.reference}" />
-			<h:outputText value="Longitude" />
-			<h:inputText value="#{stationBean.station.x}" />
-			<h:outputText value="Latitude" />
-			<h:inputText value="#{stationBean.station.y}" />
+	
+			<h:outputLabel for="registrationNumber" value="registrationNumber" />
+				<p:inputText value="#{meanBean.m.registrationNumber}" />
 
-		</h:panelGrid>
-		<h:commandButton action="#{stationBean.doAddStation()}"
-			value="Add-station" />
+			<!-- 	<h:outputLabel for="reference" value="Reference" />
+				<p:inputText value="#{stationBean.station.reference}" />
+
+				<h:outputLabel for="x" value="Longitude" />
+				<p:inputText value="#{stationBean.station.x}" />
+				<h:outputLabel for="y" value="Latitude" />
+				<p:inputText value="#{stationBean.station.y}" /> -->
+			
+					<h:commandButton action="#{meanBean.doAdd()}"
+						value="Add-station" />
 	</h:form>
 </body>
 </html>

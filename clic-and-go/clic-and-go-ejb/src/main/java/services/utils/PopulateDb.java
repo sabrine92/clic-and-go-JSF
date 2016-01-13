@@ -6,6 +6,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
+import services.interfaces.MeanOfTransportServicesLocal;
 import services.interfaces.NewsServicesLocal;
 import services.interfaces.PlaceServicesLocal;
 import services.interfaces.StationLineManagementLocal;
@@ -15,6 +16,7 @@ import services.interfaces.UserServicesLocal;
 import entities.Card;
 import entities.ContentManager;
 import entities.Line;
+import entities.MeanOfTransport;
 import entities.News;
 import entities.Place;
 import entities.Station;
@@ -45,6 +47,8 @@ public class PopulateDb {
 
 	@EJB
 	private NewsServicesLocal newsServicesLocal;
+	@EJB 
+	private MeanOfTransportServicesLocal meanOfTransportServicesLocal;
 
 	/**
 	 * Default constructor.
@@ -287,5 +291,38 @@ public class PopulateDb {
 		System.out.println(newsServicesLocal.addNews(news2));
 		System.out.println(newsServicesLocal.addNews(news3));
 
+		
+		
+		//meanoftransport
+		MeanOfTransport meanOfTransport1 = new MeanOfTransport();
+		meanOfTransport1.setRegistrationNumber("TCV1");
+		meanOfTransport1.setCapacity(30);
+		meanOfTransport1.setNbOfWagons(1);
+		System.out.println(meanOfTransportServicesLocal
+				.addMeanOfTransport(meanOfTransport1));
+
+		MeanOfTransport meanOfTransport2 = new MeanOfTransport();
+		meanOfTransport2.setRegistrationNumber("TCV2");
+		meanOfTransport2.setCapacity(30);
+		meanOfTransport2.setNbOfWagons(1);
+		System.out.println(meanOfTransportServicesLocal
+				.addMeanOfTransport(meanOfTransport2));
+		MeanOfTransport meanOfTransport4 = new MeanOfTransport();
+		meanOfTransport4.setRegistrationNumber("Train");
+		meanOfTransport4.setCapacity(120);
+		meanOfTransport4.setNbOfWagons(3);
+		System.out.println(meanOfTransportServicesLocal
+				.addMeanOfTransport(meanOfTransport4));
+
+		MeanOfTransport meanOfTransport5 = new MeanOfTransport();
+		meanOfTransport5.setRegistrationNumber("Metro 4");
+		meanOfTransport5.setCapacity(60);
+		meanOfTransport5.setNbOfWagons(2);
+		System.out.println(meanOfTransportServicesLocal
+				.addMeanOfTransport(meanOfTransport5));
+		
+		System.out.println(meanOfTransportServicesLocal.assignMeanOfTransportToLine("TCV1", 1));
+		System.out.println(meanOfTransportServicesLocal.assignMeanOfTransportToLine("Metro 4", 3));
+		System.out.println(meanOfTransportServicesLocal.assignMeanOfTransportToLine("Train", 3));
 	}
 }

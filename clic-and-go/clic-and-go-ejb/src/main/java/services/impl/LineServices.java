@@ -63,4 +63,16 @@ public class LineServices implements LineServicesRemote, LineServicesLocal {
 		}
 	}
 
-}
+	@Override
+	public Boolean updateLine(Line line) {
+		Boolean b = false;
+		try {
+			entityManager.merge(line);
+			b = true;
+		} catch (Exception e) {
+			System.err.println("A problem occured while updating "
+					+ line);
+		}
+		return b;
+
+}}

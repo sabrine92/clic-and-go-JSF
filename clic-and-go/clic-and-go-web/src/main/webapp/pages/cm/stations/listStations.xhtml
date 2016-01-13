@@ -8,55 +8,38 @@
 <h:head></h:head>
 <body>
 
+	<center>
+	
+	<p:panel header="Manage Station">
+    
+		<h:form id="station">
 
-	<h:form id="form">
-
-		<p:contextMenu for="stations">
-			<p:menuitem value="Delete" update="stations" icon="ui-icon-close"
-				actionListener="#{stationBean.doDeleteStation()}" />
-		</p:contextMenu>
-		<p:growl id="msgs" showDetail="true" />
-		<p:panel header="Manage Station">
-			<h:panelGrid columns="2">
-
-				<h:outputLabel for="name" value="name" />
-				<p:inputText value="#{stationBean.station.name}" />
-
-				<h:outputLabel for="reference" value="Reference" />
-				<p:inputText value="#{stationBean.station.reference}" />
-
-				<h:outputLabel for="x" value="Longitude" />
-				<p:inputText value="#{stationBean.station.x}" />
-				<h:outputLabel for="y" value="Latitude" />
-				<p:inputText value="#{stationBean.station.y}" />
-				<f:facet name="footer">
-
-					<h:commandButton action="#{stationBean.doAddStation()}"
-						value="Add-station" />
-				</f:facet>
-			</h:panelGrid>
-			<p:spacer height="40px;" />
+			<p:contextMenu for="stations">
+				<p:menuitem value="Delete" update="stations" icon="ui-icon-close"
+					actionListener="#{stationBean.doDeleteStation()}" />
+			</p:contextMenu>
+		
 			<p:dataTable id="stations" var="stat" value="#{stationBean.stations}"
-				editable="true" style="margin-bottom:20px" selectionMode="single"
+				editable="true" selectionMode="single"
 				selection="#{stationBean.selectedstaStation}"
 				rowKey="#{stat.stationId}"
+				paginatorPosition="bottom" 
+			rows="6" 
+			 paginator="true"
+			
 				emptyMessage="No station found with given criteria"
-				filteredValue="#{stationBean.filteredStations}">
+				filteredValue="#{stationBean.filteredStations}" style="width: 75% ">
 
 				<f:facet name="header">
            List of Stations
        </f:facet>
 
-				<p:ajax event="rowEdit"
-					actionListener="#{stationBean.saveChanges()}"
-					update=":form:stations" />
-				<p:ajax event="rowEditCancel"
-					actionlistener="#{stationBean.onRowCancel()}"
-					update=":form:msgs,:form:stations" />
-				<p:ajax event="rowSelect" listener="#{stationBean.onRowSelect}"
-					update=":form:msgs" />
-				<p:ajax event="rowUnselect" listener="#{stationBean.onRowUnselect}"
-					update=":form:msgs" />
+				
+				<p:ajax event="rowSelect"
+					listener="#{stationBean.onRowSelect(event)}" update="station">
+				</p:ajax>
+
+				
 				<p:column headerText="Name" filterBy="#{stat.name}"
 					filterMatchMode="contains">
 					<p:cellEditor>
@@ -109,13 +92,77 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column style="width:38px">
-					<f:facet name="header">Editer</f:facet>
-					<p:rowEditor />
-				</p:column>
-			</p:dataTable>
-		</p:panel>
 
-	</h:form>
+			</p:dataTable>
+
+				<p:panelGrid>
+				<p:commandButton value="new" actionListener="#{stationBean.doNew()}"
+					ajax="false"></p:commandButton>
+
+
+			</p:panelGrid>
+		
+			
+			<p:panel header="New Station" visible="#{stationBean.displayform}" style="width: 75%">
+				<h:form id="details" rendered="#{stationBean.displayform}">
+					<h:panelGrid columns="4">
+
+						<h:outputLabel for="name" value="name" />
+						<p:inputText value="#{stationBean.station.name}" />
+
+						<h:outputLabel for="reference" value="Reference" />
+						<p:inputText value="#{stationBean.station.reference}" />
+
+						<h:outputLabel for="x" value="Longitude" />
+						<p:inputText value="#{stationBean.station.x}" />
+						<h:outputLabel for="y" value="Latitude" />
+						<p:inputText value="#{stationBean.station.y}" />
+						</h:panelGrid>
+						<h:panelGrid columns="3">
+						<p:commandButton actionListener="#{stationBean.doAddStation()}" 
+							value="Add-station" update=":station" />
+						<p:commandButton actionListener="#{stationBean.doCancel1()}"
+							value="Cancel" update=":station" />
+					
+					</h:panelGrid>
+				</h:form>
+			</p:panel>
+			
+
+			<p:panel header="Update Station "
+				visible="#{stationBean.displaydetails}">
+				<h:form id="detaills" rendered="#{stationBean.displaydetails}">
+					<h:panelGrid columns="4">
+						<p:outputLabel value="Name" />
+
+						<p:inputText value="#{stationBean.selectedstaStation.name}" />
+
+						<p:outputLabel value="Reference" />
+						<p:inputText value="#{stationBean.selectedstaStation.reference}" />
+						<p:outputLabel value="Longitude" />
+						<p:inputText value="#{stationBean.selectedstaStation.x}" />
+
+						<p:outputLabel value="latitude" />
+						<p:inputText value="#{stationBean.selectedstaStation.y}" />
+
+
+					</h:panelGrid>
+
+					<h:panelGrid columns="3">
+						<p:commandButton actionListener="#{stationBean.doUpdate()}"
+							value="Save" update=":station" />
+						<p:commandButton actionListener="#{stationBean.doCancel()}"
+							value="Cancel" update=":station" />
+
+					</h:panelGrid>
+				</h:form>
+
+
+			</p:panel>
+
+
+		</h:form>
+		</p:panel>
+	</center>
 </body>
 </html>

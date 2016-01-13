@@ -3,9 +3,11 @@ package beans;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -14,10 +16,11 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
 import services.interfaces.StationServicesLocal;
+import entities.Line;
 import entities.Station;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class StationBean implements Serializable {
 
 	/**
@@ -30,20 +33,53 @@ public class StationBean implements Serializable {
 	private Station selectedstaStation;
 	private List<Station> stations2;
 	private Boolean displayform = false;
+	
+	private Boolean displaydetails = false;
 	private List<Station> filteredStations;
 	// Injection
 
 	@EJB
 	private StationServicesLocal stationServicesLocal;
 
+	
+	@PostConstruct
+	public void init() {
+	    setStation(new Station());
+		setDisplayform(false);
+		setDisplaydetails(false);
+
+	}
 	public String doAddStation() {
 		stationServicesLocal.addStation(station);
 		String navigateTo = "listStations";
 		setDisplayform(false);
 		return navigateTo;
 
+		
 	}
+	
+	
+	public String doUpdate(){
+		stationServicesLocal.updateStation(selectedstaStation);
+		String navigateTo = "listStations";
+	    setDisplaydetails(false);
+		return navigateTo;
+		
+		
+		}
+	public void doNew(){
+		station = new Station();
+		displayform=true;
+	}
+	public void doCancel() {
+		station = new Station();
+		displaydetails = false;
+	}
+	public void doCancel1() {
+		station = new Station();
 
+		displayform = false;
+	}
 	public String doDeleteStation() {
 		System.out.println(selectedstaStation);
 		stationServicesLocal.deleteStation(selectedstaStation);
@@ -51,9 +87,7 @@ public class StationBean implements Serializable {
 	}
 
 	public void onRowSelect(SelectEvent event) {
-		FacesMessage msg = new FacesMessage("Station Selected",
-				((Station) event.getObject()).getName());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		setDisplaydetails(true);
 	}
 
 	public void onRowUnselect(UnselectEvent event) {
@@ -62,11 +96,7 @@ public class StationBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
-	public String doUpdate() {
-		stationServicesLocal.updateStation(station);
-		displayform = false;
-		return "";
-	}
+
 
 	public String doDelete() {
 		stationServicesLocal.deleteStation(station);
@@ -150,6 +180,12 @@ public class StationBean implements Serializable {
 
 	public void setFilteredStations(List<Station> filteredStations) {
 		this.filteredStations = filteredStations;
+	}
+	public Boolean getDisplaydetails() {
+		return displaydetails;
+	}
+	public void setDisplaydetails(Boolean displaydetails) {
+		this.displaydetails = displaydetails;
 	}
 
 }

@@ -13,5 +13,6 @@ public interface LineServicesLocal {
 	Line findLineByName(String name);
 
 	public List<Line> findAllLines();
+	Boolean updateLine(Line line);
 
 }

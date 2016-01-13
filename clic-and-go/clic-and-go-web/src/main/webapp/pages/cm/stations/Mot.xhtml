@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<body>
+	<center>
+	<p:spacer width="50px;" />
+	
+	<p:panel header="Manage Mean Of transport" style="width: 75%" >
+		<h:form id="master">
+
+
+
+			<p:contextMenu for="means">
+				<p:menuitem value="Delete" update="means" icon="ui-icon-close"
+					actionListener="#{meanBean.doDelete()}" />
+			</p:contextMenu>
+
+
+
+			<p:dataTable id="means" var="stat"
+				value="#{meanBean.meanOfTransports}" editable="true"
+				style="margin-bottom:20px" selectionMode="single"
+				widgetVar="placesTable" rowKey="#{stat.registrationNumber}"
+				selection="#{meanBean.selectedmean}" 
+				paginatorPosition="bottom" 
+			rows="6"
+				emptyMessage="No station found with given criteria"
+				filteredValue="#{meanBean.filtredmeanOfTransports}">
+                 
+				<f:facet name="header">
+          Mean of transport 
+       </f:facet>
+
+				<!-- <p:ajax event="rowEdit" actionListener="#{stationBean.saveChanges()}"
+				update=":form:stations" />
+			<p:ajax event="rowEditCancel"
+				actionlistener="#{stationBean.onRowCancel()}"
+				update=":form:msgs,:form:stations" />
+			<p:ajax event="rowSelect" listener="#{stationBean.onRowSelect}"
+				update=":form:msgs" />
+			<p:ajax event="rowUnselect" listener="#{stationBean.onRowUnselect}"
+				update=":form:msgs" /> -->
+
+
+
+
+				<p:ajax event="rowSelect" listener="#{meanBean.onRowSelect(event)}"
+					update="master">
+
+				</p:ajax>
+				<p:column headerText="Registration Number"
+					filterBy="#{stat.registrationNumber}" filterMatchMode="contains">
+					<h:outputText value="#{stat.registrationNumber
+					}" />
+				</p:column>
+
+				<p:column headerText="Number of Wagons"
+					filterBy="#{stat.nbOfWagons}" filterMatchMode="contains">
+					<h:outputText value="#{stat.nbOfWagons}" />
+				</p:column>
+
+				<p:column headerText="Capacity" filterBy="#{stat.capacity}"
+					filterMatchMode="contains">
+					<h:outputText value="#{stat.capacity}" />
+				</p:column>
+
+				<p:column headerText="line assgined to mean of transport"
+					filterBy="#{stat.line}" filterMatchMode="contains">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('placesTable').filter()"
+							converter="#{lineConverter}">
+							<f:selectItem itemLabel="All types" itemValue="" />
+
+							<f:selectItems value="#{lineBean.lines}" var="ty"
+								itemValue="#{ty}" itemLabel="#{ty.name}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{stat.line.name
+					}" />
+				</p:column>
+
+
+			</p:dataTable>
+			<p:panelGrid >
+			<p:commandButton value="new" actionListener="#{meanBean.doNew()}"
+				ajax="false"></p:commandButton>
+
+               
+                </p:panelGrid>
+
+
+			<p:panel header="New Mean of transport" 
+				visible="#{meanBean.display}">
+				<h:form id="details" rendered="#{meanBean.display}">
+					<h:panelGrid columns="2">
+
+						<p:outputLabel value="Registration Number" />
+						<p:inputText value="#{meanBean.m.registrationNumber}" />
+						<p:outputLabel value="Number of Wagons" />
+						<p:inputText value="#{meanBean.m.nbOfWagons}"/>
+						<p:outputLabel value="Capacity" />
+						<p:inputText value="#{meanBean.m.capacity}" />
+						<!-- <p:outputLabel value="assign Line to mean of transport" />
+				<p:selectOneMenu value="#{meanBean.m.line}"
+					converter="#{lineConverter}">
+					<f:selectItem itemLabel="select one..." itemValue="" />
+					<f:selectItems value="#{lineBean.lines}" var="c"
+						itemLabel="#{c.name}" itemValue="#{c}" />
+
+				</p:selectOneMenu> -->
+
+
+					</h:panelGrid>
+
+
+
+					<h:panelGrid columns="3">
+						<p:commandButton actionListener="#{meanBean.doAdd()}" value="save"
+							update=":master" />
+						<p:commandButton actionListener="#{meanBean.doCancel()}"
+							value="Cancel" update=":master" />
+
+					</h:panelGrid>
+
+				</h:form>
+			</p:panel>
+
+			<p:panel header="Mean of transport Details"
+				visible="#{meanBean.displayDetails}">
+				<h:form id="detaills" rendered="#{meanBean.displayDetails}">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Registration Number " />
+						
+						<p:inputText value="#{meanBean.selectedmean.registrationNumber}" />
+						
+						<p:outputLabel value="Number of Wagons" />
+						<p:inputText value="#{meanBean.selectedmean.nbOfWagons}" />
+						<p:outputLabel value="Capacity" />
+						<p:inputText value="#{meanBean.selectedmean.capacity}" />
+						<p:outputLabel value="assign Line to mean of transport" />
+						<p:selectOneMenu value="#{meanBean.m.line}"
+							converter="#{lineConverter}">
+							<f:selectItem itemLabel="Passage-Menzeh 9"
+								itemValue="#{lineBean.line.name}" />
+							<f:selectItems value="#{lineBean.lines}" var="c"
+								itemLabel="#{c.name}" itemValue="#{c}" />
+
+						</p:selectOneMenu>
+
+
+
+					</h:panelGrid>
+
+					<h:panelGrid columns="3" >
+						<p:commandButton actionListener="#{meanBean.doAssign()}"
+							value="Assign" update=":master" />
+							 <p:commandButton actionListener="#{meanBean.doCancel1()}"
+							value="Cancel" update=":master" />
+
+					</h:panelGrid>
+				</h:form>
+
+
+			</p:panel>
+
+		</h:form>
+		</p:panel>
+	</center>
+	
+</body>
+</html>
