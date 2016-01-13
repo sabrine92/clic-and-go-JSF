@@ -2,6 +2,8 @@ package services.interfaces;
 
 import javax.ejb.Local;
 
+import entities.Line;
+
 @Local
 public interface SessionLocal {
 	String getLogin();
@@ -23,6 +25,10 @@ public interface SessionLocal {
 	Integer getDuration();
 
 	void setDuration(Integer duration);
+
+	Line getLineSelected();
+
+	void setLineSelected(Line lineSelected);
 
 	void exit();
 

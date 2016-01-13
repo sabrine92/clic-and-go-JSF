@@ -8,15 +8,12 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.event.TabChangeEvent;
-import org.primefaces.event.TabCloseEvent;
 import org.primefaces.event.UnselectEvent;
 
 import services.interfaces.PlaceServicesLocal;
@@ -98,8 +95,6 @@ public class PlaceBean implements Serializable {
 		displayformadd = false;
 	}
 
-
-
 	// Event Handling
 	public void onRowSelect(SelectEvent event) {
 		FacesMessage msg = new FacesMessage("Place Selected",
@@ -138,26 +133,7 @@ public class PlaceBean implements Serializable {
 		}
 	}
 
-	public void onTabChange(TabChangeEvent event) {
-		FacesMessage msg = new FacesMessage("Tab opened", "Active Tab: "
-				+ event.getTab().getTitle());
-		selectedPlace = placeServicesLocal.findPlaceByPlaceName(event.getTab()
-				.getTitle().toString().trim());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-		System.out.println(selectedPlace);
-	}
-
-	public void onTabClose(TabCloseEvent event) {
-		FacesMessage msg = new FacesMessage("Tab Closed", "Closed tab: "
-				+ event.getTab().getTitle());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-		selectedPlace = new Place();
-		System.out.println(selectedPlace);
-	}
-
 	// GETTERS&SETTERS
-
-
 
 	public LoginBean getLoginBean() {
 		return loginBean;

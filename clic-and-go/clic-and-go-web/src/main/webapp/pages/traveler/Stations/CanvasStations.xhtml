@@ -1,0 +1,160 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<script type="application/javascript">
+window.onload=draw;
+function draw(){
+
+	var canvas=document.getElementById("canvas1");
+	var ctx=canvas.getContext("2d");
+    ctx.fillStyle="rgba(0,200,0,1)";
+	ctx.fillRect(50,120,10, 10);
+    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillText("ariana",50,140,200);
+    ctx.beginPath();
+    ctx.moveTo(60,130);
+    ctx.lineTo(80,150);
+    ctx.stroke(); 
+    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillRect(80,150,10, 10);
+    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillText("cite olympique",80,170,200);
+    ctx.beginPath();
+    ctx.moveTo(90,160);
+    ctx.lineTo(120,170);
+    ctx.stroke(); 
+    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillRect(120,170,10, 10);
+    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillText("mohamed 5",120,190,200);
+    ctx.beginPath();
+    ctx.moveTo(130,180);
+    ctx.lineTo(150,190);
+    ctx.stroke(); 
+    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillRect(150,190,10, 10);
+    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillText("passage",120,210,200);
+    ctx.beginPath();
+    ctx.moveTo(160,200);
+    ctx.lineTo(170,210);
+    ctx.stroke(); 
+    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillRect(170,210,10, 10);
+    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillText("barcelone",170,230,200);
+    ctx.beginPath();
+    ctx.moveTo(180,220);
+    ctx.lineTo(220,250);
+    ctx.stroke(); 
+    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillRect(220,250,10, 10);
+    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillText("megrine",220,270,200);
+    ctx.beginPath();
+    ctx.moveTo(230,250);
+    ctx.lineTo(270,120);
+    ctx.stroke(); 
+    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillRect(270,110,10, 10);
+    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillText("rades",270,130,200);
+    ctx.beginPath();
+    ctx.moveTo(280,110);
+    ctx.lineTo(300,90);
+    ctx.stroke(); 
+    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillRect(300,80,10, 10);
+    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillText("ezzahra",300,100,200);
+    ctx.beginPath();
+    ctx.moveTo(305,80);
+    ctx.lineTo(305,30);
+    ctx.stroke(); 
+    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillRect(300,30,10, 10);
+    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillText("hammam lif",300,50,200);
+    ctx.beginPath();
+    ctx.moveTo(170,220);
+    ctx.lineTo(100,250);
+    ctx.stroke(); 
+    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillRect(90,250,10, 10);
+    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillText("manar 2",90,270,200);
+    ctx.beginPath();
+    ctx.moveTo(90,255);
+    ctx.lineTo(50,255);
+    ctx.stroke(); 
+    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillRect(40,250,10, 10);
+    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillText("menzeh 9",40,270,200);
+    ctx.beginPath();
+    ctx.moveTo(155,190);
+    ctx.lineTo(135,20);
+    ctx.stroke(); 
+    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillRect(130,20,10, 10);
+    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillText("la marsa",130,40,200);
+}
+
+
+</script>
+</head>
+<body>
+	<p:spacer height="80px;" />
+	<form>
+		<TABLE border="1" width="400" height="100">
+			<tr>
+				<td><H3>
+						<center>Stations Map</center>
+					</H3></td>
+			</tr>
+		</TABLE>
+		<TABLE border="1" width="400" height="200">
+			<tr>
+				<td>Departure</td>
+				<td><h:selectOneMenu>
+
+						<f:selectItems var="s" value="#{stationBean.stations}"
+							itemLabel="#{s.name}" itemValue="s" />
+					</h:selectOneMenu></td>
+			</tr>
+			<tr>
+				<td>Arrival</td>
+				<td><h:selectOneMenu>
+
+						<f:selectItems var="s" value="#{stationBean.stations}"
+							itemLabel="#{s.name}" itemValue="s" />
+					</h:selectOneMenu></td>
+			</tr>
+			<tr>
+				<td><h:form>
+						<h:commandButton action="#{dij.DoAfficheChemin()}"
+							value="Affiche Chemin" update=":houc"  />
+					</h:form></td>
+				<td><h5><h:outputText id="houc" value="#{dij.sh}"/></h5></td>
+			</tr>
+			<tr>
+			<td><h:form>
+						<h:commandButton action="#{dij.GoToConvas()}"
+							value="See On Map"   />
+					</h:form></td>
+			</tr>
+		</TABLE>
+		<TABLE border="1" width="400" height="400">
+			<tr>
+				<td><canvas id="canvas1" width="400" height="400"></canvas></td>
+			</tr>
+					</TABLE>
+					
+	</form>
+	<p:spacer height="40px;" />
+</body>
+</html>

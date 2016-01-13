@@ -22,11 +22,11 @@ public class LoginBean {
 		String navigateTo = "";
 		User userLoggedIn = userServicesLocal.authenticate(user.getName(),
 				user.getPassword());
-		System.out.println("userLoggedIn :"+userLoggedIn);
+		System.out.println("userLoggedIn :" + userLoggedIn);
 		if (userLoggedIn != null) {
 			user = userLoggedIn;
 			sessionLocal.setLogin(userLoggedIn.getName());
-			sessionLocal.setLogin(userLoggedIn.getPassword());
+			sessionLocal.setPwd(userLoggedIn.getPassword());
 			if (userLoggedIn instanceof Traveler) {
 				System.out.println(userLoggedIn instanceof Traveler);
 				navigateTo = "pages/cm/cmHome";

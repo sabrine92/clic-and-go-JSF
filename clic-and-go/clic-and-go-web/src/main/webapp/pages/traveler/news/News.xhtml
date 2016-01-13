@@ -10,14 +10,12 @@
 		type="text/javascript"></script>
 </h:head>
 <body>
-
-
 	<h:form>
 		<p:growl id="growl" showDetail="true" />
 
 		<p:gmap id="gmap" center="36.803660, 10.180010" zoom="13"
 			type="HYBRID" model="#{newsBean.simpleModel}"
-			style="width:70%;height:400px"
+			style="width:100%;height:400px"
 			onPointClick="handlePointClick(event);" widgetVar="map">
 
 			<p:gmapInfoWindow id="infoWindow">

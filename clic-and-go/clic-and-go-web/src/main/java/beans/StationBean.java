@@ -36,6 +36,8 @@ public class StationBean implements Serializable {
 	
 	private Boolean displaydetails = false;
 	private List<Station> filteredStations;
+	
+	
 	// Injection
 
 	@EJB

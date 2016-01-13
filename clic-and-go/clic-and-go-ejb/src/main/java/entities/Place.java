@@ -21,6 +21,8 @@ public class Place implements Serializable {
 	private String Category;
 	private Integer x;
 	private Integer y;
+	private double lat;
+	private double lng;
 	private Integer rating;
 	private Integer nbRaters;
 	private Integer rate;
@@ -135,6 +137,22 @@ public class Place implements Serializable {
 
 	public void setRate(Integer rate) {
 		this.rate = rate;
+	}
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLng() {
+		return lng;
+	}
+
+	public void setLng(double lng) {
+		this.lng = lng;
 	}
 
 }
