@@ -67,6 +67,9 @@ public class PlaceBean implements Serializable {
 	// CRUD&Display stuff
 	public String doAddPlace() {
 		System.out.println(place);
+		place.setRate(0);
+		place.setRating(0);
+		place.setNbRaters(0);
 		placeServicesLocal.addPlace(place);
 		navigateTo = "listPlaces";
 		setDisplayformadd(false);

@@ -17,117 +17,130 @@
 	<h:outputScript name="./js/jquery-1.12.0.min.js" />
 	<script src="http://maps.google.com/maps/api/js?sensor=true|false"
 		type="text/javascript"></script>
-
+	<title><ui:insert name="title" /></title>
 </h:head>
 
 <h:body>
-	<div id="top">
-		<ui:insert name="top">
-			<nav class="navbar navbar-inverse navbar-fixed-top">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed"
-						data-toggle="collapse" data-target="navbar-l">
+	<div id="container">
+		<div id="identity">
+			<ui:insert name="identity">
+				<h:form rendered="#{loginBean.loggedIn}">
+					<h:commandLink value="logout" action="/login?faces-redirect=true"></h:commandLink>
+				</h:form>
+			</ui:insert>
 
-						<span class="sr-only">Menu</span> <span class="icon-bar"></span> <span
-							class="icon-bar"></span> <span class="icon-bar"></span>
-
-
-					</button>
-					<!-- //HOMES -->
-					<p:link outcome="/pages/traveler/trHome.jsf" value="Clic And Go"
-						rendered="#{loginBean.cm==false}">
-					</p:link>
-
-					<p:link outcome="/pages/cm/cmHome.jsf" value="Clic And Go"
-						rendered="#{loginBean.cm==true}">
-					</p:link>
-
-				</div>
-				<div class="collapse navbar-collapse" id="navbar">
-					<ul class="nav navbar-nav">
-						<!-- //Menu du traveller -->
-						<li><p:link outcome="/pages/traveler/ticket/ticketing.jsf"
-								value="Ticketing" rendered="#{loginBean.cm==false}">
-							</p:link></li>
-
-						<li><p:link outcome="/pages/traveler/news/News.jsf"
-								value="News" rendered="#{loginBean.cm==false}">
-							</p:link></li>
-
-						<li><p:link outcome="/pages/traveler/places/mustGoPlaces.jsf"
-								value="Must Go Places" rendered="#{loginBean.cm==false}">
-							</p:link></li>
-
-						<!-- //Menu du traveller -->
-						<li><p:link outcome="/pages/cm/news/News.jsf"
-								value="Manage News" rendered="#{loginBean.cm==true}">
-							</p:link></li>
-
-						<li><p:link outcome="/pages/cm/places/listPlaces.jsf"
-								value="Manage Places" rendered="#{loginBean.cm==true}">
-							</p:link></li>
-
-					</ul>
-					<form action="" class="navbar-form navbar-right" role="search">
-						<div class="input-group">
-							<input type="text" class="form-control" placeholder="Search"></input>
-							<span class="input-group-btn">
-								<button type="submit" class="btn btn-default">
-									<span class="glyphicon glyphicon-search"></span>
-								</button>
-							</span>
-						</div>
-
-					</form>
-
-				</div>
-
-
-			</div>
-
-			</nav>
-
-
-		</ui:insert>
-	</div>
-	<p:spacer width="40px;" />
-
-	<div id="content" class="center_content">
-		<ui:insert name="content">Content</ui:insert>
-	</div>
-	<div class="footer">
-		<div class="container">
-			<div class="row">
-				<div class="col l6 s12">
-					<h5 class="white-text">Clic and Go App</h5>
-					<p class="grey-text text-lighten-4">You can make the best out
-						of your trip.</p>
-				</div>
-				<div class="col l4 offset-l2 s12">
-					<h5 class="white-text">Links</h5>
-					<!-- 									<ul> -->
-					<!-- 										<li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li> -->
-					<!-- 										<li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li> -->
-					<!-- 										<li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li> -->
-					<!-- 										<li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li> -->
-					<!-- 									</ul> -->
-				</div>
-			</div>
 		</div>
-		<div class="footer-copyright">
+
+		<div id="top">
+			<ui:insert name="top">
+				<nav class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed"
+							data-toggle="collapse" data-target="navbar-l">
+
+							<span class="sr-only">Menu</span> <span class="icon-bar"></span>
+							<span class="icon-bar"></span> <span class="icon-bar"></span>
+
+
+						</button>
+						<!-- //HOMES -->
+						<p:link outcome="/pages/traveler/trHome.jsf" value="Clic And Go"
+							rendered="#{loginBean.cm==false}">
+						</p:link>
+
+						<p:link outcome="/pages/cm/cmHome.jsf" value="Clic And Go"
+							rendered="#{loginBean.cm==true}">
+						</p:link>
+
+					</div>
+					<div class="collapse navbar-collapse" id="navbar">
+						<ul class="nav navbar-nav">
+							<!-- //Menu du traveller -->
+							<li><p:link outcome="/pages/traveler/ticket/ticketing.jsf"
+									value="Ticketing" rendered="#{loginBean.cm==false}">
+								</p:link></li>
+
+							<li><p:link outcome="/pages/traveler/news/News.jsf"
+									value="News" rendered="#{loginBean.cm==false}">
+								</p:link></li>
+
+							<li><p:link
+									outcome="/pages/traveler/places/mustGoPlaces.jsf"
+									value="Must Go Places" rendered="#{loginBean.cm==false}">
+								</p:link></li>
+
+							<!-- //Menu du traveller -->
+							<li><p:link outcome="/pages/cm/news/News.jsf"
+									value="Manage News" rendered="#{loginBean.cm==true}">
+								</p:link></li>
+
+							<li><p:link outcome="/pages/cm/places/listPlaces.jsf"
+									value="Manage Places" rendered="#{loginBean.cm==true}">
+								</p:link></li>
+
+						</ul>
+						<form action="#{loginBean.doLogOut()}" class="navbar-form navbar-right" >
+							<div class="input-group">
+								<h:form rendered="#{loginBean.loggedIn}">
+									<h:commandLink value="logout"
+										action="/login?faces-redirect=true" />
+								</h:form>
+							</div>
+						</form>
+
+					</div>
+
+
+				</div>
+
+				</nav>
+
+
+			</ui:insert>
+		</div>
+
+
+		<p:spacer width="50px;" />
+
+		<div id="content" class="center_content">
+			<ui:insert name="content">
+				[Content will be inserted here]
+			</ui:insert>
+		</div>
+
+		<div class="footer">
 			<div class="container">
-				© 2016 Copyright ITClic <a class="grey-text text-lighten-4 right"
-					href="www.itclic.tn">IT Clic</a>
+				<div class="row">
+					<div class="col l6 s12">
+						<h5 class="white-text">Clic and Go App</h5>
+						<p class="grey-text text-lighten-4">You can make the best out
+							of your trip.</p>
+					</div>
+					<div class="col l4 offset-l2 s12">
+						<h5 class="white-text">Links</h5>
+						<!-- 									<ul> -->
+						<!-- 										<li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li> -->
+						<!-- 										<li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li> -->
+						<!-- 										<li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li> -->
+						<!-- 										<li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li> -->
+						<!-- 									</ul> -->
+					</div>
+				</div>
 			</div>
+			<div class="footer-copyright">
+				<div class="container">
+					© 2016 Copyright ITClic <a class="grey-text text-lighten-4 right"
+						href="www.itclic.tn">IT Clic</a>
+				</div>
+			</div>
+
 		</div>
 
+		<!-- 	<div id="bottom"> -->
+		<!-- 		<ui:insert name="bottom" class="bs-docs-footer"> -->
+		<!-- 		</ui:insert> -->
+		<!-- 	</div> -->
 	</div>
-
-	<!-- 	<div id="bottom"> -->
-	<!-- 		<ui:insert name="bottom" class="bs-docs-footer"> -->
-	<!-- 		</ui:insert> -->
-	<!-- 	</div> -->
-
 </h:body>
 </html>

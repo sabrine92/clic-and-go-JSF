@@ -20,11 +20,12 @@
 			<h:outputText value="Latitude" />
 			<h:inputText value="#{placeBean.place.y}" />
 			<h:outputText value="Station" />
-<!-- 			<h:selectOneMenu value="#{placeBean.stations}"> -->
-<!-- 				<f:selectItem itemLabel="please select the closest station" /> -->
-<!-- 				<f:selectItems value="#{placeBean.stations}" var="u" -->
-<!-- 					itemLabel="#{u.name}" itemValue="#{u}"></f:selectItems> -->
-<!-- 			</h:selectOneMenu> -->
+			
+			<h:selectOneMenu value="#{placeBean.stations}" converter="#{stationConverter}">
+				<f:selectItem itemLabel="please select the closest station" />
+				<f:selectItems value="#{placeBean.stations}" var="u"
+					itemLabel="#{u.name}" itemValue="#{u}"></f:selectItems>
+			</h:selectOneMenu>
 
 			<hr />
 			<h:commandButton type="reset" value="reset" />

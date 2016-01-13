@@ -1,23 +1,24 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
-<h:head></h:head>
-<body>
-	<ui:composition template="/Template.xhtml">
-		<ui:define name="content">
-	home of cm
+	xmlns:p="http://primefaces.org/ui" template="/Template.xhtml">
 
-	<h3>Hello</h3>
+	<ui:define name="title"> Home</ui:define>
+	<ui:define name="identity">
+		<h:form rendered="#{loginBean.loggedIn}">
+			<h:commandLink value="logout" action="/login?faces-redirect=true" />
+		</h:form>
+	</ui:define>
 
-			<p:link outcome="places/listPlaces" value="Manage Places">
-				<!-- 		<f:param name="productId" value="10" /> -->
-			</p:link>
-			<p:link outcome="stations/listStations" value="Manage Stations">
-			</p:link>
-		</ui:define>
-	</ui:composition>
-</body>
-</html>
+	<ui:define name="content">
+	
+		<center>
+			<h2>Hello content manager : #{loginBean.user.name}</h2>
+		</center>
+
+		<h:graphicImage value="/resources/images/backg.jpg" />
+
+	</ui:define>
+</ui:composition>
+

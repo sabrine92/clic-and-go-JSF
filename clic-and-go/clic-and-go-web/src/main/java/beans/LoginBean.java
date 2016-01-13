@@ -62,6 +62,9 @@ public class LoginBean {
 		return navigateTo;
 	}
 
+	public String doLogOut(){
+		return "login?faces-redirect=true";
+	}
 	public Boolean isLoggedIn() {
 		return LoggedIn;
 	}

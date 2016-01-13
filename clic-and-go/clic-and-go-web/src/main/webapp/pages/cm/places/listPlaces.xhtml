@@ -66,11 +66,12 @@
 						<p:column headerText="Category" filterBy="#{u.category}"
 							filterMatchMode="exact">
 							<f:facet name="filter">
-								<p:selectOneMenu onchange="PF('placesTable').filter()">
+
+								<h:selectOneMenu onchange="PF('placesTable').filter()">
 									<f:selectItem itemLabel="Select One" itemValue="#{null}"
 										noSelectionOption="true" />
 									<f:selectItems value="#{placeBean.categories}" />
-								</p:selectOneMenu>
+								</h:selectOneMenu>
 							</f:facet>
 							<h:outputText value="#{u.category}" />
 						</p:column>
@@ -88,9 +89,6 @@
 							<h:outputText value=" (yet unrated)" rendered="#{u.nbRaters==0}" />
 						</p:column>
 
-						<p:column style="width:32px">
-							<p:rowEditor />
-						</p:column>
 
 					</p:dataTable>
 					<!--END OF Data Table: places-->
@@ -113,17 +111,25 @@
 						<p:inputTextarea value="#{placeBean.place.description}"
 							minlength="200" />
 						<h:outputText value="Category" />
-						<p:selectOneMenu value="#{placeBean.place.category}">
+						<h:selectOneMenu value="#{placeBean.place.category}">
 							<f:selectItem itemLabel="Select One" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{placeBean.categories}" />
-						</p:selectOneMenu>
+						</h:selectOneMenu>
 						<h:outputText value="Longitude" />
 						<p:inputText value="#{placeBean.place.x}" minValue="-180"
 							maxValue="180" />
 						<h:outputText value="Latitude" />
 						<p:inputText value="#{placeBean.place.y}" minValue="-90"
 							maxValue="90" />
+
+<!-- 						<h:outputText value="Closest Station" /> -->
+<!-- 						<h:selectOneMenu value="#{placeBean.stations}" -->
+<!-- 							converter="#{stationConverter}"> -->
+<!-- 							<f:selectItem itemLabel="please select the closest station" /> -->
+<!-- 							<f:selectItems value="#{placeBean.stations}" var="u" -->
+<!-- 								itemLabel="#{u.name}" itemValue="#{u}"></f:selectItems> -->
+<!-- 						</h:selectOneMenu> -->
 
 						<h:commandButton type="reset" value="reset" />
 						<h:commandButton action="#{placeBean.doAddPlace()}"
