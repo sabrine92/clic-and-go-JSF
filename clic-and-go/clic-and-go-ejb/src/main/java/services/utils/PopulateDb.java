@@ -9,12 +9,14 @@ import javax.ejb.Startup;
 import services.interfaces.MeanOfTransportServicesLocal;
 import services.interfaces.NewsServicesLocal;
 import services.interfaces.PlaceServicesLocal;
+import services.interfaces.ReadingManagementLocal;
 import services.interfaces.StationLineManagementLocal;
 import services.interfaces.StationServicesLocal;
 import services.interfaces.TicketsServicesLocal;
 import services.interfaces.UserServicesLocal;
 import entities.Card;
 import entities.ContentManager;
+import entities.Ebook;
 import entities.Line;
 import entities.MeanOfTransport;
 import entities.News;
@@ -50,7 +52,8 @@ public class PopulateDb {
 	private NewsServicesLocal newsServicesLocal;
 	@EJB 
 	private MeanOfTransportServicesLocal meanOfTransportServicesLocal;
-
+	@EJB
+	private ReadingManagementLocal readingManagementLocal;
 	/**
 	 * Default constructor.
 	 */
@@ -341,6 +344,25 @@ public class PopulateDb {
 		ticketsServicesLocal.assignTicketToUser(1, 1);
 		ticketsServicesLocal.assignTicketToLine(1, 1);
 
+		// ///////////Populating library
+				Ebook ebook = new Ebook("Godfather Part I", "Stephanie Meyer",
+						"The story begins as Don Vito Corleone, the head of a New York Mafia family", "Fiction",
+						"Livre", " The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding. ");
+			
+
+				Ebook ebook2 = new Ebook("Godfather Part II", "Sabrine Maalej",
+						"Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film","Business", "Article",
+						" Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone ");
+				
+				Ebook ebook3 = new Ebook("Godfather Part II", "Sabrine Maalej",
+						"After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.","Business", "Article",
+						"After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.");
+				
+				readingManagementLocal.addEbook(ebook);
+				readingManagementLocal.addEbook(ebook2);
+				readingManagementLocal.addEbook(ebook3);
+		
+		
 	}
 	
 
