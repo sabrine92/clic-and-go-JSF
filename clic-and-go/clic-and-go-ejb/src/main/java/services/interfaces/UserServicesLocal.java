@@ -23,4 +23,5 @@ public interface UserServicesLocal {
 	User authenticate(String name, String password);
 
 	List<User> findUserByName(String name);
+	
 }
