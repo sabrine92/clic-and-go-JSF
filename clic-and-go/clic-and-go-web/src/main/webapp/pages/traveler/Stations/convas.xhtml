@@ -10,33 +10,33 @@ function draw(){
 
 	var canvas=document.getElementById("canvas1");
 	var ctx=canvas.getContext("2d");
-    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillStyle="#FF0000";
 	ctx.fillRect(50,120,10, 10);
-    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillStyle="#FF0000";
     ctx.fillText("ariana",50,140,200);
     ctx.beginPath();
     ctx.moveTo(60,130);
     ctx.lineTo(80,150);
     ctx.stroke(); 
-    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillStyle="#FF0000";
     ctx.fillRect(80,150,10, 10);
-    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillStyle="#FF0000";
     ctx.fillText("cite olympique",80,170,200);
     ctx.beginPath();
     ctx.moveTo(90,160);
     ctx.lineTo(120,170);
     ctx.stroke(); 
-    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillStyle="#FF0000";
     ctx.fillRect(120,170,10, 10);
-    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillStyle="#FF0000";
     ctx.fillText("mohamed 5",120,190,200);
     ctx.beginPath();
     ctx.moveTo(130,180);
     ctx.lineTo(150,190);
     ctx.stroke(); 
-    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillStyle="#FF0000";
     ctx.fillRect(150,190,10, 10);
-    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillStyle="#FF0000";
     ctx.fillText("passage",120,210,200);
     ctx.beginPath();
     ctx.moveTo(160,200);
@@ -98,13 +98,11 @@ function draw(){
     ctx.moveTo(155,190);
     ctx.lineTo(135,20);
     ctx.stroke(); 
-    ctx.fillStyle="rgba(0,200,0,1)";
+    ctx.fillStyle="#FF0000";
     ctx.fillRect(130,20,10, 10);
-    ctx.fillStyle="rgba(100,100,100,1)";
+    ctx.fillStyle="#FF0000";
     ctx.fillText("la marsa",130,40,200);
 }
-
-
 </script>
 </head>
 <body>
@@ -136,24 +134,19 @@ function draw(){
 			</tr>
 			<tr>
 				<td><h:form>
-						<h:commandButton action="#{dij.DoAfficheChemin()}"
-							value="Affiche Chemin" update=":houc"  />
+						<h:commandButton action="#{#}"
+							value="Go Back" update=":houc" />
 					</h:form></td>
 				<td><h5><h:outputText id="houc" value="#{dij.sh}"/></h5></td>
 			</tr>
 			<tr>
-			<td><h:form>
-						<h:commandButton action="#{dij.GoToConvas()}"
-							value="See On Map"   />
-					</h:form></td>
 			</tr>
 		</TABLE>
 		<TABLE border="1" width="400" height="400">
 			<tr>
 				<td><canvas id="canvas1" width="400" height="400"></canvas></td>
 			</tr>
-					</TABLE>
-					
+		</TABLE>
 	</form>
 	<p:spacer height="40px;" />
 </body>
