@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+<ui:composition template="/Template.xhtml">
+		<ui:define name="content">
+<h1>welcome : #{loginBean.user.name}</h1>
+	<h:form id="form">
+		<p:panel header="Manage eBooks">
+			<p:growl id="msgs" showDetail="true" />
+
+			<!--context menu for : on right clic-->
+			<p:contextMenu for="listBooks">
+				<p:menuitem value="Delete" update="listBooks" icon="ui-icon-close"
+					actionListener="#{bookBean.doDeleteEbook()}" />
+			</p:contextMenu>
+			<!--END OF context menu for : on right clic  -->
+
+			<!--Data Table: places-->
+			<p:dataTable 
+				id="listBooks" 
+				widgetVar="booksTable"
+				value="#{bookBean.ebooks}" 
+				var="u" 
+				border="2"
+				selectionMode="single" 
+				selection="#{bookBean.selectedBook}"
+				rowKey="#{u.id}"
+				emptyMessage="No e-book found with given criteria"
+				filteredValue="#{bookBean.filteredBooks}" sortMode="multiple">
+
+				<f:facet name="header">
+    		    	Available e-books and articles
+    			</f:facet>
+
+				<!--Events-->
+				<p:ajax event="rowSelect" listener="#{bookBean.onRowSelect}"
+					update=":form:msgs" />
+				<p:ajax event="rowUnselect" listener="#{bookBean.onRowUnselect}"
+					update=":form:msgs" />
+
+				<!--Columns-->
+				<p:column headerText="Id" filterBy="#{u.id}" style="width:30px"
+					filterMatchMode="contains" sortBy="#{u.id}">
+					<h:outputText value="#{u.id}" />
+				</p:column>
+
+				<p:column headerText="Title" filterBy="#{u.title}" style="width:30px"
+					filterMatchMode="contains" sortBy="#{u.title}">
+					<h:outputText value="#{u.title}" />
+				</p:column>
+
+				<p:column headerText="Category" filterBy="#{u.category}" style="width:30px"
+					filterMatchMode="exact" sortBy="#{u.category}">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('booksTable').filter()">
+							<f:selectItem itemLabel="Select One" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{bookBean.categories}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{u.category}" />
+				</p:column>
+				
+				<p:column headerText="Type" filterBy="#{u.type}" style="width:30px"
+					filterMatchMode="exact" sortBy="#{u.type}">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('booksTable').filter()">
+							<f:selectItem itemLabel="Select One" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{bookBean.types}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{u.type}" />
+				</p:column>
+
+				<p:column headerText="Author" filterBy="#{u.author}" style="width:30px"
+					filterMatchMode="contains">
+					<h:outputText value="#{u.author}" />
+				</p:column>
+				<p:column headerText="Number Ofwords" filterBy="#{u.nbOfWords}" style="width:30px"
+					filterMatchMode="contains">
+					<h:outputText value="#{u.nbOfWords}" />
+				</p:column>
+
+			
+
+			</p:dataTable>
+			<!--END OF Data Table: places-->
+			<p:spacer height="40px;" />
+			<!--Buttons-->
+			<h:panelGrid columns="2">
+				<h:commandButton action="#{bookBean.doDisplayAdd()}"
+					value="Add a book">
+					<f:setPropertyActionListener value="#{bookBean.ebook}"
+						target="#{bookBean.ebook}"></f:setPropertyActionListener>
+				</h:commandButton>
+				<h:commandButton action="#{bookBean.doUndisplayAdd()}"
+					value="Cancel" rendered="#{bookBean.displayformadd}" />
+			</h:panelGrid>
+			<!--Panel Grid: ADD-->
+			<h:panelGrid columns="2" rendered="#{bookBean.displayformadd}">
+				<h:outputText value="Title" />
+				<p:inputText value="#{bookBean.ebook.title}" maxlength="100" />
+				<h:outputText value="Author" />
+				<p:inputText value="#{bookBean.ebook.author}" maxlength="100" />
+				<h:outputText value="Description" />
+				<p:inputTextarea value="#{bookBean.ebook.description}"
+					minlength="200" />
+					<h:outputText value="Content" />
+				<p:inputTextarea value="#{bookBean.ebook.content}"
+					minlength="200" />
+				<h:outputText value="Category" />
+				<p:selectOneMenu value="#{bookBean.ebook.category}">
+					<f:selectItem itemLabel="Select One" itemValue="#{null}"
+						noSelectionOption="true" />
+					<f:selectItems value="#{bookBean.categories}" />
+				</p:selectOneMenu>
+				<h:outputText value="Type" />
+				<p:selectOneMenu value="#{bookBean.ebook.type}">
+					<f:selectItem itemLabel="Select One" itemValue="#{null}"
+						noSelectionOption="true" />
+					<f:selectItems value="#{bookBean.types}" />
+				</p:selectOneMenu>
+				
+				
+
+				<h:commandButton type="reset" value="reset" />
+				<h:commandButton action="#{bookBean.doAddBook()}" value="Confirm" />
+			</h:panelGrid>
+			<!--END OF Panel Grid: ADD-->
+		</p:panel>
+	</h:form>
+	</ui:define>
+	</ui:composition>
+</body> 
+</html>
+

@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import services.interfaces.ReadingManagementLocal;
 import services.interfaces.ReadingManagementRemote;
 import entities.Ebook;
+import entities.Place;
 import entities.Traveler;
 
 /**
@@ -37,7 +38,7 @@ public class ReadingManagement implements ReadingManagementRemote,
 		return b;
 	}
 
-	// je recupere l'utilisateur connecté et son trajet actuel
+	// je recupere l'utilisateur connectï¿½ et son trajet actuel
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Ebook> suggestEbooks(Integer duration, Traveler traveler) {
@@ -100,5 +101,46 @@ public class ReadingManagement implements ReadingManagementRemote,
 			return null;
 		}
 	}
+	@Override
+	public Ebook findEbookByEbookId(Integer Id) {
+		return entityManager.find(Ebook.class, Id);
+	}
+	@Override
+	public Boolean deleteEbook(Ebook ebook) {
+		Boolean b = false;
+		try {
+			ebook = findEbookByEbookId(ebook.getId());
+			entityManager.remove(ebook);
+			b = true;
+		} catch (Exception e) {
+		}
+		return b;
+	}
+	@Override
+	public Boolean updateEbook(Ebook ebook) {
+		Boolean b = false;
+		try {
+			entityManager.merge(ebook);
+			b = true;
+		} catch (Exception e) {
+		}
+		return b;
+	}
 
+	@Override
+	public Ebook findEbookByEbookTitle(String Title) {
+		
+		String jpql = "select s from Ebook s where s.title LIKE :param";
+		Query query = entityManager.createQuery(jpql);
+		query.setParameter("param",'%'+Title+'%');
+		System.out.println((Ebook) query.getSingleResult());
+		return (Ebook) query.getSingleResult();	
+		
+	}
+	
+	
+	
+	
+	
+	
 }
