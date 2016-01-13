@@ -70,7 +70,7 @@
 									value="Must Go Places" rendered="#{loginBean.cm==false}">
 								</p:link></li>
 
-							<!-- //Menu du traveller -->
+							<!-- //Menu du cm -->
 							<li><p:link outcome="/pages/cm/news/News.jsf"
 									value="Manage News" rendered="#{loginBean.cm==true}">
 								</p:link></li>
@@ -80,14 +80,12 @@
 								</p:link></li>
 
 						</ul>
-						<form action="#{loginBean.doLogOut()}" class="navbar-form navbar-right" >
 							<div class="input-group">
-								<h:form rendered="#{loginBean.loggedIn}">
+								<h:form rendered="#{loginBean.loggedIn}" class="navbar-form navbar-right">
 									<h:commandLink value="logout"
 										action="/login?faces-redirect=true" />
 								</h:form>
 							</div>
-						</form>
 
 					</div>
 
