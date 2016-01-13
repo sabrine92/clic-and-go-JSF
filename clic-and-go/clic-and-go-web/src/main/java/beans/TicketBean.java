@@ -2,6 +2,7 @@ package beans;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Random;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -40,6 +41,7 @@ public class TicketBean implements Serializable {
 	private Integer qt;
 	private User user;
 	private List<Ticket> tickets;
+	private String number;
 
 	// Injection
 
@@ -154,13 +156,21 @@ public class TicketBean implements Serializable {
 	}
 
 	public List<Ticket> getTickets() {
-		tickets = ticketsServicesLocal.findAllTicketsByUserId(doAuthentUser()
-				.getUserId());
+		tickets = ticketsServicesLocal.findAllTickets();
 		return tickets;
 	}
 
 	public void setTickets(List<Ticket> tickets) {
 		this.tickets = tickets;
+	}
+
+	public String getNumber() {
+		number = doGetRandomNumberWithin();
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
 	// Functionality
@@ -194,15 +204,41 @@ public class TicketBean implements Serializable {
 	}
 
 	public Boolean doPayTicket(Ticket ticket, Card card) {
-		Boolean b = ticketsServicesLocal.payTicket(ticket, card);
-		ticketsServicesLocal.assignTicketToUser(ticket.getTicketId(),
-				doAuthentUser().getUserId());
+		Boolean b = false;
+		try {
+			ticketsServicesLocal.payTicket(ticket, card);
+			ticketsServicesLocal.assignTicketToUser(ticket.getTicketId(), 1);
+			ticketsServicesLocal.assignTicketToLine(ticket.getTicketId(),
+					lineSelected.getLineId());
+			tickets.add(ticket);
+			System.out.println(lineSelected);
+			b = true;
+
+		} catch (Exception e) {
+			System.out.println("meme po d5al lel boucle ");
+		}
+
 		return b;
 	}
 
 	public User doAuthentUser() {
 		return userServicesLocal.authenticate(sessionLocal.getLogin(),
 				sessionLocal.getPwd());
+	}
+
+	public String doGetRandomNumberWithin() {
+		int lower = 111111111;
+		int upper = 999999999;
+
+		Random rand = new Random();
+		int randomNumber = rand.nextInt(upper - lower) + lower;
+		if (randomNumber == lower) {
+			int j = lower + 1;
+			return "" + j;
+		} else {
+			return "" + randomNumber;
+		}
+
 	}
 
 }

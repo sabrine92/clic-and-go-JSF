@@ -25,7 +25,7 @@ public interface PlaceServicesLocal {
 
 	List<Place> findPlacesByDestination(Integer stationId);
 
-	Boolean ratePlace(Integer placeId, Integer rating);
+	Boolean ratePlace(Integer placeId, Integer rating, Integer nbRaters, Integer rate);
 
 	Place findPlaceByPlaceName(String name);
 

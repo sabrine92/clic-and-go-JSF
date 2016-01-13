@@ -5,19 +5,45 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:head></h:head>
-<body>
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<h:outputStylesheet name="./css/bootstrap.css" />
+	<h:outputStylesheet name="./css/bootstrap-theme.css" />
+	<h:outputStylesheet name="./css/bootstrap-theme.min.css" />
+	<h:outputStylesheet name="./css/bootstrap.min.css" />
+	<h:outputScript name="./js/bootstrap.js" />
+	<h:outputScript name="./js/jquery-1.12.0.min.js" />
+</h:head>
+<body style="background:url('backg.jpg') ;width:500px;
+	  height:500px;">
+
 	<h:form>
-		<p:panel header="Login interface">
-			<h:panelGrid id="pg">
+		
+		<div class="col-sm-4">
+	<div class="panel panel-danger" style="width:320px;
+	  height:160px;position: fixed;
+  top: 40%;
+  left: 40%;">
+	<div class="panel-heading">
+	<h3 class="panel-title">Login</h3>
+	
+	</div>
+	<div class="panel-body" >
+	<h:panelGrid id="pg" columns="2">
 				<h:outputText value="login" />
 				<p:inputText value="#{loginBean.user.name}" />
 				<h:outputText value="password" />
 				<p:password value="#{loginBean.user.password}" />
 
 			</h:panelGrid>
-			<h:commandButton action="#{loginBean.doLogin()}" value="login"  />
-		</p:panel>
+			<h:commandButton action="#{loginBean.doLogin()}" value="login" style="position: relative;
+    width: 60px;
+    height: 30px; left: 240px;
+    top: 6px;"/>
+	</div>
+	</div>
+	
+	</div>
 	</h:form>
 </body>
 </html>

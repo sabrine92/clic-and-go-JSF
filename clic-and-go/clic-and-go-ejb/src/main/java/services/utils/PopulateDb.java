@@ -18,6 +18,7 @@ import entities.Line;
 import entities.News;
 import entities.Place;
 import entities.Station;
+import entities.Ticket;
 import entities.Traveler;
 
 /**
@@ -249,12 +250,20 @@ public class PopulateDb {
 		place1.setRating(108);
 		place1.setNbRaters(36);
 		place1.setRate(3);
+		place1.setLat(36.8458383);
+		place1.setLng(10.1505943);
 		place2.setRating(600);
 		place2.setRate(4);
 		place2.setNbRaters(150);
+		place2.setLat(36.8813778);
+		place2.setLng(10.3305924);
 		place3.setRating(3100);
 		place3.setRate(5);
 		place3.setNbRaters(620);
+		place3.setLat(36.796422);
+		place3.setLng(10.179515);
+		place4.setLat(36.8028);
+		place4.setLng(10.1797);
 		placeServicesLocal.addPlace(place1);
 		placeServicesLocal.addPlace(place2);
 		placeServicesLocal.addPlace(place3);
@@ -287,5 +296,13 @@ public class PopulateDb {
 		System.out.println(newsServicesLocal.addNews(news2));
 		System.out.println(newsServicesLocal.addNews(news3));
 
+		// tickets
+		Ticket t = new Ticket();
+		t.setPrice(1.5D);
+		ticketsServicesLocal.addTicket(t);
+		ticketsServicesLocal.assignTicketToUser(1, 1);
+		ticketsServicesLocal.assignTicketToLine(1, 1);
 	}
+	
+
 }
