@@ -15,6 +15,7 @@ import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
+import services.interfaces.StationLineManagementLocal;
 import services.interfaces.StationServicesLocal;
 import entities.Line;
 import entities.Station;
@@ -42,7 +43,8 @@ public class StationBean implements Serializable {
 
 	@EJB
 	private StationServicesLocal stationServicesLocal;
-
+    @EJB
+       private StationLineManagementLocal stationlineManagementLocal;
 	
 	@PostConstruct
 	public void init() {
@@ -64,6 +66,7 @@ public class StationBean implements Serializable {
 	public String doUpdate(){
 		stationServicesLocal.updateStation(selectedstaStation);
 		String navigateTo = "listStations";
+		stationlineManagementLocal.assignNewStationToLine(selectedstaStation,2, 100, 1, 1);
 	    setDisplaydetails(false);
 		return navigateTo;
 		
