@@ -18,8 +18,8 @@ public class Ebook implements Serializable {
 	private String title;
 	private String author;
 	private String description;
-	private String category;
-	private String type;
+	private Category category;
+	private Type type;
 	private String content;
 	private int nbOfWords;
 	private static final long serialVersionUID = 1L;
@@ -41,7 +41,7 @@ public class Ebook implements Serializable {
 	
 
 	public Ebook(String title, String author, String description,
-			String category, String type, String content) {
+			Category category, Type type, String content) {
 		super();
 		this.title = title;
 		this.author = author;
@@ -77,18 +77,18 @@ public class Ebook implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}   
-	public String getCategory() {
+	public Category getCategory() {
 		return this.category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}   
-	public String getType() {
+	public Type getType() {
 		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(Type type) {
 		this.type = type;
 	}   
 	public int getNbOfWords() {

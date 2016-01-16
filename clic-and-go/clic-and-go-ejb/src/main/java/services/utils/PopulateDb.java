@@ -166,11 +166,11 @@ public class PopulateDb {
 		st10.setX(40);
 		st10.setY(250);
 
-		Station st11 = new Station();
-		st11.setName("La marsa");
-		st11.setReference(11);
-		st11.setX(130);
-		st11.setY(20);
+//		Station st11 = new Station();
+//		st11.setName("La marsa");
+//		st11.setReference(11);
+//		st11.setX(130);
+//		st11.setY(20);
 
 		stationServicesLocal.addStation(st0);
 		stationServicesLocal.addStation(st1);
@@ -183,7 +183,7 @@ public class PopulateDb {
 		stationServicesLocal.addStation(st8);
 		stationServicesLocal.addStation(st9);
 		stationServicesLocal.addStation(st10);
-		stationServicesLocal.addStation(st11);
+//		stationServicesLocal.addStation(st11);
 
 		// //Populating line
 
@@ -249,7 +249,7 @@ public class PopulateDb {
 		Place place1 = new Place("foccacia", "pizza italienne à volenté",
 				"Fast Food", 45, 255, st10);
 		Place place2 = new Place("Barista's", "Cheese cake et moccachino",
-				"Coffee shop", 140, 17, st11);
+				"Coffee shop", 140, 17, st10);
 		Place place3 = new Place("Al7attab", "Lablebi, Kafteji, s7an tounsi",
 				"Fast Food", 155, 190, st3);
 		Place place4 = new Place("Chillis", "American Dream on a plate",
@@ -344,23 +344,21 @@ public class PopulateDb {
 		ticketsServicesLocal.assignTicketToUser(1, 1);
 		ticketsServicesLocal.assignTicketToLine(1, 1);
 
-		// ///////////Populating library
-				Ebook ebook = new Ebook("Godfather Part I", "Stephanie Meyer",
-						"The story begins as Don Vito Corleone, the head of a New York Mafia family", "Fiction",
-						"Livre", " The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding. ");
-			
-
-				Ebook ebook2 = new Ebook("Godfather Part II", "Sabrine Maalej",
-						"Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film","Business", "Article",
-						" Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone ");
-				
-				Ebook ebook3 = new Ebook("Godfather Part II", "Sabrine Maalej",
-						"After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.","Business", "Article",
-						"After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.");
-				
-				readingManagementLocal.addEbook(ebook);
-				readingManagementLocal.addEbook(ebook2);
-				readingManagementLocal.addEbook(ebook3);
+//		// ///////////Populating library
+//				Ebook ebook = new Ebook("x","xx","xx","");
+//			
+//
+//				Ebook ebook2 = new Ebook("Godfather Part II", "Sabrine Maalej",
+//						"Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film","Business", "Article",
+//						" Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone ");
+//				
+//				Ebook ebook3 = new Ebook("Godfather Part II", "Sabrine Maalej",
+//						"After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.","Business", "Article",
+//						"After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.");
+//				
+//				readingManagementLocal.addEbook(ebook);
+//				readingManagementLocal.addEbook(ebook2);
+//				readingManagementLocal.addEbook(ebook3);
 		
 		
 	}

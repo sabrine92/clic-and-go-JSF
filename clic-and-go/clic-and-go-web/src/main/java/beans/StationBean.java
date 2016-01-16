@@ -66,7 +66,7 @@ public class StationBean implements Serializable {
 	public String doUpdate(){
 		stationServicesLocal.updateStation(selectedstaStation);
 		String navigateTo = "listStations";
-		stationlineManagementLocal.assignNewStationToLine(selectedstaStation,2, 100, 1, 1);
+		stationlineManagementLocal.assignNewStationToLine(selectedstaStation,4, 100, 1, 1);
 	    setDisplaydetails(false);
 		return navigateTo;
 		
