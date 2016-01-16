@@ -14,7 +14,7 @@
 	<h:outputScript name="./js/bootstrap.js" />
 	<h:outputScript name="./js/jquery-1.12.0.min.js" />
 </h:head>
-<body style="background: url('backg.jpg'); width: 500px; height: 500px;">
+<body style="background: url('Login.jpg'); width: 500px; height: 500px;">
 
 	<h:form>
 
@@ -22,10 +22,10 @@
 			<div class="panel panel-danger"
 				style="width: 50% x; height: 35%; position: fixed; top: 40%; left: 40%;">
 				<div class="panel-heading">
-					<h3 class="panel-title">Login</h3>
-
+				
 				</div>
-				<div class="panel-body">
+				<p:panel header="Login" >
+				
 					<p:messages id="messages" showDetail="true" autoUpdate="true"
 						closable="true" />
 					<h:panelGrid id="pg" columns="2">
@@ -36,11 +36,11 @@
 
 						<h:commandButton action="#{loginBean.doLogin()}" value="login" />
 					</h:panelGrid>
-
+</p:panel>
 				</div>
 			</div>
 
-		</div>
+		
 	</h:form>
 </body>
 </html>

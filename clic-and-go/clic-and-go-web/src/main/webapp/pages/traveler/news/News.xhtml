@@ -1,66 +1,64 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
-
-<h:head>
-	<script src="http://maps.google.com/maps/api/js?sensor=true|false"
-		type="text/javascript"></script>
-</h:head>
-<body>
-	<ui:composition template="/Template.xhtml">
-		<ui:define name="content">
-			<br></br>
-			<br></br>
-			<br></br>
-
-			<h:form>
-				<p:panel>
-					<p:growl id="growl" showDetail="true" />
-
-					<p:gmap id="gmap" center="36.803660, 10.180010" zoom="13"
-						type="HYBRID" model="#{newsBean.simpleModel}"
-						style="width:70%;height:400px"
-						onPointClick="handlePointClick(event);" widgetVar="map">
-
-						<p:gmapInfoWindow id="infoWindow">
-							<p:outputPanel
-								style="text-align: center; display: block; margin: auto">
-
-								<h:outputText value="Title: " style="font-weight: bold" />
-								<h:outputText value="#{newsBean.marker.title}" />
+	xmlns:p="http://primefaces.org/ui" template="/Home.xhtml">
+	<ui:define name="title"> News</ui:define>
 
 
+	<ui:insert name="Head">
+		<script src="http://maps.google.com/maps/api/js?sensor=true|false"
+			type="text/javascript"></script>
+	</ui:insert>
 
-							</p:outputPanel>
-						</p:gmapInfoWindow>
+	<ui:define name="Services">
+		<br></br>
+		<br></br>
+		<br></br>
+
+		<h:form>
+			<p:panel>
+				<p:growl id="growl" showDetail="true" />
+
+				<p:gmap id="gmap" center="36.803660, 10.180010" zoom="13"
+					type="HYBRID" model="#{newsBean.simpleModel}"
+					style="width:70%;height:400px"
+					onPointClick="handlePointClick(event);" widgetVar="map">
+
+					<p:gmapInfoWindow id="infoWindow">
+						<p:outputPanel
+							style="text-align: center; display: block; margin: auto">
+
+							<h:outputText value="Title: " style="font-weight: bold" />
+							<h:outputText value="#{newsBean.marker.title}" />
 
 
-						<p:ajax event="overlaySelect"
-							listener="#{newsBean.onMarkerSelect}" update="growl" />
-					</p:gmap>
-				</p:panel>
-				<h3>News</h3>
-				<p:accordionPanel value="#{newsBean.newss}" var="c">
-					<p:tab title="#{c.title}">
-						<h:panelGrid columns="2" cellpadding="5">
 
-							<h:outputText value="Title:" style="font-weight: bold" />
-							<h:outputText value="#{c.title}" />
+						</p:outputPanel>
+					</p:gmapInfoWindow>
 
-							<h:outputText value="Description:" style="font-weight: bold" />
-							<h:outputText value="#{c.description}" />
 
-							<h:outputText value="Type:" style="font-weight: bold" />
-							<h:outputText value="#{c.type}" />
-						</h:panelGrid>
-					</p:tab>
-				</p:accordionPanel>
+					<p:ajax event="overlaySelect" listener="#{newsBean.onMarkerSelect}"
+						update="growl" />
+				</p:gmap>
+			</p:panel>
+			<h3>News</h3>
+			<p:accordionPanel value="#{newsBean.newss}" var="c">
+				<p:tab title="#{c.title}">
+					<h:panelGrid columns="2" cellpadding="5">
 
-			</h:form>
-		</ui:define>
-	</ui:composition>
-</body>
-</html>
+						<h:outputText value="Title:" style="font-weight: bold" />
+						<h:outputText value="#{c.title}" />
+
+						<h:outputText value="Description:" style="font-weight: bold" />
+						<h:outputText value="#{c.description}" />
+
+						<h:outputText value="Type:" style="font-weight: bold" />
+						<h:outputText value="#{c.type}" />
+					</h:panelGrid>
+				</p:tab>
+			</p:accordionPanel>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
