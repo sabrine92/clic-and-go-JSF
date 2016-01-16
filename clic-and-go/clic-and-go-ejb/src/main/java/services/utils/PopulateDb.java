@@ -15,6 +15,7 @@ import services.interfaces.StationServicesLocal;
 import services.interfaces.TicketsServicesLocal;
 import services.interfaces.UserServicesLocal;
 import entities.Card;
+import entities.Category;
 import entities.ContentManager;
 import entities.Ebook;
 import entities.Line;
@@ -24,6 +25,7 @@ import entities.Place;
 import entities.Station;
 import entities.Ticket;
 import entities.Traveler;
+import entities.Type;
 
 /**
  * Session Bean implementation class PopulateDb
@@ -345,20 +347,22 @@ public class PopulateDb {
 		ticketsServicesLocal.assignTicketToLine(1, 1);
 
 //		// ///////////Populating library
-//				Ebook ebook = new Ebook("x","xx","xx","");
-//			
-//
-//				Ebook ebook2 = new Ebook("Godfather Part II", "Sabrine Maalej",
-//						"Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film","Business", "Article",
-//						" Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone ");
-//				
-//				Ebook ebook3 = new Ebook("Godfather Part II", "Sabrine Maalej",
-//						"After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.","Business", "Article",
-//						"After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.");
-//				
-//				readingManagementLocal.addEbook(ebook);
-//				readingManagementLocal.addEbook(ebook2);
-//				readingManagementLocal.addEbook(ebook3);
+		Ebook ebook = new Ebook("Twilight", "Stephanie Meyer",
+				"Bella est amoureuse et certaine.", Category.Fiction,
+				Type.Livre, " Edward i7ab Bella , Bella ta3mel fiHom ");
+			
+
+				Ebook ebook2 = new Ebook("Godfather Part II", "Sabrine Maalej",
+						"Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film",Category.Business, Type.Article,
+						" Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone ");
+				
+				Ebook ebook3 = new Ebook("Godfather Part II", "Sabrine Maalej",
+						"After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.",Category.Fiction,
+						Type.Livre,"After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.");
+				
+				readingManagementLocal.addEbook(ebook);
+				readingManagementLocal.addEbook(ebook2);
+				readingManagementLocal.addEbook(ebook3);
 		
 		
 	}
